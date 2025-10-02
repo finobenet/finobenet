@@ -1,0 +1,87 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-1" style="margin-top:20px;">
+                            <div class="card">
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <div class="row" style="flex-grow: 1;">
+                                        <a href="/admin/"><button class="btn btn-theme col-md-1 mr-1"><i class="far fa-chevron-left"></i></button></a>
+                                        <h4><strong>bans</strong></h4>
+                                    </div>
+                                </div>
+                                <script>
+                                    function toggleExpirationFields() {
+                                        var banTypeSelect = document.getElementById("type");
+                                        var expirationFields = document.getElementById("expirationFields");
+                                        var dateInput = document.getElementById("date");
+                                        var timeInput = document.getElementById("time");
+                                        
+                                        if (banTypeSelect.value === "y") {
+                                            expirationFields.style.display = "none";
+                                            dateInput.removeAttribute("required");
+                                            timeInput.removeAttribute("required");
+                                        } else {
+                                            expirationFields.style.display = "block";
+                                            dateInput.setAttribute("required", "required");
+                                            timeInput.setAttribute("required", "required");
+                                        }
+                                    }
+                                </script>
+                                <div class="card-body text-center">
+                                    <form role="form" method="POST" action="/admin/bans" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-form-label text-md-right" style="margin-left:15px;">Username</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="name" name="name" value="" placeholder="Username" required autofocus="autofocus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="name" class="col-form-label text-md-right" style="margin-left:15px;">Ban type</label>
+                                            <div class="col-md-12">
+                                                <select id="type" name="type" required class="form-control" onchange="toggleExpirationFields()">
+                                                    <option value="n">Normal Ban</option>
+                                                    <option value="y">Permanent Ban</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="expirationFields">
+                                            <label class="col-form-label text-md-right" style="margin-left:15px;">Expiration</label>
+                                            <hr>
+                                            <div class="form-group row">
+                                                <label for="date" class="col-form-label text-md-right" style="margin-left:15px;">Date & Time</label>
+                                                <div class="col-md-12">
+                                                    <div class="input-group">
+                                                        <input type="date" id="date" name="date" class="form-control">
+                                                        <input type="time" id="time" name="time" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="reason" class="col-form-label text-md-right" style="margin-left:15px;">Reason</label>
+                                            <div class="col-md-12">
+                                                <textarea type="text" id="reason" name="reason" value="" placeholder="Reason" class="form-control" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top:40px;">
+                                            <button type="submit" class="btn btn-danger full-width">Ban</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

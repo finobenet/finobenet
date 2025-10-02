@@ -1,0 +1,43 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3">
+		<h3>Change cleint version thing (idk)</h3>
+		<form role="form" method="POST" action="" id="dynamic-form" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+            <div class="form-group row">
+                <label for="application" class="col-form-label text-md-right" style="margin-left:15px;">Application <em>(eg. 0.1.1pcapplication)</em></label>
+                <div class="col-md-12">
+                    <input type="text" name="application" value="{{ data.application }}" placeholder="Application version" autofocus="autofocus" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="md5" class="col-form-label text-md-right" style="margin-left:15px;">MD5 hash <em>(eg. 4a9f5eb327067fa82ed312029ecb7824)</em></label>
+                <div class="col-md-12">
+                    <input type="text" name="md5" value="{{ data.md5 }}" placeholder="MD5 hash" autofocus="autofocus" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="version" class="col-form-label text-md-right" style="margin-left:15px;">Version <em>(eg. version-69d48314c23a4510)</em></label>
+                <div class="col-md-12">
+                    <input type="text" name="version" value="{{ data.version }}" placeholder="Version" autofocus="autofocus" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:40px;">
+                <button type="submit" class="btn btn-success full-width">change</button>
+            </div>
+        </form>
+	  </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

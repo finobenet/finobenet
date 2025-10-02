@@ -1,0 +1,46 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="full-width mt-3">
+                    <h4>New Place</h4>
+                    <p>
+                        You've used {{ data.user.places }} of {{ data.user.slots }} place slots.
+                    </p>
+                    <div class="card-body text-center">
+                        <form role="form" id="form" method="POST" action="/app/place/new" enctype="multipart/form-data">
+                            <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+    
+                            <div class="form-group row">
+                                <label for="name" class="col-form-label text-md-right"
+                                    style="margin-left:15px;">Name</label>
+                                <div class="col-md-12">
+                                    <input type="text" id="name" name="title"
+                                        value="{{ data.user.username }}'s place"
+                                        placeholder="Place name" required="required" autofocus="autofocus"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="description" class="col-form-label text-md-right"
+                                    style="margin-left:15px;">Description</label>
+                                <div class="col-md-12">
+                                    <textarea type="text" id="description" name="description" value=""
+                                        placeholder="Description (optional)" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 40px;">
+                                <button type="submit" id="submit_b" class="btn btn-primary full-width">Publish</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <strong><h3 class="mb-3">Oui/Non Decider</h3></strong>
+                <strong><h2 class="mb-5">{{ random(0, 1) == 1 ? 'True' : 'False' }}</h2></strong>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

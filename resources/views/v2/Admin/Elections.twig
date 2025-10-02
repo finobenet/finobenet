@@ -1,0 +1,105 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/css/css.min.js"></script>
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3">
+		<h3>Elections</h3>
+		<form role="form" method="POST" action="" id="dynamic-form" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+            <div class="form-group row">
+                <label for="title" class="col-form-label text-md-right" style="margin-left:15px;">Election Title</label>
+                <div class="col-md-12">
+                    <input type="text" name="title" value="" placeholder="title" autofocus="autofocus" class="form-control">
+                </div>
+            </div>
+			<div class="form-group row">
+                <label for="css" class="col-form-label text-md-right" style="margin-left:15px;">CSS Style</label>
+                <div class="col-md-12">
+                    <textarea type="text" id="css-editor" name="css" value="" placeholder="CSS" class="form-control"></textarea>
+                    <label for="css" class="custom-label"><small>css style for what the election page should look like</small></label>
+                    <script>
+                        var editor = CodeMirror.fromTextArea(document.getElementById("css-editor"), {
+                          mode: "css",  // Set mode to CSS
+                          lineNumbers: true,  // Enable line numbers
+                          theme: "default"  // Choose a theme (optional)
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="css" class="col-form-label text-md-right" style="margin-left:15px;">Expiration</label>
+                <div class="col-md-12">
+                    <label for="css" class="custom-label"><small>for when the elections end</small></label>
+                    <div class="input-group">
+                        <input type="date" name="expire" value="" class="form-control">
+                        <input type="time" id="time" name="time" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="options" class="col-form-label text-md-right" style="margin-left: 15px;">Options</label>
+                <div class="col-md-12">
+                    <label for="options" class="custom-label"><small>Options from what people can choose from</small></label>
+                    <div class="input-group">
+                        <input type="text" name="options[0][title]" value="" placeholder="Option Name" class="form-control">
+                        <input type="text" name="options[0][image]" value="" placeholder="Option Image Link (optional)" class="form-control">
+                    </div>
+                    <div class="input-group mt-3">
+                        <input type="text" name="options[1][title]" value="" placeholder="Option Name" class="form-control">
+                        <input type="text" name="options[1][image]" value="" placeholder="Option Image Link (optional)" class="form-control">
+                    </div>
+                    <div id="options-container"></div>
+                    <br>
+                    <button type="button" id="add-option" class="btn btn-primary">Add option</button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:40px;">
+                <button type="submit" class="btn btn-success full-width">create</button>
+            </div>
+            <script>
+                var count = 2;
+                document.addEventListener("DOMContentLoaded", function () {
+                    const optionsContainer = document.getElementById("options-container");
+                    const addOptionButton = document.getElementById("add-option");
+            
+                    addOptionButton.addEventListener("click", function () {
+                        const newOption = document.createElement("div");
+                        newOption.className = "form-group row mt-3";
+                        newOption.innerHTML = `
+                            <div class="col-md-12 input-group">
+                                <input type="text" name="options[` + count + `][title]" value="" placeholder="Option Name" class="form-control">
+                                <input type="text" name="options[` + count + `][image]" value="" placeholder="Option Image Link (optional)" class="form-control">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-danger remove-option">Remove</button>
+                                </div>
+                            </div>
+                        `;
+            
+                        optionsContainer.appendChild(newOption);
+                        count++;
+                    });
+            
+                    optionsContainer.addEventListener("click", function (event) {
+                        if (event.target.classList.contains("remove-option")) {
+                            event.target.closest(".form-group").remove();
+                        }
+                    });
+                });
+            </script>
+        </form>
+	  </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

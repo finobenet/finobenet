@@ -1,0 +1,157 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <style>
+        .up.vote-selected {
+            color: var(--blue)!important
+        }
+
+        .down.vote-selected {
+            color: var(--purple)!important
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+       {% include ('v2/Modules/nav.twig') %}
+       <div class="container mt-3">
+           <p class="mt-0 mb-3"><a href="/videos" class="btn btn-theme btn-sm border mr-2"><i class="far fa-chevron-left mr-2"></i> Back</a></p>
+           <h3 class="mt-2 mb-1 font-light">
+    			{{ data.video.title|raw }}
+    		</h3>
+    		<p class="mt-0 mb-1">by <a href="/user/{{ data.video.uuid }}">{{ data.video.author }}</a></p>
+    		<div class="mt-1 mb-4"><div data-v-73be696c="" class="forum-voter"><div data-v-73be696c="" id="video-number-main" class="total border">
+        		{{ data.video.rating }}
+        	</div> <div data-v-73be696c="" id="video-up-main" class="up{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.video.userRating == "l") ? " vote-selected" : "" }}"><i data-v-73be696c="" class="far fa-arrow-up"></i>
+        		{{ data.video.upvotes }}
+        	</div> <div data-v-73be696c="" id="video-down-main" class="down{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.video.userRating == "d") ? " vote-selected" : "" }}"><i data-v-73be696c="" class="far fa-arrow-down"></i>
+        		{{ data.video.downvotes }}
+        	</div></div></div>
+        	<video id="player" controls crossorigin playsinline data-poster="https://finobe.net/video/thumb/{{ data.video.id }}">
+              <source src="https://finobe.net/video/data/{{ data.video.id }}" type="video/{{ data.video.filename matches '/webm$/' ? 'webm' : 'mp4' }}">
+            </video>
+            <script>
+              const player = new Plyr('#player');
+            </script>
+            {% if data.siteusername %}
+            <script>
+                                    function sync_rating(type, videoId) {
+                                                var number = $('#video-number-main');
+                                                var data = new URLSearchParams();
+                                                data.append('videoId', videoId);
+                                                data.append('type', type);
+                                                data.append('_token', '{{ data.csrf_token }}');
+
+                                                $.ajax({
+                                                    url: "/api/video/rating_number",
+                                                    type: "POST",
+                                                    contentType: 'application/x-www-form-urlencoded',
+                                                    data: data.toString(),
+                                                    success: function(data) {
+                                                        number.text(data.rating);
+                                                        //console.log(data);
+                                                    },
+                                                    error: function(error) {
+                                                        console.error('Error:', error);
+                                                    }
+                                                });
+                                            }
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            
+
+                                            document.getElementById('video-up-main').addEventListener('click', function () {
+                                                var video = document.getElementById('video-up-main');
+                                                var videodown = document.getElementById('video-down-main');
+                                                var number = document.getElementById('video-number-main');
+
+                                                const data = new URLSearchParams();
+                                                data.append('videoId', '{{ data.video.id }}');
+                                                data.append('rating', 'l');
+                                                data.append('_token', '{{ data.csrf_token }}');
+
+                                                fetch("/api/video/rate", {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: data
+                                                })
+                                                .then(response => response.text())
+                                                .then(response => {
+                                                    if (video.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        video.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(video.innerText, 10) - 1);
+                                                    } else {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        video.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(video.innerText, 10) + 1);
+                                                    }
+
+                                                    if (videodown.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        videodown.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(video.innerText, 10) - 1);
+                                                        videodown.classList.toggle('vote-selected');
+                                                    }
+                                                    
+                                                    video.classList.toggle('vote-selected');
+                                                });
+                                            });
+
+                                            document.getElementById('video-down-main').addEventListener('click', function () {
+                                                var video = document.getElementById('video-down-main');
+                                                var videoup = document.getElementById('video-up-main');
+                                                var number = document.getElementById('video-number-main');
+
+                                                const data = new URLSearchParams();
+                                                data.append('videoId', '{{ data.video.id }}');
+                                                data.append('rating', 'd');
+                                                data.append('_token', '{{ data.csrf_token }}');
+
+                                                fetch("/api/video/rate", {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: data
+                                                })
+                                                .then(response => response.text())
+                                                .then(response => {
+                                                    if (!video.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        video.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(video.innerText, 10) - 1);
+                                                    } else {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        video.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(video.innerText, 10) + 1);
+                                                    }
+
+                                                    if (videoup.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "{{ data.video.id }}");
+                                                        videoup.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(videoup.innerText, 10) - 1);
+                                                        videoup.classList.remove('vote-selected');
+                                                    }
+                                                    
+                                                    video.classList.toggle('vote-selected');
+                                                });
+                                            })
+                                        });
+                                    </script>
+                                    {% endif %}
+            <h4 class="mt-4 font-weight-light">Description</h4>
+            <div> {{ (not data.video.description|length) ? "No description" : data.video.description|raw }} </div>
+            <h4 class="mt-4 font-weight-light">Comments</h4>
+            <div id="disqus_thread"></div>
+            <script>
+                (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://finobe-1.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    	</div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

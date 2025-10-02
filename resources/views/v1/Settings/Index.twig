@@ -1,0 +1,47 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3">
+           <div class="card">
+              <div class="card-header bg-primary text-white">
+                 Settings
+              </div>
+              <div class="card-body">
+                 <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                   <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                   <input type="hidden" name="currentversion" value="{{ user.version }}">
+                   <div class="form-group">
+                      <label for="type" class="col-form-label">Branding</label>
+                      <select id="branding" name="branding" class="form-control mt-2" required>
+                      <option value="aesthetiful"{{ (data.user.branding == "aesthetiful") ? " selected" : "" }}>Aesthetiful</option>
+                      <option value="finobe"{{ (data.user.branding == "finobe") ? " selected" : "" }}>Finobe</option>
+                      </select>
+                   </div>
+                   <div class="form-group">
+                      <button type="submit" class="btn btn-primary full-width">Change</button>
+                   </div>
+                 </form>
+                 <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                 <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+					 <div class="form-group">
+						<label for="version" class="col-form-label">Version</label>
+						<select id="version" name="version" class="form-control mt-2" required>
+							<option value="v1"{{ (data.user.version == "v1") ? " selected" : "" }}>Version 1</option>
+							<option value="v2"{{ (data.user.version == "v2") ? " selected" : "" }}>Version 2</option>
+						</select>
+					 </div>
+					 <div class="form-group">
+						<button type="submit" class="btn btn-primary full-width">Change</button>
+					 </div>
+                 </form>
+              </div>
+           </div>
+        </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

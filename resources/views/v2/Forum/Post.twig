@@ -1,0 +1,672 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+        .up.vote-selected {
+            color: var(--blue)!important
+        }
+
+        .down.vote-selected {
+            color: var(--purple)!important
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="forumContainer container mt-3">
+                <nav class="breadcrumb"><a href="/" class="breadcrumb-item">{{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }}</a> <a href="/forum/home"
+                        class="breadcrumb-item">Forum Home</a> <a href="/forum/home/{{ data.post.category }}" class="breadcrumb-item">
+                        {% if data.post.category == "1" %}{{ "Announcements" }}{% elseif data.post.category == "2" %}{{ "General" }}{% elseif data.post.category == "3" %}{{ "Suggestions" }}{% elseif data.post.category == "4" %}{{ "Off Topic" }}{% elseif data.post.category == "5" %}{{ "Help" }}{% elseif data.post.category == "6" %}{{ "Development" }}{% elseif data.post.category == "7" %}{{ "Serious" }}{% elseif data.post.category == "8" %}{{ "Serious (Real World)" }}{% elseif data.post.category == "9" %}{{ "Trade Discussion" }}{% elseif data.post.category == "10" %}{{ "да (Русский)" }}{% endif %}
+                    </a> <span class="breadcrumb-item overflow-hidden">
+                        {{ data.post.title | raw }}
+                    </span></nav>
+                {% if data.post.category == "7" or data.post.category == "8" %}
+                    <div class="alert alert-danger mb-4">
+                        <div class="container text-white">
+                            <h5 class="font-weight-light my-2"><i
+                                    class="far fa-exclamation-triangle fa-fw align-middle mr-1"></i> Serious replies only</h5>
+                            <p class="mb-2">Only serious replies are allowed in this section. Offenders may be banned.</p>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if not data.editing %}
+                {% if data.siteusername %}
+                    {% if data.post.locked == 'y' %}
+                        <button class="btn btn-primary btn-lg-5 col-md-1 mb-2 disabled" style="text-transform: capitalize;" disabled><i class="far fa-fw fa-plus"></i>topic locked</button>
+                    {% else %}
+                        <a href="/forum/new/reply?id={{ data.post.id }}"><button class="btn btn-primary btn-lg-5 col-md-1 mb-2{{ (data.post.locked == "y") ? " disabled" : "" }}" style="text-transform: capitalize;"><i class="far fa-fw fa-plus"></i>reply</button></a>
+                    {% endif %}
+                    {% if data.post.author != data.data.user.username %}
+                        <a href="/forum/subscribe?id={{ data.post.id }}"><button class="btn btn-primary btn-lg-5 col-md-1 mb-2" style="text-transform: capitalize;">{{ (data.post.subscription) ? "Unsubscribe" : "subscribe" }}</button></a>
+                    {% endif %}
+                {% endif %}
+                <div class="mt-2">
+                    <ul class="pagination shadow-sm">
+                        <li class="page-item{{ (data.replies.pages.info.previous_page == data.replies.pages.info.start_page and data.replies.pages.info.previous_page != (data.replies.pages.info.start_page + 1)) ? " disabled" : "" }}"><a class="page-link" id="previous-page" href="/forum/post?id={{ data.post.id }}&page={{ data.replies.pages.info.previous_page }}" onclick="" rel="previous" aria-label="Previous <<">«</a></li>
+                        {% if data.replies.pages.info.start_page > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="/forum/post?id={{ data.post.id }}&page=1">1</a>
+                            </li>
+                            {% if data.replies.pages.info.start_page > 2 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="/forum/post?id={{ data.post.id }}&page=2">2</a>
+                                </li>
+                            {% endif %}
+                            {% if data.replies.pages.info.start_page - 1 > 2 %}
+                                <li class="page-item"><span class="page-link">...</span></li>
+                            {% endif %}
+                        {% endif %}
+                        {% for page in data.replies.pages.data %}
+                            <li class="page-item"><a class="page-link{{ (page.page == data.replies.pages.info.current_page) ? " selected" : "" }}" href="/forum/post?id={{ data.post.id }}&page={{ page.page }}">{{ page.page }}</a></li>
+                        {% endfor %}
+                        {% if data.replies.pages.info.end_page < data.replies.pages.info.number_of_pages %}
+                            {% if data.replies.pages.info.end_page + 1 < data.replies.pages.info.number_of_pages - 1 %}
+                                <li class="page-item"><span class="page-link">...</span></li>
+                            {% endif %}
+                            {% for page in [data.replies.pages.info.number_of_pages - 1, data.replies.pages.info.number_of_pages] %}
+                                {% if page > data.replies.pages.info.end_page %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="/forum/post?id={{ data.post.id }}&page={{ page }}">{{ page }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        <li class="page-item{{ (data.replies.pages.info.next_page == data.replies.pages.info.end_page) ? " disabled" : "" }}"><a class="page-link" id="next-page" href="/forum/post?id={{ data.post.id }}&page={{ data.replies.pages.info.next_page + 1 }}" onclick="" rel="next" aria-label="Next >>">»</a></li>
+                    </ul>
+                </div>
+                <div id="forum-posts">
+                    <div class="card mb-4">
+                        <div id="originalPost" class="card-header bg-info text-white">
+                            Original Post - {{ data.post.date }} {% if data.post.edited %}<span title="Edited {{ data.post.edited_date }}"><i>*(edited)</i></span>{% endif %}{% if data.user.status == "admin" %} - <a href="/admin/{{ (data.post.pinned == "n") ? "pin" : "unpin" }}?id={{ data.post.id }}">{{ (data.post.pinned == "n") ? "Pin" : "Unpin" }} Post</a> - <a href="/admin/{{ (data.post.locked == "n") ? "lock" : "unlock" }}?id={{ data.post.id }}">{{ (data.post.locked == "n") ? "Lock" : "Unlock" }} Post</a>{% endif %}
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2 b-right">
+                                    <p><span class="forum__color-ball ml-0 mr-1" style="background: {{ (data.post.online) ? 'green' : 'grey' }};"></span>
+                                    <a href="/user/{{ data.post.uuid }}">
+                                        {% if data.siteusername %}<i class='fal fa-mars fa-1x'></i>{% endif %} {% if data.post.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ data.post.author }}</span>{% else %}{{ data.post.author }}{% endif %}
+                                    </a> {% if data.siteusername %}[-]{% endif %}</p>
+                                    {% if data.siteusername %}
+                                        {% if data.post.pfp == "" %}
+                                            <img src="/s/img/spinnerv2.gif" style="max-width: 75px;">
+                                        {% else %}
+                                            <img src="https://cdn.finobe.net/{{ data.post.pfp }}" style="max-width: 75px;">
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if data.post.status == "admin" %}
+                                        <p class="mb-0"><span class="badge badge-danger badge-admin"><i class="far fa-gavel fa-fw mr-1"></i> Admin</span></p>
+                                    {% endif %}
+                                    <p><b>Posts:</b> {{ data.post.posts }}</p>
+                                </div>
+                                <div class="col-md-10 post-content overflow-hidden">
+                                    <div>
+                                        {{ data.post.comment | raw }}
+                                    </div>
+                                    <div>
+                                        <div data-v-73be696c="" class="forum-voter">
+                                            <div data-v-73be696c="" id="post-number-main" class="total border">
+                                                {{ data.post.rating }}
+                                            </div>
+                                            <div data-v-73be696c="" id="post-up-main" class="up{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.post.userRating == "l") ? " vote-selected" : "" }}"><i data-v-73be696c=""
+                                                    class="far fa-arrow-up"></i>
+                                                {{ data.post.upvotes }}
+                                            </div>
+                                            <div data-v-73be696c="" id="post-down-main" class="down{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.post.userRating == "d") ? " vote-selected" : "" }}"><i data-v-73be696c=""
+                                                    class="far fa-arrow-down"></i>
+                                                {{ data.post.downvotes }}
+                                            </div>
+                                        </div>
+                                        {% if post.badges|length %}
+                                            <p class="mt-2 mb-0">
+                                            {% for badge in data.post.badges %}
+                                                <span class="badge badge-{{ badge.color }} mr-1">{{ badge.message }}</span>
+                                            {% endfor %}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                    {% if data.siteusername %}
+                                    <script>
+                                        function sync_rating(type, index, postId) {
+                                            var number = $('#post-number-main');
+                                            var data = new URLSearchParams();
+                                            data.append('postId', postId);
+                                            data.append('type', type);
+                                            data.append('_token', '{{ data.csrf_token }}');
+
+                                            if(type == "2") {
+                                                number = $('#reply-number-' + index);
+                                            }
+
+                                            $.ajax({
+                                                url: "/api/rating_number",
+                                                type: "POST",
+                                                contentType: 'application/x-www-form-urlencoded',
+                                                data: data.toString(),
+                                                success: function(data) {
+                                                    number.text(data.rating);
+                                                    //console.log(data);
+                                                },
+                                                error: function(error) {
+                                                    console.error('Error:', error);
+                                                }
+                                            });
+                                        }
+                                        
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            document.getElementById('post-up-main').addEventListener('click', function () {
+                                                var post = document.getElementById('post-up-main');
+                                                var postdown = document.getElementById('post-down-main');
+                                                var number = document.getElementById('post-number-main');
+
+                                                const data = new URLSearchParams();
+                                                data.append('type', '1');
+                                                data.append('postId', '{{ data.post.id }}');
+                                                data.append('rating', 'l');
+                                                data.append('_token', '{{ data.csrf_token }}')
+
+                                                fetch("/api/rate", {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: data
+                                                })
+                                                .then(data => {
+                                                    if (post.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        post.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(post.innerText, 10) - 1);
+                                                    } else {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        post.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(post.innerText, 10) + 1);
+                                                    }
+
+                                                    if (postdown.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        postdown.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(postdown.innerText, 10) - 1);
+                                                        postdown.classList.toggle('vote-selected');
+                                                    }
+                                                    
+                                                    post.classList.toggle('vote-selected');
+                                                });
+                                            });
+
+                                            document.getElementById('post-down-main').addEventListener('click', function () {
+                                                var post = document.getElementById('post-down-main');
+                                                var postup = document.getElementById('post-up-main');
+                                                var number = document.getElementById('post-number-main');
+
+                                                const data = new URLSearchParams();
+                                                data.append('type', '1');
+                                                data.append('postId', '{{ data.post.id }}');
+                                                data.append('rating', 'd');
+                                                data.append('_token', '{{ data.csrf_token }}');
+
+                                                fetch("/api/rate", {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: data
+                                                })
+                                                .then(data => {
+                                                    if (post.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        post.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(post.innerText, 10) - 1);
+                                                    } else {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        post.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-down"></i>' + (parseInt(post.innerText, 10) + 1);
+                                                    }
+
+                                                    if (postup.classList.contains('vote-selected')) {
+                                                        sync_rating("1", "0", "{{ data.post.id }}");
+                                                        postup.innerHTML = '<i data-v-73be696c="" class="far fa-arrow-up"></i>' + (parseInt(postup.innerText, 10) - 1);
+                                                        postup.classList.remove('vote-selected');
+                                                    }
+                                                    
+                                                    post.classList.toggle('vote-selected');
+                                                });
+                                            });
+                                        });
+                                    </script>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if data.post.author == data.user.username %}
+                            <div class="card-footer"><a class="btn btn-primary text-white" href="/forum/post?id={{ data.post.id }}&edit=1">Edit</a></div>
+                        {% endif %}
+                    </div>
+                    {% if data.sticked %}
+                        <div class="card mb-4">
+                            <div id="stickyPost" class="card-header bg-success text-white"><a href="#stickyPost">Sticked Post</a> -
+                                {{ data.sticked.date }} {% if data.sticked.edited == "y" %}<span title="Edited {{ data.sticked.edited_date }}"><i>*(edited)</i></span>{% endif %} {% if data.user.status == "admin" %} - <a href="/admin/unstick?id={{ data.sticked.id }}">Unstick Post</a>{% endif %}
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2 b-right">
+                                        <p><span class="forum__color-ball ml-0 mr-1" style="background: {{ (data.sticked.online) ? 'green' : 'grey' }};"></span> <a
+                                            href="/user/{{ data.sticked.uuid }}">{% if data.siteusername %}<i class='fal fa-mars fa-1x'></i>{% endif %} {% if data.sticked.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ data.sticked.author }}</span>{% else %}{{ data.sticked.author }}{% endif %}</a> {% if data.siteusername %}[-]{% endif %}
+                                        </p>
+                                        {% if data.siteusername %}
+                                            {% if data.sticked.pfp == "" %}
+                                                <img src="/s/img/spinnerv2.gif" style="max-width: 75px;">
+                                            {% else %}
+                                                <img src="https://cdn.finobe.net/{{ data.sticked.pfp }}" style="max-width: 75px;">
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if data.sticked.status == "admin" %}
+                                            <p class="mb-0"><span class="badge badge-danger badge-admin"><i class="far fa-gavel fa-fw mr-1"></i> Admin</span></p>
+                                        {% endif %}
+                                        <p><b>Posts:</b> {{ data.sticked.posts }}</p>
+                                    </div>
+                                    <div class="col-md-10 post-content overflow-hidden">
+                                        <div>
+                                            {% if data.sticked.replyTo %}
+                                            <blockquote class="greentext"><p>{{ data.sticked.replyComment }}</p></blockquote>
+                                            {% endif %}
+                                            {{ data.sticked.comment | raw }}
+                                        </div>
+                                        <div>
+                                            <div data-v-73be696c="" class="forum-voter">
+                                                <div data-v-73be696c="" id="sticked-number-{{ loop.index }}" class="total border">
+                                                    {{ data.sticked.rating }}
+                                                </div>
+                                                <div data-v-73be696c="" id="sticked-up-{{ loop.index }}" class="up{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.sticked.userRating == "l") ? " vote-selected" : "" }}" data-type="up">
+                                                    <div data-v-73be696c="" class="total">
+                                                        <i class="far fa-arrow-up"></i>
+                                                        {{ data.sticked.upvotes }}
+                                                    </div>
+                                                </div>
+                                                <div data-v-73be696c="" id="sticked-down-{{ loop.index }}" class="down{{ (not data.siteusername) ? " disabled" : "" }}{{ (data.sticked.userRating == "d") ? " vote-selected" : "" }}" data-type="down">
+                                                    <div data-v-73be696c="" class="total">
+                                                        <i class="far fa-arrow-down"></i> 
+                                                        {{ data.sticked.downvotes }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if data.sticked.badges|length %}
+                                                <p class="mt-2 mb-0">
+                                                {% for badge in data.sticked.badges %}
+                                                    <span class="badge badge-{{ badge.color }} mr-1">{{ badge.message }}</span>
+                                                {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                document.getElementById('sticked-up-{{ loop.index }}').addEventListener('click', function () {
+                                                    var replyup{{ loop.index }} = document.getElementById('sticked-up-{{ loop.index }}');
+                                                    var replydown{{ loop.index }} = document.getElementById('sticked-down-{{ loop.index }}');
+                                                    var number{{ loop.index }} = document.getElementById('sticked-number-{{ loop.index }}');
+
+                                                    const data = new URLSearchParams();
+                                                    data.append('type', '2');
+                                                    data.append('postId', '{{ data.sticked.id }}');
+                                                    data.append('rating', 'l');
+                                                    data.append('_token', '{{ data.csrf_token }}');
+
+                                                    fetch("/api/rate", {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                                        },
+                                                        body: data
+                                                    })
+                                                    .then(data => {
+                                                        if (replyup{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                        } else {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) + 1) + '</div>';
+                                                        }
+
+                                                        if (replydown{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                            replydown{{ loop.index }}.classList.toggle('vote-selected');
+                                                        }
+                                                        
+                                                        replyup{{ loop.index }}.classList.toggle('vote-selected');
+                                                    });
+                                                });
+
+                                                document.getElementById('sticked-down-{{ loop.index }}').addEventListener('click', function () {
+                                                    var replydown{{ loop.index }} = document.getElementById('sticked-down-{{ loop.index }}');
+                                                    var replyup{{ loop.index }} = document.getElementById('sticked-up-{{ loop.index }}');
+                                                    var number{{ loop.index }} = document.getElementById('sticked-number-{{ loop.index }}');
+
+                                                    const data = new URLSearchParams();
+                                                    data.append('type', '2');
+                                                    data.append('postId', '{{ data.sticked.id }}');
+                                                    data.append('rating', 'd');
+                                                    data.append('_token', '{{ data.csrf_token }}');
+
+                                                    fetch("/api/rate", {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                                        },
+                                                        body: data
+                                                    })
+                                                    .then(data => {
+                                                        if (replydown{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                        } else {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) + 1) + '</div>';
+                                                        }
+
+                                                        if (replyup{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ data.sticked.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                            replyup{{ loop.index }}.classList.remove('vote-selected');
+                                                        }
+                                                        
+                                                        replydown{{ loop.index }}.classList.toggle('vote-selected');
+                                                    });
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if data.sticked.author == data.user.username %}
+                            <div class="card-footer"><a class="btn btn-primary text-white" href="/forum/edit?id={{ data.sticked.id }}">Edit</a></div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="forum-replies">
+                    {% for reply in data.replies.data %}
+                        <div class="card mb-4">
+                            <div class="card-header bg-primary text-white"><a href="/forum/new/reply?id={{ data.post.id }}&reply={{ reply.id }}" class="text-white">Reply</a> -
+                                {{ reply.date }} {% if reply.edited == "y" %}<span title="Edited {{ reply.edited_date }}"><i>*(edited)</i></span>{% endif %} {% if data.user.status == "admin" %} - <a href="/admin/stick?id={{ reply.id }}">Stick Post</a>{% endif %}
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2 b-right">
+                                        <p><span class="forum__color-ball ml-0 mr-1" style="background: {{ (reply.online) ? 'green' : 'grey' }};"></span> <a
+                                                href="/user/{{ reply.uuid }}">{% if data.siteusername %}<i class='fal fa-mars fa-1x'></i>{% endif %} {% if reply.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ reply.author }}</span>{% else %}{{ reply.author }}{% endif %}</a> {% if data.siteusername %}[-]{% endif %}
+                                        </p>
+                                        {% if data.siteusername %}
+                                            {% if reply.pfp == "" %}
+                                                <img src="/s/img/spinnerv2.gif" style="max-width: 75px;">
+                                            {% else %}
+                                                <img src="https://cdn.finobe.net/{{ reply.pfp }}" style="max-width: 75px;">
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if reply.status == "admin" %}
+                                            <p class="mb-0"><span class="badge badge-danger badge-admin"><i class="far fa-gavel fa-fw mr-1"></i> Admin</span></p>
+                                        {% endif %}
+                                        <p><b>Posts:</b> {{ reply.posts }}</p>
+                                    </div>
+                                    <div class="col-md-10 post-content overflow-hidden">
+                                        <div>
+                                            {% if reply.replyTo %}
+                                            <blockquote class="greentext"><p>{{ reply.replyComment }}</p></blockquote>
+                                            {% endif %}
+                                            {{ reply.comment | raw }}
+                                        </div>
+                                        <div>
+                                            <div data-v-73be696c="" class="forum-voter">
+                                                <div data-v-73be696c="" id="reply-number-{{ loop.index }}" class="total border">
+                                                    {{ reply.rating }}
+                                                </div>
+                                                <div data-v-73be696c="" id="reply-up-{{ loop.index }}" class="up{{ (not data.siteusername) ? " disabled" : "" }}{{ (reply.userRating == "l") ? " vote-selected" : "" }}" data-type="up">
+                                                    <div data-v-73be696c="" class="total">
+                                                        <i class="far fa-arrow-up"></i>
+                                                        {{ reply.upvotes }}
+                                                    </div>
+                                                </div>
+                                                <div data-v-73be696c="" id="reply-down-{{ loop.index }}" class="down{{ (not data.siteusername) ? " disabled" : "" }}{{ (reply.userRating == "d") ? " vote-selected" : "" }}" data-type="down">
+                                                    <div data-v-73be696c="" class="total">
+                                                        <i class="far fa-arrow-down"></i> 
+                                                        {{ reply.downvotes }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% if reply.badges|length %}
+                                                <p class="mt-2 mb-0">
+                                                {% for badge in reply.badges %}
+                                                    <span class="badge badge-{{ badge.color }} mr-1">{{ badge.message }}</span>
+                                                {% endfor %}
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                        {% if data.siteusername %}
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                document.getElementById('reply-up-{{ loop.index }}').addEventListener('click', function () {
+                                                    var replyup{{ loop.index }} = document.getElementById('reply-up-{{ loop.index }}');
+                                                    var replydown{{ loop.index }} = document.getElementById('reply-down-{{ loop.index }}');
+                                                    var number{{ loop.index }} = document.getElementById('reply-number-{{ loop.index }}');
+
+                                                    const data = new URLSearchParams();
+                                                    data.append('type', '2');
+                                                    data.append('postId', '{{ reply.id }}');
+                                                    data.append('rating', 'l');
+                                                    data.append('_token', '{{ data.csrf_token }}');
+
+                                                    fetch("/api/rate", {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                                        },
+                                                        body: data
+                                                    })
+                                                    .then(data => {
+                                                        if (replyup{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                        } else {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) + 1) + '</div>';
+                                                        }
+
+                                                        if (replydown{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                            replydown{{ loop.index }}.classList.toggle('vote-selected');
+                                                        }
+                                                        
+                                                        replyup{{ loop.index }}.classList.toggle('vote-selected');
+                                                    });
+                                                });
+
+                                                document.getElementById('reply-down-{{ loop.index }}').addEventListener('click', function () {
+                                                    var replydown{{ loop.index }} = document.getElementById('reply-down-{{ loop.index }}');
+                                                    var replyup{{ loop.index }} = document.getElementById('reply-up-{{ loop.index }}');
+                                                    var number{{ loop.index }} = document.getElementById('reply-number-{{ loop.index }}');
+
+                                                    const data = new URLSearchParams();
+                                                    data.append('type', '2');
+                                                    data.append('postId', '{{ reply.id }}');
+                                                    data.append('rating', 'd');
+                                                    data.append('_token', '{{ data.csrf_token }}');
+
+                                                    fetch("/api/rate", {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                                        },
+                                                        body: data
+                                                    })
+                                                    .then(data => {
+                                                        if (replydown{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                        } else {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replydown{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-down"></i> ' + (parseInt(replydown{{ loop.index }}.innerText, 10) + 1) + '</div>';
+                                                        }
+
+                                                        if (replyup{{ loop.index }}.classList.contains('vote-selected')) {
+                                                            setTimeout(() => {
+                                                                sync_rating("2", "{{ loop.index }}", "{{ reply.id }}");
+                                                            }, 250);
+                                                            replyup{{ loop.index }}.innerHTML = '<div data-v-73be696c="" class="total"><i data-v-73be696c="" class="far fa-arrow-up"></i> ' + (parseInt(replyup{{ loop.index }}.innerText, 10) - 1) + '</div>';
+                                                            replyup{{ loop.index }}.classList.remove('vote-selected');
+                                                        }
+                                                        
+                                                        replydown{{ loop.index }}.classList.toggle('vote-selected');
+                                                    });
+                                                })
+                                            });
+                                        </script>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% if reply.author == data.user.username %}
+                            <div class="card-footer"><a class="btn btn-primary text-white" href="/forum/edit?id={{ reply.id }}">Edit</a></div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    </div>
+                    <center class="loading_comm_pagination" style="display: none;">
+                        <div>
+                            <img src="/s/img/spinnerv2.gif" style="width:16px;height:16px;vertical-align: middle;"> Loading...
+                        </div>
+                    </center>
+                    <div class="mt-2">
+                        <ul class="pagination shadow-sm">
+                            <li class="page-item{{ (data.replies.pages.info.previous_page == data.replies.pages.info.start_page and data.replies.pages.info.previous_page != (data.replies.pages.info.start_page + 1)) ? " disabled" : "" }}"><a class="page-link" id="previous-page" href="/forum/post?id={{ data.post.id }}&page={{ data.replies.pages.info.previous_page }}" onclick="" rel="previous" aria-label="Previous <<">«</a></li>
+                            {% if data.replies.pages.info.start_page > 1 %}
+                                <li class="page-item">
+                                    <a class="page-link" href="/forum/post?id={{ data.post.id }}&page=1">1</a>
+                                </li>
+                                {% if data.replies.pages.info.start_page > 2 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="/forum/post?id={{ data.post.id }}&page=2">2</a>
+                                    </li>
+                                {% endif %}
+                                {% if data.replies.pages.info.start_page - 1 > 2 %}
+                                    <li class="page-item"><span class="page-link">...</span></li>
+                                {% endif %}
+                            {% endif %}
+                            {% for page in data.replies.pages.data %}
+                                <li class="page-item"><a class="page-link{{ (page.page == data.replies.pages.info.current_page) ? " selected" : "" }}" href="/forum/post?id={{ data.post.id }}&page={{ page.page }}">{{ page.page }}</a></li>
+                            {% endfor %}
+                            {% if data.replies.pages.info.end_page < data.replies.pages.info.number_of_pages %}
+                                {% if data.replies.pages.info.end_page + 1 < data.replies.pages.info.number_of_pages - 1 %}
+                                    <li class="page-item"><span class="page-link">...</span></li>
+                                {% endif %}
+                                {% for page in [data.replies.pages.info.number_of_pages - 1, data.replies.pages.info.number_of_pages] %}
+                                    {% if page > data.replies.pages.info.end_page %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="/forum/post?id={{ data.post.id }}&page={{ page }}">{{ page }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <li class="page-item{{ (data.replies.pages.info.next_page == data.replies.pages.info.end_page) ? " disabled" : "" }}"><a class="page-link" id="next-page" href="/forum/post?id={{ data.post.id }}&page={{ data.replies.pages.info.next_page + 1 }}" onclick="" rel="next" aria-label="Next >>">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+                {% else %}
+                <div id="forum-posts">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Editing to {{ data.post.title }}
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 post-content overflow-hidden">
+                                    <form role="form" method="POST" action="" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="{{ data.post.id }}">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <div class="form-group row">
+                                            <label for="note" class="col-form-label text-md-right mb-2" style="margin-left:15px;">Note: Use Markdown syntax.</label>
+                                            <div class="col-md-12">
+                                                {% if data.user.status == "admin" %}
+												<button style="margin-top: 5px;" type="button" class="btn btn-sm btn-secondary col-md-3 mb-1" onclick="addImage()">Add image</button>
+												<script>
+												function addImage() {
+													var imageUrl = prompt("Please enter the image URL:", "/s/img/user/image.jpg");
+
+													if (imageUrl !== null) {
+														var img = new Image();
+														img.onload = function () {
+															var maxWidth = 1000;
+															var maxHeight = 1000;
+															var width = img.width;
+															var height = img.height;
+
+															if (width > maxWidth || height > maxHeight) {
+																var ratio = Math.min(maxWidth / width, maxHeight / height);
+																width *= ratio;
+																height *= ratio;
+															}
+
+															var imgTag = '<img src="' + imageUrl + '" width="' + width + '" height="' + height + '" alt="Image" style="max-width: 100%; height: auto;">';
+															var textarea = document.getElementById("content");
+															textarea.value += imgTag;
+														};
+
+														img.src = imageUrl;
+													}
+												}
+												
+												function addVideo() {
+                                                    var videoUrl = prompt("Please enter the video URL:", "/s/img/user/video.mp4");
+
+                                                    if (videoUrl !== null) {
+                                                        var video = document.createElement("video");
+                                                        video.controls = true;
+                                                        video.style.maxWidth = "100%";
+                                                        video.style.height = "auto";
+                                                        
+                                                        var source = document.createElement("source");
+                                                        source.src = videoUrl;
+                                                        source.type = "video/mp4";
+
+                                                        video.appendChild(source);
+
+                                                        var textarea = document.getElementById("content");
+                                                        textarea.value += video.outerHTML;
+                                                    }
+                                                }
+												</script>
+												{% endif %}
+                                                <textarea rows="10" minlength="3" type="text" id="content" name="content" value="" placeholder="Enter your reply here (minimum 3 characters)." class="form-control">{{ data.post.comment|raw }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary full-width">edit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

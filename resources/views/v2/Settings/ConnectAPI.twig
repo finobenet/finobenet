@@ -1,0 +1,48 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+  </head>
+  <body>
+    <div id="app" style="width:200%;">
+            <div class="container mt-4">
+                <div class="card col-lg-10">
+                    <div class="card-body" style="text-align:center;">
+                        <div>
+                            <img src="//cdn.eracast.cc/yt/imgbin/yt-mini-logo.jpg" width="150" height="150">
+                            <i class="fas fa-link fa-3x" style="margin:50px"></i>
+                            <img src="//cdn.eracast.cc/dynamic/pfp/{{ data.pfp }}" width="150" height="150">
+                        </div><br><br>
+                        <p><strong>Are you sure you want to connect your EraCast account to your Aesthetiful+ account?</strong></p>
+                        <p>Once you connect your accounts, {{ data.e_username }} will be connected to your Aesthetiful+ account.</p>
+                        <div style="display: inline-block;">
+                            <a href="/app/connect">
+                                <button class="btn btn-secondary">Cancel</button>
+                            </a>
+                        </div>
+                        <div style="display: inline-block;">
+                            <form method="POST" action="/api/connect">
+                                <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                <input type="hidden" name="username" value="{{ data.e_username }}">
+                                <input type="hidden" name="userid" value="{{ data.e_id }}">
+                                <button type="submit" class="btn btn-primary">Connect</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+  </body>
+</html>

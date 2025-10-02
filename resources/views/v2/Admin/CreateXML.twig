@@ -1,0 +1,74 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3">
+		<h3>New XML asset</h3>
+		<form role="form" method="POST" action="" id="dynamic-form" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+            <div class="form-group row">
+                <label for="title" class="col-form-label text-md-right" style="margin-left:15px;">Title</label>
+                <div class="col-md-12">
+                    <input type="text" name="title" value="" placeholder="title" autofocus="autofocus" class="form-control" required>
+                </div>
+            </div>
+			<div class="form-group row">
+                <label for="description" class="col-form-label text-md-right" style="margin-left:15px;">Description</label>
+                <div class="col-md-12">
+                    <textarea name="description" value="" placeholder="description" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="price" class="col-form-label text-md-right" style="margin-left:15px;">Price</label>
+                <div class="col-md-12">
+                    <input type="number" name="price" value="0" min="0" placeholder="price" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-form-label text-md-right" style="margin-left:15px;">Asset type</label>
+                <div class="col-md-12">
+                    <select id="type" name="type" required="" class="form-control" onchange="toggleExpirationFields()">
+                        <option value="hat">Hat</option>
+                        <option value="gear">Gear</option>
+                        <option value="mesh">Mesh</option>
+                        <option value="texture">Texture</option>
+                    </select>
+                </div>
+            </div>
+            <div class="custom-control custom-checkbox mt-3">
+                <input type="checkbox" name="onsale" class="custom-control-input" checked="">
+                <label for="onsale" class="custom-control-label pl-1">Onsale</label>
+            </div>
+            <div class="form-group row d-flex justify-content-center">
+                <label for="mesh" class="col-form-label text-md-right" style="margin-left:15px;">Mesh</label>
+                <div class="col-md-4">
+                    <input type="file" name="mesh" value="" class="form-control">
+                </div>
+                <label for="xml" class="col-form-label text-md-right" style="margin-left:15px;">XML</label>
+                <div class="col-md-4">
+                    <input type="file" name="xml" value="" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row d-flex justify-content-center">
+                <label for="xml" class="col-form-label text-md-right" style="margin-left:15px;">Texture</label>
+                <div class="col-md-4">
+                    <input type="file" name="texture" value="" class="form-control">
+                </div>
+            </div>
+            <div class="form-group" style="margin-top:40px;">
+                <button type="submit" class="btn btn-success full-width">create</button>
+            </div>
+        </form>
+	  </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

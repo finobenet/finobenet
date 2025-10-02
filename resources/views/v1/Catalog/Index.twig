@@ -1,0 +1,101 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3 mb-5 ">
+            <div class="d-flex flex-row flex-grow-1 ml-2">
+               <div class="col-md-2">
+                  <a class="btn btn-outline-primary full-width mb-3" href="/create"><i class="far fa-fw fa-plus"></i> new</a>
+                  <div class="card">
+                     <div class="card-header">Sidebar</div>
+                     <div class="card-body">
+                        <ul>
+                           <li>{{ (section == "hats") ? "<strong>" : "" }}<a href="/catalog/hats">Hats</a>{{ (section == "hats") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "t-shirts") ? "<strong>" : "" }}<a href="/catalog/t-shirts">T-Shirts</a>{{ (section == "t-shirts") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "shirts") ? "<strong>" : "" }}<a href="/catalog/shirts">Shirts</a>{{ (section == "shirts") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "pants") ? "<strong>" : "" }}<a href="/catalog/pants">Pants</a>{{ (section == "pants") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "gears") ? "<strong>" : "" }}<a href="/catalog/gears">Gear</a>{{ (section == "gears") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "faces") ? "<strong>" : "" }}<a href="/catalog/faces">Faces</a>{{ (section == "faces") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "heads") ? "<strong>" : "" }}<a href="/catalog/heads">Heads</a>{{ (section == "heads") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "packages") ? "<strong>" : "" }}<a href="/catalog/packages">Packages</a>{{ (section == "packages") ? "</strong>" : "" }}</li>
+                           <li>{{ (section == "audio") ? "<strong>" : "" }}<a href="/catalog/audio">Audio</a>{{ (section == "audio") ? "</strong>" : "" }}</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-10">
+                  <div class="d-flex justify-content-center">
+                    <form method="get" action="" class="mt-1 mb-3 col-md-5">
+                        <div class="input-group search-input">
+                            <input type="text" name="q" placeholder="Search Item" value="{{ (search != false) ? search : "" }}" class="form-control border">
+                            <button type="submit" class="btn btn-primary border ml-3">search</button>
+                        </div>
+                    </form>
+                  </div>
+                  <div class="d-flex flex-wrap align-items-stretch">
+                     {% for item in items.data %}
+                     <div class="col-md-4 mb-4 pr-4">
+                        <div class="card d-flex flex-column h-100">
+                           <div class="card-body">
+                              <div class="d-flex justify-content-center">
+                                 <img src="{{ (section == "audio") ? "/s/img/v1/speaker.png" : "" }}" style="width: 50%; height: auto;">
+                              </div>
+                              <p class="mt-2 mb-0"><a href="/item/{{ item.id }}">{{ item.title | raw }}</a></p>
+                              <p class="mt-0 mb-0"><i class="fa fa-fw fa-user"></i> {% if item.uuid == false %}{{ item.author }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+                              <p class="mt-0 mb-0"><img src="/s/img/v1/owo_16.png" alt="Diu" title="Diu" class="img-responsive align-middle"> {{ item.price }}</p>
+                              <a class="btn btn-primary mt-2" href="/item/{{ item.id }}">details</a>
+                           </div>
+                        </div>
+                     </div>
+                     {% endfor %}
+                     {% if not items.data|length %}
+                     <p>No results.</p>
+                     {% endif %}
+                  </div>
+               </div>
+            </div>
+            <ul class="d-flex justify-content-center pagination shadow-sm">
+               <li class="page-item{{ (items.pages.info.previous_page == items.pages.info.start_page) ? " disabled" : "" }}">
+               <a class="page-link" id="previous-page" href="/catalog/{{ section }}?page={{ items.pages.info.current_page }}{{ (search != false) ? "&q=" ~ search : "" }}" rel="previous" aria-label="Previous <<" {{ (items.pages.info.current_page <= 1) ? "style='pointer-events: none;'" : "" }}>«</a>
+               </li>
+               {% if items.pages.info.start_page > 1 %}
+               <li class="page-item">
+                  <a class="page-link" href="/catalog/{{ section }}?page=1{{ (search != false) ? "&q=" ~ search : "" }}">1</a>
+               </li>
+               {% if items.pages.info.start_page > 2 %}
+               <li class="page-item">
+                  <a class="page-link" href="/catalog/{{ section }}?page=2{{ (search != false) ? "&q=" ~ search : "" }}">2</a>
+               </li>
+               {% endif %}
+               <li class="page-item"><span class="page-link">...</span></li>
+               {% endif %}
+               {% for page in items.pages.data %}
+               <li class="page-item">
+                  <a class="page-link{{ (page.page == items.pages.info.current_page) ? " selected" : "" }}" href="/catalog/{{ section }}?page={{ page.page }}{{ (search != false) ? "&q=" ~ search : "" }}">
+                  {{ page.page }}
+                  </a>
+               </li>
+               {% endfor %}
+               {% if items.pages.info.end_page < items.pages.info.number_of_page %}
+               {% if items.pages.info.end_page + 1 < items.pages.info.number_of_page %}
+               <li class="page-item"><span class="page-link">...</span></li>
+               {% endif %}
+               <li class="page-item">
+                  <a class="page-link" href="/catalog/{{ section }}?page={{ items.pages.info.number_of_page - 1 }}{{ (search != false) ? "&q=" ~ search : "" }}">{{ items.pages.info.number_of_page - 1 }}</a>
+               </li>
+               <li class="page-item">
+                  <a class="page-link" href="/catalog/{{ section }}?page={{ items.pages.info.number_of_page }}{{ (search != false) ? "&q=" ~ search : "" }}">{{ items.pages.info.number_of_page }}</a>
+               </li>
+               {% endif %}
+               <li class="page-item{{ (items.pages.info.next_page == items.pages.info.end_page) ? " disabled" : "" }}">
+               <a class="page-link" id="next-page" href="/catalog/{{ section }}?page={{ items.pages.info.next_page }}{{ (search != false) ? "&q=" ~ search : "" }}" rel="next" aria-label="Next >>" >»</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                Invites
+                                <button class="btn btn-secondary float-right" onclick="window.location.href='/invites/new'"><i class="far fa-plus"></i></button>
+                            </div>
+                            <div class="card-body">
+                                <ul class="nav nav-pills mb-3">
+                                    <li class="nav-item"><a href="javascript:void(0);" class="nav-link active">Invite List</a></li>
+                                    <li class="nav-item"><a href="javascript:void(0);" class="nav-link">Invite Tree</a></li>
+                                </ul>
+                                <p>You have created {{ data.keys.data|length }} invites. {{ (data.keys.info.created >= 2) ? "You cannot create any more invites this month" : "You can create " ~ (2 - data.keys.info.created) ~ " more invite this month." }}</p>
+                                <hr>
+                                <div>
+                                    <div class="card-body row justify-content-between" style="padding-top: 0;padding-bottom: 0;">
+                                        <p class="col-md-1 mb-0"><strong>Date</strong></p>
+                                        <p class="col-md-10 mb-0" style="padding:0;"><strong>Description</strong></p>
+                                    </div>
+                                    <hr class="mb-0">
+                                    {% for key in data.keys.data %}
+                                    <hr class="mt-0">
+                                    <div class="card-body row justify-content-between" style="padding-top: 0;padding-bottom: 0;">
+                                        <p class="col-md-1">{{ key.creation }}</p>
+                                        {% if key.used == "n" %}
+                                            <i class="col-md-10" style="padding:0;"><p>Unused invite key: <b>{{ key.IID }}</b></p></i>
+                                        {% else %}
+                                            <p class="col-md-10" style="padding:0;">Invited <a href="/user/{{ key.uuid }}">{{ key.usedBy }}</a> on {{ key.dateUsed }}</p>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                    {% if not data.keys.data|length %}
+                                        <div class="card-body row justify-content-between" style="padding-top: 0;padding-bottom: 0;">
+                                            <p class="mt-3">--</p>
+                                            <p class="col-md-10 mt-3" style="padding: 0;">No invites found</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

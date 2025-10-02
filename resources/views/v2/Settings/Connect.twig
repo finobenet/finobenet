@@ -1,0 +1,71 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-2 mb-2">
+                        <div>
+                            <strong><p>Settings</p></strong>
+                            <p class="mb-1"><a href="/app/settings">User Details</a></p>
+                            <p class="mb-1">Password</p>
+                            <p class="mb-1">Security</p>
+                            <p class="mb-1">Privacy</p>
+                            <p class="mb-1"><a href="/app/theme">Theming</a></p>
+                            <p class="mb-1">Language</p>
+                            <p class="mb-1"><a href="/app/games">Places</a></p>
+                            <p class="mb-1 text-primary"><strong>Connect</strong></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <a href="//www.eracast.cc/"><img src="//cdn.eracast.cc/yt/imgbin/yt-mini-logo.jpg" width="50" height="50"></a>
+                                    <label class="col-form-label" style="margin-left:10px">EraCast</label>
+                                    <div style="float:right;margin-top:10px;">
+                                        {% if data.user.eracast_link == "None" %}
+                                            <a href="/api/connect?app=eracast">
+                                                <button class="btn btn-secondary ">Not Connected</button>
+                                            </a>
+                                        {% else %}
+                                            <form method="POST" action="/app/connect">
+                                                <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                                <input type="hidden" name="username" value="{{ data.user.username }}">
+                                                <p>{{ data.user.eracast_username }}
+                                                <button id="toggleButton" class="btn btn-primary " onmouseover="toggleButtonText(true)" onmouseout="toggleButtonText(false)">Connected</button></p>
+                                            </form>
+                                            <script>
+                                                function toggleButtonText(isHovering) {
+                                                    var button = document.getElementById('toggleButton');
+
+                                                    if (isHovering) {
+                                                        if (button.innerHTML === 'Connected') {
+                                                        button.innerHTML = 'Disconnect';
+                                                        button.classList.remove('btn-primary');
+                                                        button.classList.add('btn-danger');
+                                                        }
+                                                    } else {
+                                                        if (button.innerHTML === 'Disconnect') {
+                                                        button.innerHTML = 'Connected';
+                                                        button.classList.remove('btn-danger');
+                                                        button.classList.add('btn-primary');
+                                                        }
+                                                    }
+                                                }
+                                            </script>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

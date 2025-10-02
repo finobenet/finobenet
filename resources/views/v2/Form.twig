@@ -1,0 +1,90 @@
+<html>
+    <head>
+        {% include ('v2/Modules/head.twig') %}
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    </head>
+    <body>
+        <div id="app">
+            {% include ('v2/Modules/nav.twig') %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="alert alert-warning rounded text-center" style="color:white;margin:20px 0 20px 0">
+                            We don't care what password you use, just make it unique.
+                        </div>
+                        <div class="card" style="margin-bottom:20px">
+                            <div class="card-header">
+                                Register
+                            </div>
+                            <div class="card-body">
+                                <form role="form" method="POST" action="/auth/register">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <div class="form-group row"><label for="name"
+                                            class="col-md-3 col-form-label text-md-right">Username</label>
+                                        <div class="col-md-9"><input type="text" id="name" name="username" value=""
+                                                required="required" autofocus="autofocus" class="form-control">
+                                            <small id="nameHelp" class="form-text text-muted">Use a username that conforms
+                                                to our rules.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label for="email"
+                                            class="col-md-3 col-form-label text-md-right">E-mail</label>
+                                        <div class="col-md-9"><input type="email" id="email" name="email" value=""
+                                                required="required" class="form-control">
+                                            <small id="emailHelp" class="form-text text-muted">You'll need to verify your
+                                                email - give us a valid one. You lose your invite key if you give us an
+                                                invalid email.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label for="email_confirmation"
+                                            class="col-md-3 col-form-label text-md-right">Confirm Email</label>
+                                        <div class="col-md-9"><input type="email" id="email_confirmation"
+                                                name="email_confirmation" required="required" class="form-control">
+                                            <small id="emailHelp" class="form-text text-muted">We don't like email
+                                                confirmation fields, but we don't like typos even more.</small>
+                                        </div>
+                                    </div>
+                                    {% if data.invitekeys %}
+                                    <div class="form-group row"><label for="invite_key"
+                                            class="col-md-3 col-form-label text-md-right">Invite Key</label>
+                                        <div class="col-md-9"><input type="text" id="invite_key" name="invite_key" value=""
+                                                required="required" autofocus="autofocus" class="form-control">
+                                            <small id="inviteKeyHelp" class="form-text text-muted">{{ (data.user.branding == "finobe") ? "Finobe" : "Aesthetiful" }} is currently
+                                                invite only.</small>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group row"><label for="password"
+                                            class="col-md-3 col-form-label text-md-right">Password</label>
+                                        <div class="col-md-9"><input type="password" id="password" name="password"
+                                                required="required" class="form-control">
+                                            <small id="nameHelp" class="form-text text-muted">Passwords should be 6 or more
+                                                characters.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label for="password_confirmation"
+                                            class="col-md-3 col-form-label text-md-right">Confirm Password</label>
+                                        <div class="col-md-9"><input type="password" id="password_confirmation"
+                                                name="password_confirmation" required="required" class="form-control"></div>
+                                    </div>
+                                    <div id="_g-recaptcha">
+                                        <div class="g-recaptcha" data-sitekey="6LcUOtYmAAAAAFWvf2uKHaleJ4rAOkeBVnE3a-dA">
+                                        </div>
+                                    </div>
+                                    <p class="text-center">By creating an account, <b>you agree to our <a
+                                                href="/legal/terms">terms
+                                                of service</a>, <a href="/legal/rules">rules</a>,
+                                            and <a href="/legal/privacy">privacy
+                                                policy</a>.</b></p>
+                                    <div class="form-group"><button type="submit"
+                                            class="btn btn-primary full-width">Register</button></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include ('v2/Modules/footer.twig') %}
+    </body>
+</html>

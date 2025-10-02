@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% set data = {
+            'embeds': {
+                'title': 'Fatal Error - Aesthetiful',
+                'description': 'Finobe, it is website. He is for old brick-builder. Good for use.',
+                'url': 'https://finobe.net',
+                'image': 'https://finobe.net/s/img/finnobe3logo.png'
+            },
+            'user': {
+                'branding': 'finobe',
+                'version': 'v2'
+            }
+        } %}
+        {% include ('v2/Modules/head.twig') %}
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-expand-lg navbar-light bg-faded navbar-static-top mb-3">
+              <div class="container"><a href="/" class="navbar-brand">
+                  Finobe </a> <button type="button" data-toggle="collapse" data-target="#navbar-collapse"
+                  aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"
+                  class="navbar-toggler navbar-toggler-right"><span class="navbar-toggler-icon"></span></button>
+              </div>
+            </nav>
+            <div class="container d-flex justify-content-center">
+                <div class="col-md-9">
+                    <div class="card mt-5" style="text-align:center">
+                        <div class="card-body">
+                            <h2 class="mb-4">Something unexpected happened</h2> <div class="col-lg-4" style="margin: auto;"> <p class="catalog-card" style="text-align: center;">our team is fixing this</p>
+                            <img src="/s/img/blobs/collection/emoji_u1f610.svg">
+                            <p style="text-align: center;"><a href="/" class="btn btn-primary btn-lg mt-3 mr-2">Front Page ›</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

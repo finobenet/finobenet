@@ -1,0 +1,55 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="forumContainer container">
+		   <nav class="breadcrumb mt-3"><a href="/" class="breadcrumb-item">{{ (user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}</a> <a href="/forum" class="breadcrumb-item">Forum Home</a> <a href="/forum/home/{{ post.category }}" class="breadcrumb-item">{% if post.category == "1" %}{{ "Announcements" }}{% elseif post.category == "2" %}{{ "General" }}{% elseif post.category == "3" %}{{ "Suggestions" }}{% elseif post.category == "4" %}{{ "Off Topic" }}{% elseif post.category == "5" %}{{ "Help" }}{% elseif post.category == "6" %}{{ "Development" }}{% elseif post.category == "7" %}{{ "Serious" }}{% elseif post.category == "8" %}{{ "Serious (Real World)" }}{% elseif post.category == "9" %}{{ "Trade Discussion" }}{% elseif post.category == "10" %}{{ "да (Русский)" }}{% endif %}</a> <span class="breadcrumb-item active">{{ post.title | raw }}</span></nav>
+		   <div class="card mb-4">
+			  <div id="originalPost" class="card-header bg-info text-white">Original Post - {{ post.format_date }} {% if post.edited == "y" %}<span title="Edited {{ post.edited_date }}"><i>*(edited)</i></span>{% endif %}{% if user.status == "admin" %} - <a href="/admin/{{ (post.pinned == "n") ? "pin" : "unpin" }}?id={{ post.id }}">{{ (post.pinned == "n") ? "Pin" : "Unpin" }} Post</a> - <a href="/admin/{{ (post.locked == "n") ? "lock" : "unlock" }}?id={{ post.id }}">{{ (post.locked == "n") ? "Lock" : "Unlock" }} Post</a>{% endif %}</div>
+			  <div class="card-body">
+				 <div class="row">
+					<div class="col-md-2 b-right">
+					   <p><a href="/user/{{ post.uuid }}"> {% if post.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ post.author }}</span>{% else %}{{ post.author }}{% endif %}</a> <span style="color: grey;">[-]</span></p>{% if post.pfp == "" %}
+                                            <img src="/s/img/spinnerv2.gif" style="max-width: 75px;">
+                                        {% else %}
+                                            <img src="https://cdn.finobe.net/{{ post.pfp }}" style="max-width: 75px;">
+                                        {% endif %}
+					   {% if post.status == "admin" %}<p class="text-danger mb-0"><i class="fa fa-gavel"></i> Admin</p>{% endif %}
+					   <p><b>Posts:</b> {{ post.posts }}</p>
+					</div>
+					<div class="col-md-10 rdiscuss__post-content">
+					   {{ post.comment | raw}}
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		{% for reply in replies.data %}
+		   <div class="card mb-4">
+			  <div id="reply{{ reply.id }}" class="card-header bg-primary text-white"><a href="#reply{{ reply.id }}">Reply</a> - {{ reply.format_date }} {% if reply.edited == "y" %}<span title="Edited {{ reply.edited_date }}"><i>*(edited)</i></span>{% endif %} {% if user.status == "admin" %} - <a href="/admin/stick?id={{ reply.id }}">Stick Post</a>{% endif %}</div>
+			  <div class="card-body">
+				 <div class="row">
+					<div class="col-md-2 b-right">
+					   <p><a href="/user/{{ reply.uuid }}"> {#<span style="color: rgb(76, 175, 80); font-weight: bold;">Ruin</span>#}{% if reply.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ reply.author }}</span>{% else %}{{ reply.author }}{% endif %}</a> <span style="color: grey;">[-]</span></p>
+					   {% if reply.pfp == "" %}
+                                            <img src="/s/img/spinnerv2.gif" style="max-width: 75px;">
+                                        {% else %}
+                                            <img src="https://cdn.finobe.net/{{ reply.pfp }}" style="max-width: 75px;">
+                                        {% endif %}
+					   {#<p class="text-success mb-0"><i class="fa fa-shield text-success"></i> Mod</p>#}
+					   <p><b>Posts:</b> {{ reply.posts }}</p>
+					</div>
+					<div class="col-md-10 rdiscuss__post-content">
+					   {{ reply.comment | raw }}
+					</div>
+				 </div>
+			  </div>
+		   </div>
+		{% endfor %}
+		</div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

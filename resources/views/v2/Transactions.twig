@@ -1,0 +1,48 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="row">
+                    <div class="full-width mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                Transaction Log
+                            </div>
+                            <div class="card-body">
+                                <select name="transaction-type" class="form-control mt-2 full-width">
+                                    <option value="all">All Transactions</option>
+                                </select>
+                                <hr>
+                                <div>
+                                    <div class="card-body row justify-content-between" style="padding-top: 0;padding-bottom: 0;">
+                                        <p class="col-md-1 mb-0"><strong>Date</strong></p>
+                                        <p class="col-md-6 mb-0"><strong>Description</strong></p>
+                                        <p class="col-md-2 mb-0"><strong>Effect</strong></p>
+                                    </div>
+                                    <hr class="mb-0">
+                                    {% for purchase in data.purchases %}
+                                    <hr class="mt-0">
+                                    <div class="card-body row justify-content-between" style="padding-top: 0;padding-bottom: 0;">
+                                        <p class="col-md-1">{{ purchase.date }}</p>
+                                        <p class="col-md-6" style="padding:0;">{% if purchase.type in [1, 3, 5] %}Purchased{% elseif purchase.type == 2 %}Sold{% elseif purchase.type == 4 %}Awarded{% endif %} <a href="{{ (purchase.type in [1, 2]) ? "/item/" ~ purchase.assetid : "javascript:void(0)" }}">{{ purchase.assetname|raw }}</a>{% if purchase.type in [1, 2] %} by {% if purchase.uuid %}<a href="/user/{{ purchase.uuid }}">{{ purchase.author }}</a>{% else %}{{ purchase.author }}{% endif %}{% endif %}</p>
+                                        <p class="col-md-2"><img src="/s/img/diu_16.png" alt="Diu" title="Diu" class="img-responsive align-middle "> <a class=" text-decoration-none" href="javascript:void(0);" style="{{ (purchase.type in [1, 3, 5] or purchase.amount < 0) ? 'color:#e3342f;' : 'color:var(--success);' }}text-decoration:none;pointer-events:none;">{{ (purchase.type in [2, 4] and purchase.amount >= 0) ? '+' : '' }}{{ purchase.amount }}</a></p>
+                                    </div>
+                                    {% endfor %}
+                                    {% if not data.purchases|length %}
+                                        <hr class="mt-0">
+                                        <p class="text-center">No transactions found</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

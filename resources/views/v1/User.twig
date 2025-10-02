@@ -1,0 +1,84 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+      <style>
+    .custom-blockquote {
+        position: relative;
+        padding-left: 20px; /* Adjust the padding to control the distance of the line from the text */
+    }
+
+    .custom-blockquote::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px; /* Adjust the width of the line */
+        height: 100%;
+        background-color: black; /* Adjust the color of the line */
+        opacity: 5%;
+    }
+</style>
+   </head>
+   <body>
+      <div id="app main-content">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3 mb-5 ">
+             <div class="container row">
+                 <div class="col-md-4">
+                     <div class="card">
+                         <div class="card-header bg-primary text-white text-center">
+                             {{ user_profile.username }}
+                         </div>
+                         <div class="card-body text-center">
+                             <img src="{{ (user_profile.pfp == "") ? "/s/img/spinnerv2.gif" : "https://cdn.finobe.net/" ~ user_profile.pfp }}" style="width: 45%;height: auto;">
+                             <div class="custom-blockquote mt-2">
+                                <p class="mb-0">{{ user_profile.blurb | raw }}</p>
+                            </div>
+                            <hr>
+                            <p class="mt-1"><strong>Friends: </strong>{{ user_profile.CurrentFriends|length }} <a href="/user/{{ user_profile.id }}/friends">(View ›)</a></p>
+                            <p class="mt-1"><strong>Forum Posts: </strong>{{ user_profile.posts }}</p>
+                            <p class="mt-1"><strong>Join Date: </strong>{{ user_profile.created }}</p>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-8">
+                     <div class="card">
+                         <div class="card-header bg-primary text-white text-center">
+                             Games
+                         </div>
+                         <div class="card-body">
+                             {% for place in user_profile.places %}
+                            <button class="btn btn-primary full-width mt-2" onclick="openGame({{ place.count }});">
+                               <p class="float-left text-white" style="margin: 0;">{{ place.title }}</p>
+                               <span class="badge badge-dark float-right">{{ (place.version == "2016") ? "2016" : "2012" }}</span>
+                            </button>
+                            <div class="card" id="game-{{ place.count }}" style="display: none;">
+                               <div class="card-body text-center">
+                                  <a href="/app/places">
+                                     <p>{{ place.title }}</p>
+                                  </a>
+                                  <a href="/app/places"><img src="https://cdn.finobe.net/{{ place.thumbnail }}" class="mt-2 full-width" style="max-height: 125px; object-fit: contain;"></a>
+                                  <a href="/app/places"><button class="btn btn-success btn-lg full-width mt-3" id="data-v-4350f98c"><i class="far fa-play"></i> play</button></a>
+                               </div>
+                            </div>
+                            {% endfor %}
+                            {% if user_profile.places|length %}
+                            <script>
+                               function openGame(number) {
+                                   var game = document.getElementById('game-' + number);
+                                   game.style.display = game.style.display == "none" ? "" : "none";
+                               }
+                            </script>
+                            {% endif %}
+                            {% if not user_profile.places|length %}
+                            <p style="margin-bottom:0px;">This user has no active places.</p>
+                            {% endif %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

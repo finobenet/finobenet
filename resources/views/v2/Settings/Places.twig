@@ -1,0 +1,43 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-2 mb-2">
+                        <div>
+                            <strong><p>Settings</p></strong>
+                            <p class="mb-1"><a href="/app/settings">User Details</a></p>
+                            <p class="mb-1">Password</p>
+                            <p class="mb-1">Security</p>
+                            <p class="mb-1">Privacy</p>
+                            <p class="mb-1"><a href="/app/theme">Theming</a></p>
+                            <p class="mb-1">Language</p>
+                            <p class="mb-1 text-primary"><strong>Places</strong></p>
+                            <p class="mb-1"><a href="/app/connect">Connect</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 style="font-weight: 300;">Places</h4>
+                                <div class="nav-item nav-link n-money-text" data-animation="false" data-toggle="tooltip" data-placement="bottom" style="padding-left:0px;">You can purchase more place slots here. Each place slot costs <a><img src="/s/img/diu_16.png" alt="Diu" title="Diu" class="img-responsive align-middle "> 625</a> Dius.</div>
+                                <p><strong>You currently have {{ data.user.places }} of {{ data.user.slots }} place slots.</strong></p>
+                                <form role="form" method="POST" action="/app/games" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary" style="text-transform: capitalize;">Purchase place slot</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

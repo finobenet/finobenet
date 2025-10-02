@@ -1,0 +1,34 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+                <div class="row">
+                    <div class="col-md-9 mt-3 mb-3" style="margin-left:auto;margin-right:auto;">
+                        <div class="card" style="margin: 10px 0px 10px 0px;">
+                            <div class="card-header bg-primary text-white text-center">
+                                Welcome to {{ (data.user.branding == "finobe" ? "Finobe" : "Aesthetiful") }} </div>
+                                <img src="/s/img/{% if data.user.branding == "finobe" %}{% if data.user.logo == "v1" %}{{ "BUSY.png" }}{% elseif data.user.logo == "v2" %}{{ "finnobe3.png" }}{% else %}{{ "finnobe3logo.png" }}{% endif %}{% else %}{{ "logo.png" }}{% endif %}" class="mt-4 mb-3" style="max-width:100px;margin-right:auto;margin-left:auto;">
+                                <div class="content-container" style="margin-right:auto;margin-left:auto;">
+                                    <p>This is a friendly reminder to read our <a href="/legal/rules">rules</a>. Some key takeaway points:</p>
+                                    <ul>
+                                        <li><strong>DO NOT SAY SLURS.</strong></li>
+                                        <li>DO NOT SAY THE N WORD.</li>
+                                        <li>DO NOT SAY THE F WORD (against gay people).</li>
+                                        <li>DO NOT BE TRANSPHOBIC.</li>
+                                        <li>Just in case you're too dense to notice: the last 3 thing refer to slurs.</li>
+                                    </ul>
+                                </div>
+                                <p class="text-center">That is all. Have fun or something. Oh, and you can disable the site-wide filter in the <a href="/app/settings">settings</a> if you want.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

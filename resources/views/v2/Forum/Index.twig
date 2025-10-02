@@ -1,0 +1,103 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="forum-section-info mb-4 text-center py-4"><h4 class="mb-2">{% if data.search %}{{ "Search" }}{% elseif data.section == "0" %}{{ "All Sections" }}{% elseif data.section == "1" %}{{ "Announcements" }}{% elseif data.section == "2" %}{{ "General" }}{% elseif data.section == "3" %}{{ "Suggestions" }}{% elseif data.section == "4" %}{{ "Off Topic" }}{% elseif data.section == "5" %}{{ "Help" }}{% elseif data.section == "6" %}{{ "Development" }}{% elseif data.section == "7" %}{{ "Serious" }}{% elseif data.section == "8" %}{{ "Serious (Real World)" }}{% elseif data.section == "9" %}{{ "Trade Discussion" }}{% elseif data.section == "10" %}{{ "да (Русский)" }}{% endif %}</h4> <p class="mt-2 mb-0 text-muted">{% if data.search %}{{ "you search for stuff here" }}{% elseif data.section == "0" %}{{ "This section of the forum consolidates all of the latest forum posts on the forum." }}{% elseif data.section == "1" %}{{ "See the latest news about F* here!" }}{% elseif data.section == "2" %}{{ "Discuss anything relevant to F* here." }}{% elseif data.section == "3" %}{{ "Suggest stuff for this website here." }}{% elseif data.section == "4" %}{{ "Anything." }}{% elseif data.section == "5" %}{{ "Get support for any problem related to this website here. Spam = ban." }}{% elseif data.section == "6" %}{{ "Discuss development of games here!" }}{% elseif data.section == "7" %}{{ "Serious things that are not in real life." }}{% elseif data.section == "8" %}{{ "This section is for politics and other events in the world. Spam = ban. For real this time." }}{% elseif data.section == "9" %}{{ 'Post your trade deals and "trade with me" posts here. That means not in general or any other section.' }}{% elseif data.section == "10" %}{{ "Only Russian is allowed in this section. Offenders will be banned. хахахахахаха" }}{% endif %}</p></div>
+            <div class="container"><div class="row"><div class="col-md-4 col-lg-2 mb-4"><a href="/app/forum/new/post" class="btn btn-outline-primary btn-block mt-2 mb-4"><i class="far fa-plus mr-1"></i>
+                    New Topic				</a> <form method="get" action="/forum/search" class="mt-2 mb-4"><div class="input-group search-input"><input type="text" name="q" placeholder="Search..." value="" class="form-control form-control-sm border-right-0 border"> <span class="input-group-append"><button type="submit" class="btn btn-outline-secondary btn-sm border-left-0 border"><i class="far fa-search"></i></button></span></div></form> <nav class="finobe-basic-nav"><p class="header">Section</p> <a href="/forum/home" class="link{{ (not data.section) ? " active" : "" }}">
+            All Sections
+        </a> <a href="/forum/home/1" class="link{{ (data.section == "1") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(190, 69, 69);"></span>
+            Announcements
+        </a> <a href="/forum/home/2" class="link{{ (data.section == "2") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(26, 172, 118);"></span>
+            General
+        </a> <a href="/forum/home/3" class="link{{ (data.section == "3") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(166, 64, 153);"></span>
+            Suggestions
+        </a> <a href="/forum/home/4" class="link{{ (data.section == "4") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(81, 56, 141);"></span>
+            Off Topic
+        </a> <a href="/forum/home/5" class="link{{ (data.section == "5") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(166, 34, 101);"></span>
+            Help
+        </a> <a href="/forum/home/6" class="link{{ (data.section == "6") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(51, 145, 227);"></span>
+            Development
+        </a> <a href="/forum/home/7" class="link{{ (data.section == "7") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(96, 104, 111);"></span>
+            Serious
+        </a> <a href="/forum/home/8" class="link{{ (data.section == "8") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(170, 113, 43);"></span>
+            Serious (Real World)
+        </a> <a href="/forum/home/9" class="link{{ (data.section == "9") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(96, 13, 13);"></span>
+            Trade Discussion
+        </a> <a href="/forum/home/10" class="link{{ (data.section == "10") ? " active" : "" }}"><span class="forum__color-ball" style="background: rgb(96, 104, 111);"></span>
+            да (Русский)
+        </a></nav></div> <div class="col-md-8 col-lg-10">
+            {% if data.search %}
+                <h3>Results for <strong>{{ data.search }}</h3></strong>
+            {% endif %}
+            <div class="forum-posts mb-4">
+            {% for thread in data.threads.data %}
+                <a href="/forum/post?id={{ thread.id }}" class="forum-post overflow-hidden"><span><p class="mt-0 mb-1"><strong{{ (thread.pinned == "y") ? ' class="text-success"' : ''}}>{% if thread.locked == "y" %}<i class="far fa-lock mr-1"></i>{% endif %}{% if thread.pinned == "y" %}<i class="far fa-thumbtack mr-1"></i>{% endif %}<span>{{ thread.title | raw }}</span> <span class="badge badge-secondary forum-badge ml-1"><span class="forum-badge__color-indicator" style="background: rgb({% if thread.category == "1" %}{{ "190, 69, 69" }}{% elseif thread.category == "2" %}{{ "26, 172, 118" }}{% elseif thread.category == "3" %}{{ "166, 64, 153" }}{% elseif thread.category == "4" %}{{ "81, 56, 141" }}{% elseif thread.category == "5" %}{{ "166, 34, 101" }}{% elseif thread.category == "6" %}{{ "51, 145, 227" }}{% elseif thread.category == "7" %}{{ "96, 104, 111" }}{% elseif thread.category == "8" %}{{ "170, 113, 43" }}{% elseif thread.category == "9" %}{{ "96, 13, 13" }}{% elseif thread.category == "10" %}{{ "96, 104, 111" }}{% endif %});"></span>
+                {% if thread.category == "1" %}{{ "Announcements" }}{% elseif thread.category == "2" %}{{ "General" }}{% elseif thread.category == "3" %}{{ "Suggestions" }}{% elseif thread.category == "4" %}{{ "Off Topic" }}{% elseif thread.category == "5" %}{{ "Help" }}{% elseif thread.category == "6" %}{{ "Development" }}{% elseif thread.category == "7" %}{{ "Serious" }}{% elseif thread.category == "8" %}{{ "Serious (Real World)" }}{% elseif thread.category == "9" %}{{ "Trade Discussion" }}{% elseif thread.category == "10" %}{{ "да (Русский)" }}{% endif %}
+						</span></strong></p>
+                        <p class="my-0">Posted by <span{{ (thread.status == "admin") ? ' class="text-danger" style="font-weight: bold;"' : ""}}>{{ thread.author }}</span> <span title="{{ thread.date }}">{{ thread.ago }}</span></p> <p class="my-0 text-muted"><span title="Post score" class="mr-1 forum-vote-total">
+                        {{ thread.rating }}
+                    </span>
+                    {{ thread.replies }} replies
+                </p></span></a>
+            {% endfor %}
+            {% if not data.threads.data|length %}
+                <p>No results</p>
+            {% endif %}
+            </div>
+            <div class="mt-2" style="display: flex; justify-content: center;">{#
+                <ul class="pagination shadow-sm">
+                    <li class="page-item{{ (threads.pages.info.previous_page == threads.pages.info.start_page) ? " disabled" : "" }}"><a class="page-link" id="previous-page" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.previous_page }}" onclick="" rel="previous" aria-label="Previous <<">«</a></li>
+                              {% for page in threads.pages.data %}
+                                  <li class="page-item"><a class="page-link{{ (page.page == threads.pages.info.current_page) ? " selected" : "" }}" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ page.page }}">{{ page.page }}</a></li>
+                              {% endfor %}
+                    <li class="page-item{{ (threads.pages.info.next_page == threads.pages.info.end_page) ? " disabled" : "" }}"><a class="page-link" id="next-page" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.next_page + 1 }}" onclick="" rel="next" aria-label="Next >>">»</a></li>
+                </ul>#}
+                <ul class="pagination shadow-sm">
+    <li class="page-item{{ (data.threads.pages.info.previous_page == data.threads.pages.info.start_page) ? " disabled" : "" }}">
+      <a class="page-link" id="previous-page" href="/forum/{{ (not data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ data.section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page={{ data.threads.pages.info.previous_page }}" rel="previous" aria-label="Previous <<" {{ (data.threads.pages.info.current_page <= 1) ? "style='pointer-events: none;'" : "" }}>«</a>
+    </li>
+    {% if data.threads.pages.info.start_page > 1 %}
+      <li class="page-item">
+        <a class="page-link" href="/forum/{{ (not data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page=1">1</a>
+      </li>
+      {% if data.threads.pages.info.start_page > 2 %}
+        <li class="page-item">
+          <a class="page-link" href="/forum/{{ (not data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page=2">2</a>
+        </li>
+      {% endif %}
+      {% if data.threads.pages.info.start_page - 1 > 2 %}
+        <li class="page-item"><span class="page-link">...</span></li>
+      {% endif %}
+    {% endif %}
+    {% for page in data.threads.pages.data %}
+      <li class="page-item">
+        <a class="page-link{{ (page.page == data.threads.pages.info.current_page) ? " selected" : "" }}" href="/forum/{{ (not data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ data.section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page={{ page.page }}">
+          {{ page.page }}
+        </a>
+      </li>
+    {% endfor %}
+    {% if data.threads.pages.info.end_page < data.threads.pages.info.number_of_pages %}
+      {% if data.threads.pages.info.end_page + 1 < data.threads.pages.info.number_of_pages - 1 %}
+        <li class="page-item"><span class="page-link">...</span></li>
+      {% endif %}
+      {% for page in [data.threads.pages.info.number_of_pages - 1, data.threads.pages.info.number_of_pages] %}
+        {% if page > data.threads.pages.info.end_page %}
+          <li class="page-item">
+            <a class="page-link" href="/forum/{{ (not data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ data.section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page={{ page }}">{{ page }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <li class="page-item{{ (data.threads.pages.info.next_page == data.threads.pages.info.end_page) ? " disabled" : "" }}">
+      <a class="page-link" id="next-page" href="/forum/{{ (data.search) ? "home" : "search" }}{{ (data.section != "0") ? "/" ~ data.section : "" }}{{ (data.search) ? "?q=" ~ data.search : "" }}{{ (data.search) ? "&" : "?" }}page={{ data.threads.pages.info.next_page }}" rel="next" aria-label="Next >>" >»</a>
+    </li>
+  </ul>
+            </div>
+        </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

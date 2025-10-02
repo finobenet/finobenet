@@ -1,0 +1,152 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+	<style>
+	th, td {
+		padding: 1.5%;
+	}
+	{% if data.user.theme == 1 %}
+	tr {
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	{% endif %}
+	tr:nth-child(even) {
+		{% if data.user.theme == 1 %}
+        background-color: rgba(255, 255, 255, 0.01);
+		{% else %}
+		background-color: rgba(0, 0, 0, 0.05);
+		{% endif %}
+    }
+	</style>
+	<style>
+            @keyframes fadeInban {
+                0% {
+                    opacity: 0
+                }
+
+                to {
+                    opacity: 0.6
+                }
+            }
+            .fadeInto-ban {
+                position: fixed;
+                z-index: 9999999;
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .fadeInto-ban .background {
+                position: absolute;
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                opacity: 0.6;
+                animation: fadeInban 0.25s ease;
+            }
+
+            .fadeInto-ban .card {
+                opacity: 1;
+                animation: fadeInUp 0.25s ease;
+            }
+
+            .fa-spin-2 {
+                -webkit-animation: fa-spin 1s linear infinite;
+                animation: fa-spin 1s linear infinite
+            }
+        </style>
+  </head>
+  <body>
+	<div style="display: none;" id="ban-card" class="">
+            <div class="background"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="card col-md-7 mt-5" style="padding: 0;">
+						<div class="card-header">
+							<h3 class="py-2">Ban Reason for <strong><span id="ban-username">placeholder</span></strong><button class="btn float-right" id="btn-close-ban"><i class="fas fa-fw fa-plus fa-lg" style="filter: invert(1);transform: rotate(45deg);"></i></button></h3>
+						</div>
+                        <div class="card-body">
+                            <p><strong>Reason:</strong></p>
+							<p style="color: var(--pink)" id="ban-reason">Reason</p>
+                        </div>
+						<div class="card-footer text-center">
+                            <button class="btn btn-theme float-right" id="btn-close-ban">close</button>
+						</div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3" style="margin-bottom:10px">
+	  <h3>Public Ban List</h3>
+	  <form method="get" action="" class="mt-3 mb-4 col-mb-3">
+                    <div class="input-group input-group-lg search-input">
+                        <input type="text" name="q" placeholder="Search User" value="{{ data.search }}" class="form-control form-control-lg border-right-0 border">
+                        <span class="input-group-append">
+                            <button type="submit" class="btn btn-secondary  border-left-0 border"><i class="far fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+				{% if data.user.theme != 1 %}
+				<hr>
+				{% endif %}
+								<table class="full-width">
+									<thead>
+										<tr>
+											<th style="width: 10%;">Start Date</th>
+											<th style="width: 15%;">User</th>
+											<th style="width: 10%;">Reason</th>
+											<th style="width: 10%;">Type</th>
+											<th style="width: 10%;">End Date</th>
+											<th style="width: 10%;">Undone</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for ban in data.bans %}
+										<tr>
+											<td>{{ ban.date }}</td>
+											<td>{{ ban.username }}</td>
+											<td><button class="btn btn-primary" onclick="opend('{{ ban.username | raw }}', `{{ ban.reason|raw }}`);">click here</button></td>
+											<td>{% if ban.perm == "y" %}{{ "Permanent" }}{% elseif ban.expire != "" %}{{ "Ban" }}{% else %}{{ "Warning" }}{% endif %}</td>
+											<td>{{ (ban.perm == "y" or ban.expire == "") ? "N/A" : ban.expire }}</td>
+											<td>{{ (ban.undone == "n") ? "No" : "Yes" }}</td>
+										</tr>
+										{% endfor %}
+										{% if not data.bans|length %}
+										<td>No results</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										{% endif %}
+									</tbody>
+								</table>
+        </div>
+		<script>
+			var card = document.getElementById('ban-card');
+			var user = document.getElementById('ban-username');
+			var reas = document.getElementById('ban-reason');
+			
+			function opend(username, reason) {
+				user.innerHTML = username;
+				reas.innerHTML = reason;
+				
+				card.style.display = "";
+				card.classList.add('fadeInto-ban');
+			}
+			
+			document.querySelectorAll('#btn-close-ban').forEach(function(button) {
+				button.addEventListener('click', function() {
+					card.style.display = "none";
+					card.classList.remove('fadeInto-ban');
+				});
+			});
+		</script>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

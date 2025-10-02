@@ -1,0 +1,32 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:20px;margin-top:20px;">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="card">
+              <div class="card-header">
+                  Register </div>
+                <div class="card-body text-center"><img src="/s/img/{% if data.user.branding == "finobe" %}{% if data.user.logo == "v1" %}{{ "BUSY.png" }}{% elseif data.user.logo == "v2" %}{{ "finnobe3.png" }}{% else %}{{ "finnobe3logo.png" }}{% endif %}{% else %}{{ "logo.png" }}{% endif %}" class="mb-4" style="max-width: 75px;">
+                  <h4>Welcome to {{ (data.user.branding == "finobe" ? "Finobe" : "Aesthetiful") }}!</h4>
+                  <p class="mb-1">Remember to read our <a href="/legal/rules">rules</a> and <a
+                          href="/legal/terms">terms of service</a> first.</p>
+                  <p class="mb-4">In addition, {{ (data.user.branding == "finobe" ? "Finobe" : "Aesthetiful") }} is currently <strong>invite-only</strong>.</p>
+                  <p class="mb-1">Now, a question before we start: <strong>Are you 13 years of age or
+                          older?</strong></p>
+                  <p class="mt-4"><a href="https://google.com" class="btn btn-outline-danger mr-1"
+                          style="text-transform: none;">no, I'm not 13+</a> <a href="/auth/form{{ (app.request.get('next')) ? "?next=" ~ app.request.get('next') : "" }}"
+                          class="btn btn-primary" style="text-transform: none;">yes, I'm 13 or older</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

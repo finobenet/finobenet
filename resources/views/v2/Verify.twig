@@ -1,0 +1,35 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container d-flex justify-content-center">
+          <div class="col-md-7">
+              <div class="card">
+                  <div class="card-header bg-primary text-white">
+                      Verify email
+                  </div>
+                  <div class="card-body">
+                      We now require to verify your email, why?
+                      <ul>
+                          <li>Prevent manipulation of the economy (artifitially increasing your Dius)</li>
+                          <li>Prevent immature usernames</li>
+                          <li>Prevent moderation evation</li>
+                          <li>Reduce hacking</li>
+                      </ul>
+                    Would you like us to send a verification email to this email?
+                    <input type="text" class="form-control" value="{{ data.user.email|slice(0, 2) ~ '******@' ~ data.user.email|split('@')[1] }}" disabled><br>
+                    <form action="/verify/email" method="post">
+                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                    <button class="btn btn-primary" type="submit">yeah, send it</button>
+                    </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

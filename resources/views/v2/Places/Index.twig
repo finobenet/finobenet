@@ -1,0 +1,1408 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>.badge-shen{background:#f5c177;color:#000;}.badge-iago{background:#6f5e56;color:#fff;}</style>
+    <style type="text/css">.finobe__vloader[data-v-3ec8574b] {
+      display: flex;
+      width: 100%;
+      min-height: 250px;
+      z-index: 9999; /* :thinking:; */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    </style><style type="text/css">/* Fat */
+    .page-input[data-v-e236382e] {
+      max-width: 2.5rem;
+      display: inline;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    /* Number up/down thing is ugly */
+    input[type='number'][data-v-e236382e] {
+      -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+              appearance: textfield;
+    }
+    input[type='number'][data-v-e236382e]::-webkit-inner-spin-button,
+    input[type='number'][data-v-e236382e]::-webkit-outer-spin-button,
+    input[type='number'][data-v-e236382e]:hover::-webkit-inner-spin-button,
+    input[type='number'][data-v-e236382e]:hover::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    </style><style type="text/css">.n-loading-center[data-v-6e596b1f] {
+      z-index: 9999;
+    }
+    .col-thumbnail[data-v-6e596b1f] {
+      display: flex;
+      align-content: center;
+      align-items: center;
+    }
+    </style><style type="text/css">.item-list[data-v-4533fc68] {
+      max-height: calc(100vh + 500px);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .trade-send-btn[data-v-4533fc68] {
+      max-width: 200px;
+    }
+    .card > .selected-text[data-v-4533fc68] {
+      display: flex;
+      position: absolute;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: rgba(14, 14, 14, .5);
+      width: 100%;
+      height: 100%;
+      border-radius: 3px;
+      color: #fff;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .1s linear;
+    }
+    .card.card-is-selected > .selected-text[data-v-4533fc68] {
+      opacity: 1;
+    }
+    .card.card-is-selected > .card-block[data-v-4533fc68] {
+      pointer-events: none;
+    }
+    </style><style type="text/css">.btn-play[data-v-152bd39d] {
+      padding: .75rem 5rem;
+    }
+    .fat-spin[data-v-152bd39d] {
+      -webkit-animation: fa-spin 1s infinite linear;
+              animation: fa-spin 1s infinite linear;
+      margin-right: 2px;
+    }
+    .checkmark[data-v-152bd39d] {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      vertical-align: middle;
+      display: inline-block;
+      stroke-width: 8px;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      box-shadow: inset 0px 0px 0px #00b857;
+    }
+    .checkmark.make-animate[data-v-152bd39d] {
+      -webkit-animation: fill-data-v-152bd39d .2s ease-in-out forwards,scale-data-v-152bd39d .3s ease-in-out .2s both;
+              animation: fill-data-v-152bd39d .2s ease-in-out forwards,scale-data-v-152bd39d .3s ease-in-out .2s both;
+    }
+    .check[data-v-152bd39d] {
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      -webkit-animation: stroke-data-v-152bd39d .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+              animation: stroke-data-v-152bd39d .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+    }
+    @-webkit-keyframes stroke-data-v-152bd39d {
+    100% {
+        stroke-dashoffset: 0;
+    }
+    }
+    @keyframes stroke-data-v-152bd39d {
+    100% {
+        stroke-dashoffset: 0;
+    }
+    }
+    @-webkit-keyframes scale-data-v-152bd39d {
+    0%,
+      100% {
+        -webkit-transform: none;
+                transform: none;
+    }
+    50% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+                transform: scale3d(1.1, 1.1, 1);
+    }
+    }
+    @keyframes scale-data-v-152bd39d {
+    0%,
+      100% {
+        -webkit-transform: none;
+                transform: none;
+    }
+    50% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+                transform: scale3d(1.1, 1.1, 1);
+    }
+    }
+    @-webkit-keyframes fill-data-v-152bd39d {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #00b857;
+    }
+    }
+    @keyframes fill-data-v-152bd39d {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #00b857;
+    }
+    }
+    .fade-enter-active[data-v-152bd39d],
+    .fade-leave-active[data-v-152bd39d] {
+      transition: opacity .2s;
+    }
+    .fade-enter[data-v-152bd39d],
+    .fade-leave-to[data-v-152bd39d] {
+      opacity: 0;
+    }
+    </style><style type="text/css">.option[data-v-ef83b9bc] {
+      width: 100%;
+      display: inline-block;
+      background-color: #fff;
+      padding: 6px 10px;
+      color: #000;
+      transition: all .15s linear;
+      border-radius: .25rem;
+      cursor: pointer;
+    }
+    .option[data-v-ef83b9bc]:hover {
+      color: #000;
+      text-decoration: none;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1), 0 1px 4px 2px rgba(0, 0, 0, .1);
+    }
+    .option.active[data-v-ef83b9bc],
+    .option.active[data-v-ef83b9bc]:hover {
+      border-color: #0270a6;
+      box-shadow: 0 0 0 .2rem rgba(3, 155, 229, .5);
+      cursor: default;
+    }
+    </style><style type="text/css">@charset "UTF-8";
+    .forum-voter[data-v-73be696c] {
+      display: flex;
+      width: 200px;
+    }
+    .forum-voter > .total[data-v-73be696c] {
+      padding: 0 6px;
+      margin-right: 6px;
+      min-width: 30px;
+      text-align: center;
+      height: 22px;
+      border-radius: 4px;
+    }
+    .forum-voter > .up[data-v-73be696c],
+    .forum-voter > .down[data-v-73be696c] {
+      background-color: #ececec;
+      padding: 0 6px;
+      min-width: 50px;
+      display: flex;
+      justify-content: space-around;
+      height: 22px;
+      color: #6b6b6b;
+      cursor: pointer;
+    }
+    .forum-voter > .up.disabled[data-v-73be696c],
+    .forum-voter > .down.disabled[data-v-73be696c] {
+      cursor: not-allowed;
+    }
+    .forum-voter > .up > i[data-v-73be696c]:before,
+    .forum-voter > .down > i[data-v-73be696c]:before {
+      display: inline-block;
+      margin-top: 4px;
+    }
+    .forum-voter > .up[data-v-73be696c] {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      border: 1px solid #e6e6e6;
+      border-right: 1px solid #e6e6e6;
+    }
+    .forum-voter > .down[data-v-73be696c] {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border: 1px solid #e6e6e6;
+    }
+    .forum-voter > .up.active[data-v-73be696c] {
+      color: #039be5;
+    }
+    .forum-voter > .down.active[data-v-73be696c] {
+      color: #ba68c8;
+    }
+    .forum-voter > .up[data-v-73be696c]:hover:not(.active):not(.disabled),
+    .forum-voter > .down[data-v-73be696c]:hover:not(.active):not(.disabled) {
+      color: #000;
+    }
+    .finobe-dark .forum-voter > .up[data-v-73be696c],
+    .finobe-dark .forum-voter > .down[data-v-73be696c] {
+      background-color: #2b2d31;
+      color: #d6dbdd;
+    }
+    .finobe-dark .forum-voter > .up[data-v-73be696c] {
+      border: 1px solid rgba(246, 246, 246, .125);
+      border-right: 1px solid rgba(246, 246, 246, .125);
+    }
+    .finobe-dark .forum-voter > .down[data-v-73be696c] {
+      border: 1px solid rgba(246, 246, 246, .125);
+    }
+    .finobe-dark .forum-voter > .up.active[data-v-73be696c] {
+      color: #039be5;
+    }
+    .finobe-dark .forum-voter > .down.active[data-v-73be696c] {
+      color: #ba68c8;
+    }
+    .finobe-dark .forum-voter > .up[data-v-73be696c]:hover:not(.active):not(.disabled),
+    .finobe-dark .forum-voter > .down[data-v-73be696c]:hover:not(.active):not(.disabled) {
+      color: #dcdcdc;
+    }
+    .far.fa-arrow-up[data-v-73be696c]:before {
+      content: "\F062";
+    }
+    .far.fa-arrow-down[data-v-73be696c]:before {
+      content: "\F063";
+    }
+    </style><style type="text/css">.modal[data-v-2386736f] {
+      transition: all .2s ease;
+    }
+    .modal-enter[data-v-2386736f],
+    .modal-leave-active[data-v-2386736f] {
+      opacity: 0;
+    }
+    .modal-enter.modal[data-v-2386736f],
+    .modal-leave-active.modal[data-v-2386736f] {
+      -webkit-transform: scale(.9);
+              transform: scale(.9);
+    }
+    </style><style type="text/css">.whats-this[data-v-1377793b] {
+      line-height: 2;
+    }
+    </style><style type="text/css">.btn-play[data-v-20da418e] {
+      padding: .75rem 5rem;
+    }
+    .btn-theme[data-v-4350f98c] {
+      height:100%;
+    }
+    .fat-spin[data-v-20da418e] {
+      -webkit-animation: fa-spin 1s infinite linear;
+              animation: fa-spin 1s infinite linear;
+      margin-right: 2px;
+    }
+    .checkmark[data-v-20da418e] {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      vertical-align: middle;
+      display: inline-block;
+      stroke-width: 8px;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      box-shadow: inset 0px 0px 0px #00b857;
+    }
+    .checkmark.make-animate[data-v-20da418e] {
+      -webkit-animation: fill-data-v-20da418e .2s ease-in-out forwards,scale-data-v-20da418e .3s ease-in-out .2s both;
+              animation: fill-data-v-20da418e .2s ease-in-out forwards,scale-data-v-20da418e .3s ease-in-out .2s both;
+    }
+    .check[data-v-20da418e] {
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      stroke-dasharray: 48;
+      stroke-dashoffset: 48;
+      -webkit-animation: stroke-data-v-20da418e .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+              animation: stroke-data-v-20da418e .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+    }
+    @-webkit-keyframes stroke-data-v-20da418e {
+    100% {
+        stroke-dashoffset: 0;
+    }
+    }
+    @keyframes stroke-data-v-20da418e {
+    100% {
+        stroke-dashoffset: 0;
+    }
+    }
+    @-webkit-keyframes scale-data-v-20da418e {
+    0%,
+      100% {
+        -webkit-transform: none;
+                transform: none;
+    }
+    50% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+                transform: scale3d(1.1, 1.1, 1);
+    }
+    }
+    @keyframes scale-data-v-20da418e {
+    0%,
+      100% {
+        -webkit-transform: none;
+                transform: none;
+    }
+    50% {
+        -webkit-transform: scale3d(1.1, 1.1, 1);
+                transform: scale3d(1.1, 1.1, 1);
+    }
+    }
+    @-webkit-keyframes fill-data-v-20da418e {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #00b857;
+    }
+    }
+    @keyframes fill-data-v-20da418e {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #00b857;
+    }
+    }
+    .fade-enter-active[data-v-20da418e],
+    .fade-leave-active[data-v-20da418e] {
+      transition: opacity .2s;
+    }
+    .fade-enter[data-v-20da418e],
+    .fade-leave-to[data-v-20da418e] {
+      opacity: 0;
+    }
+    </style><style type="text/css">.whats-this[data-v-59802440] {
+      line-height: 2;
+    }
+    </style><style type="text/css">.game-card-div[data-v-5ad0ed22] {
+      display: inline-flex;
+      height: 178px;
+    }
+    .game-card[data-v-5ad0ed22]:hover,
+    .game-card-div[data-v-5ad0ed22]:hover,
+    .game-card-div:hover > .game-card-link[data-v-5ad0ed22] {
+      z-index: 10000;
+    }
+    .game-card[data-v-5ad0ed22] {
+      position: relative;
+      overflow-y: hidden;
+      height: 170px;
+      width: 148px;
+    }
+    .game-card-link > .game-card > .visits[data-v-5ad0ed22] {
+      display: none;
+    }
+    .game-card-link:hover > .game-card[data-v-5ad0ed22] {
+      height: auto;
+    }
+    .game-card-link:hover > .game-card > .visits[data-v-5ad0ed22] {
+      display: block;
+      padding: .25rem 0 .5rem .65rem;
+      border-top: 1px solid #ccc;
+    }
+    </style><style type="text/css">.group-members-select[data-v-318d200a] {
+      min-width: 200px;
+    }
+    .group-member-link > span > img[data-v-318d200a] {
+      max-width: 64px;
+    }
+    .group-member-link[data-v-318d200a] {
+      text-decoration: none !important;
+    }
+    .finobe-light .group-member-link[data-v-318d200a]:link,
+    .finobe-light .group-member-link[data-v-318d200a]:hover,
+    .finobe-light .group-member-link[data-v-318d200a]:visited {
+      color: #212529;
+    }
+    .finobe-dark .group-member-link[data-v-318d200a]:link,
+    .finobe-dark .group-member-link[data-v-318d200a]:hover,
+    .finobe-dark .group-member-link[data-v-318d200a]:visited {
+      color: #ececec;
+    }
+    .group-member-card[data-v-318d200a] {
+      width: 112px;
+    }
+    </style><style type="text/css">.no-default-chevron::after {
+      content: none !important;
+    }
+    </style><style type="text/css">.message-text[data-v-3160ad12] {
+      white-space: pre-line;
+      word-break: break-word;
+    }
+    </style><style type="text/css">.report-option[data-v-0c71d2a7] {
+      display: block;
+      background-color: #fff;
+      padding: 6px 10px;
+      color: #000;
+      transition: all .15s linear;
+      border-radius: .25rem;
+    }
+    .report-option[data-v-0c71d2a7]:hover {
+      color: #000;
+      text-decoration: none;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
+    }
+    .report-option.active[data-v-0c71d2a7],
+    .report-option.active[data-v-0c71d2a7]:hover {
+      border-color: #0270a6;
+      box-shadow: 0 0 0 .2rem rgba(3, 155, 229, .5);
+      cursor: default;
+    }
+    .blockquote[data-v-0c71d2a7] {
+      padding-left: 8px;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      border-left: 2px solid #949494;
+      max-height: 100px;
+      overflow: auto;
+      white-space: pre;
+    }
+    </style><style type="text/css">.character-image[data-v-799cc847] {
+      max-width: 200px;
+      max-height: 200px;
+      width: 100%;
+      height: auto;
+    }
+    </style><style type="text/css">.color[data-v-6acaae49] {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #444;
+      margin: 4px;
+    }
+    .color[data-v-6acaae49]:hover {
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+    .color-box[data-v-6acaae49] {
+      margin: 0 auto;
+      max-width: 385px;
+    }
+    .modal-frontdrop[data-v-6acaae49] {
+      background: rgba(0, 0, 0, .5);
+      position: absolute;
+      z-index: 1003;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .card-modal-loading > .far[data-v-6acaae49] {
+      display: block;
+    }
+    .fade-enter-active[data-v-6acaae49],
+    .fade-leave-active[data-v-6acaae49] {
+      transition: opacity .3s;
+    }
+    .fade-enter[data-v-6acaae49],
+    .fade-leave-to[data-v-6acaae49] {
+      opacity: 0;
+    }
+    </style><style type="text/css">.body-container[data-v-2cad07f2] {
+      height: 240px;
+      width: 194px;
+      text-align: center;
+      margin: 0px auto;
+      position: relative;
+    }
+    .body-part[data-v-2cad07f2] {
+      position: absolute;
+      cursor: pointer;
+      border: 1px solid #666;
+    }
+    .body-head[data-v-2cad07f2] {
+      left: 72px;
+      top: 0px;
+      width: 44px;
+      height: 44px;
+    }
+    .body-torso[data-v-2cad07f2] {
+      left: 48px;
+      top: 52px;
+      height: 88px;
+      width: 88px;
+    }
+    .body-larm[data-v-2cad07f2] {
+      left: 0px;
+      top: 52px;
+      height: 88px;
+      width: 40px;
+    }
+    .body-rarm[data-v-2cad07f2] {
+      left: 144px;
+      top: 52px;
+      height: 88px;
+      width: 40px;
+    }
+    .body-lleg[data-v-2cad07f2] {
+      left: 48px;
+      top: 146px;
+      height: 88px;
+      width: 40px;
+    }
+    .body-rleg[data-v-2cad07f2] {
+      left: 96px;
+      top: 146px;
+      height: 88px;
+      width: 40px;
+    }
+    </style><style type="text/css">.card-img-top[data-v-1dfaa596] {
+      max-width: 125px;
+      max-height: 125px;
+      height: auto;
+      width: auto;
+    }
+    .search-input[data-v-1dfaa596] {
+      float: right;
+      max-width: 250px;
+    }
+    #assets-container[data-v-1dfaa596] {
+      display: inline-block;
+      width: 100%;
+    }
+    </style><style type="text/css">.card-img-top[data-v-75254752] {
+      max-width: 125px;
+      max-height: 125px;
+      height: auto;
+      width: auto;
+    }
+
+    .card-img-top[data-v-5ad0ed22] {
+      max-width: 160px;
+      max-height: 94px;
+      width:148px !important;
+      height:84px !important;
+    }
+    .character-outfit-dropdown[data-v-75254752] {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+    </style><style type="text/css">.blob-rage {
+      width: 100px;
+      height: 100px;
+      display: inline-block;
+      background-image: url(/img/blobs/rage.svg);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    </style><style type="text/css">.group-member-img[data-v-a72ede82] {
+      max-width: 64px;
+    }
+    </style><style type="text/css">.game-card[data-v-55ec3b92] {
+      height: auto;
+    }
+    .cursor-pointer[data-v-55ec3b92] {
+      cursor: pointer;
+    }
+    .smaller-title[data-v-55ec3b92] {
+      font-size: .8rem !important;
+    }
+    </style><style type="text/css">.game-card[data-v-93be2002] {
+      height: auto;
+    }
+    .cursor-pointer[data-v-93be2002] {
+      cursor: pointer;
+    }
+    .smaller-title[data-v-93be2002] {
+      font-size: .8rem !important;
+    }
+    </style><style type="text/css">.place-list-menu[data-v-4350f98c] {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 44px;
+      z-index: 99999;
+      min-width: 200px;
+      /*width: 200px;*/
+      height: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      will-change: opacity, transform;
+      -webkit-transform: rotateX(-10deg);
+              transform: rotateX(-10deg);
+      -webkit-transform-origin: 0 100%;
+              transform-origin: 0 100%;
+      transition-duration: .2s;
+      pointer-events: none;
+      opacity: 0;
+    }
+    .place-list-menu[data-v-4350f98c]:before {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #fff;
+      border: solid 1px #dee2e6;
+      border-bottom: none;
+      border-left: none;
+      z-index: 99999;
+      top: -5px;
+      left: 12px;
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg);
+      border-top-right-radius: 2px;
+    }
+    .place-list-menu-show[data-v-4350f98c] {
+      -webkit-transform: none;
+              transform: none;
+      pointer-events: all;
+      opacity: 1;
+    }
+    .place-list-menu-dark[data-v-4350f98c],
+    .place-list-menu-dark[data-v-4350f98c]:before {
+      background: #2b2d31;
+    }
+    .place-list-menu-dark[data-v-4350f98c]:before {
+      border: 1px solid rgba(246, 246, 246, .125);
+      border-bottom: none;
+      border-left: none;
+    }
+    </style><style type="text/css">.finobe__vloader[data-v-28f94fdd] {
+      display: flex;
+      width: 100%;
+      min-height: 250px;
+      z-index: 9999; /* :thinking:; */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    </style><style type="text/css">.slide-left-enter-active[data-v-38d68604],
+    .slide-left-leave-active[data-v-38d68604],
+    .slide-right-enter-active[data-v-38d68604],
+    .slide-right-leave-active[data-v-38d68604] {
+      transition-duration: .5s;
+      transition-property: height, opacity, -webkit-transform;
+      transition-property: height, opacity, transform;
+      transition-property: height, opacity, transform, -webkit-transform;
+      transition-timing-function: cubic-bezier(.55, 0, .1, 1);
+      overflow: hidden;
+    }
+    .slide-left-enter[data-v-38d68604],
+    .slide-right-leave-active[data-v-38d68604] {
+      opacity: 0;
+      -webkit-transform: translate(2em, 0);
+              transform: translate(2em, 0);
+    }
+    .slide-left-leave-active[data-v-38d68604],
+    .slide-right-enter[data-v-38d68604] {
+      opacity: 0;
+      -webkit-transform: translate(-2em, 0);
+              transform: translate(-2em, 0);
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div data-v-38d68604="" class="container">
+<!----> 
+<div data-v-4350f98c="" data-v-38d68604="">
+<h3 data-v-4350f98c="" class="font-weight-light">Games</h3>
+<div data-v-4350f98c="" class="d-flex my-3">
+   <div data-v-4350f98c="" class="mr-2 d-flex justify-content-center position-relative" style="position: relative;">
+      <button data-v-4350f98c="" class="btn btn-theme border px-2" id="data-v-4350f98c"><i data-v-4350f98c="" class="far fa-fw fa-bars"></i></button> 
+      <div data-v-4350f98c="" class="place-list-menu{{ (data.user.theme == 1 or data.user.gary == 1) ? " place-list-menu-dark" : "" }} border shadow-lg"{{ (data.user.theme == 1 or data.user.gary == 1) ? ' style="position:absolute;left:0;top:132%;"' : "" }}>
+         <h5 data-v-4350f98c=""><i data-v-4350f98c="" class="far fa-code-branch fa-fw"></i>
+            Version
+         </h5>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="version-all" name="place-version" value="all" class="custom-control-input" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: All
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 52" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: All
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 52" autofill-prediction="UNKNOWN_TYPE" checked> <label data-v-4350f98c="" for="version-all" class="custom-control-label pl-1">All</label></div>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="version-2012" name="place-version" class="custom-control-input" value="2012" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: 2012
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 53" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: 2012
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 53" autofill-prediction="UNKNOWN_TYPE"> <label data-v-4350f98c="" for="version-2012" class="custom-control-label pl-1">2012</label></div>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="version-2016" name="place-version" class="custom-control-input" value="2016" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: 2016
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 54" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: 2016
+            parseable name: place-version
+            section: place-version_1-default
+            field signature: 3472919611
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 54" autofill-prediction="UNKNOWN_TYPE"> <label data-v-4350f98c="" for="version-2016" class="custom-control-label pl-1">2016</label></div>
+         <h5 data-v-4350f98c="" class="mt-4"><i data-v-4350f98c="" class="far fa-copy fa-fw"></i>
+            Category
+         </h5>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="place-type-all" name="place-type-filter" value="all" class="custom-control-input" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: All
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 55" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: All
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 55" autofill-prediction="UNKNOWN_TYPE" checked> <label data-v-4350f98c="" for="place-type-all" class="custom-control-label pl-1">All</label></div>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="place-type-original" name="place-type-filter" class="custom-control-input" value="original" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Original
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 56" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Original
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 56" autofill-prediction="UNKNOWN_TYPE"> <label data-v-4350f98c="" for="place-type-original" class="custom-control-label pl-1">Original</label></div>
+         <div data-v-4350f98c="" class="custom-control custom-radio py-1"><input data-v-4350f98c="" type="radio" id="place-type-copies" name="place-type-filter" class="custom-control-input" value="copies" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Copies
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 57" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Copies
+            parseable name: place-type-filter
+            section: place-version_1-default
+            field signature: 1628142843
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 57" autofill-prediction="UNKNOWN_TYPE"> <label data-v-4350f98c="" for="place-type-copies" class="custom-control-label pl-1">Copies</label></div>
+         <h5 data-v-4350f98c="" class="mt-4"><i data-v-4350f98c="" class="far fa-cog fa-fw"></i>
+            Etc.
+         </h5>
+         <div data-v-4350f98c="" class="custom-control custom-checkbox"><input data-v-4350f98c="" type="checkbox" id="show_hidden_places" class="custom-control-input" title="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Show hidden places
+            parseable name: show_hidden_places
+            section: place-version_1-default
+            field signature: 68111998
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 58" autofill-information="overall type: UNKNOWN_TYPE
+            server type: NO_SERVER_DATA
+            heuristic type: UNKNOWN_TYPE
+            label: Show hidden places
+            parseable name: show_hidden_places
+            section: place-version_1-default
+            field signature: 68111998
+            form signature: 4198279631467950932
+            form renderer id: 4294967295
+            field renderer id: 58" autofill-prediction="UNKNOWN_TYPE"> <label data-v-4350f98c="" for="show_hidden_places" class="custom-control-label pl-1">Show hidden places</label></div>
+      </div>
+   </div>
+   <div data-v-4350f98c="" class="input-group">
+    <input data-v-4350f98c="" type="text" id="searchInput" placeholder="Search..." class="form-control">
+    <span data-v-4350f98c="" class="input-group-append">
+        <button data-v-4350f98c="" type="submit" id="searchButton" class="btn btn-secondary">
+            <i data-v-4350f98c="" aria-hidden="true" class="far fa-search"></i>
+        </button>
+    </span>
+  </div>
+
+</div>
+<ul data-v-4350f98c="" class="nav nav-pills nav-fill mb-3">
+   <li data-v-4350f98c="" class="nav-item"><a data-v-4350f98c="" href="javascript:void(0);" class="nav-link" id="btn-featured">Featured</a></li>
+   <li data-v-4350f98c="" class="nav-item"><a data-v-4350f98c="" href="javascript:void(0);" class="nav-link active disabled" id="btn-all">All</a></li>
+</ul>
+<div data-v-4350f98c="" id="loader">
+   <div data-v-4350f98c="">
+      <div data-v-28f94fdd="" data-v-4350f98c="" class="finobe__vloader">
+         <span data-v-28f94fdd="" class="finobe__spinning_blob finobe__blob_thinking"></span> 
+         <h3 data-v-28f94fdd="" class="mt-2 text-center">Hold on, I need a moment to think...</h3>
+      </div>
+   </div>
+</div>
+<div class=" mt-4" id="games">
+</div>
+<div data-v-4350f98c="" class="mt-4"><div data-v-e236382e="" data-v-4350f98c="" class="paginator clearfix text-center clearfix"><a data-v-e236382e="" class="btn btn-theme mr-2 disabled" id="input-form-data-v-e236382e-01"><i data-v-e236382e="" class="far fa-chevron-left"></i></a> <span data-v-e236382e=""><input data-v-e236382e="" id="input-form-data-v-e236382e-02" type="number" min="1" place="current" class="form-control form-control-sm page-input mr-1" disabled="disabled" title="overall type: UNKNOWN_TYPE
+server type: NO_SERVER_DATA
+heuristic type: UNKNOWN_TYPE
+label: Hold on, I need a moment to think...
+parseable name: 
+section: place-version_1-default
+field signature: 2096205953
+form signature: 4198279631467950932
+form renderer id: 4294967295
+field renderer id: 61" autofill-information="overall type: UNKNOWN_TYPE
+server type: NO_SERVER_DATA
+heuristic type: UNKNOWN_TYPE
+label: Hold on, I need a moment to think...
+parseable name: 
+section: place-version_1-default
+field signature: 2096205953
+form signature: 4198279631467950932
+form renderer id: 4294967295
+field renderer id: 61" autofill-prediction="UNKNOWN_TYPE"> of <span data-v-e236382e="" id="input-form-data-v-e236382e-03" place="total">1</span></span> <a data-v-e236382e="" class="btn btn-theme ml-2 disabled" id="input-form-data-v-e236382e-04"><i data-v-e236382e="" class="far fa-chevron-right"></i></a></div></div></div></div>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var filterButton = document.getElementById('data-v-4350f98c');
+            var featuredButton = document.getElementById('btn-featured');
+            var allButton = document.getElementById('btn-all');
+            var placeListMenu = document.querySelector('.place-list-menu');
+            var checkAll = document.getElementById('version-all');
+            var check2012 = document.getElementById('version-2012');
+            var check2016 = document.getElementById('version-2016');
+            var searchInput = document.getElementById('searchInput');
+            var searchButton = document.getElementById('searchButton');
+            var gameType = "all";
+            var version = "all";
+            var searchQuery = "";
+            var maxpages = 1;
+            var currentPage = 1;
+
+            function doSearch() {
+              let query = "?";
+              searchQuery = searchInput.value;
+
+              if(gameType == "featured") {
+                query += "type=featured";
+              } else {
+                query += "type=all";
+              }
+
+              if(version == "all") {
+                query += "&version=all";
+              } else if(version == "2012") {
+                query += "&version=2012";
+              } else if(version == "2016") {
+                query += "&version=2016";
+              }
+
+              query += "&search=" + searchQuery;
+
+              if(!allButton.classList.contains('disabled')) {
+                allButton.classList.add('disabled');
+              }
+
+              if(!featuredButton.classList.contains('disabled')) {
+                featuredButton.classList.add('disabled');
+              }
+
+              if(searchInput.disabled != true) {
+                searchInput.disabled = true;
+              }
+
+              if(searchButton.disabled != true) {
+                searchButton.disabled = true;
+              }
+
+              checkAll.disabled = true;
+              check2012.disabled = true;
+              check2016.disabled = true;
+              document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+              document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+              document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+              document.getElementById('games').style.display = "none";
+              document.getElementById('loader').style.display = "";
+              fetch('/api/places' + query)
+                .then(response => response.json())
+                .then(json => {
+                  const data = json.data;
+                  const html = data.reduce((acc, data) => acc + data, '');
+                  const pages = json.info.pages;
+                  const currentPg = json.info.current_page;
+                  const parser = new DOMParser();
+                  maxpages = pages;
+                  const doc = parser.parseFromString(html, 'text/html');
+                  const htmlw = doc.body.innerHTML;
+                  document.getElementById('games').innerHTML = htmlw;
+                  document.getElementById('loader').style.display = "none";
+                  document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                  document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                  document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                  document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                  document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                  document.getElementById('games').style.display = "";
+                  checkAll.disabled = false;
+                  check2012.disabled = false;
+                  check2016.disabled = false;
+                  searchInput.disabled = false;
+                  searchButton.disabled = false;
+
+                  if(gameType == "featured") {
+                    allButton.classList.remove('disabled');
+                  } else {
+                    featuredButton.classList.remove('disabled');
+                  }
+                });
+            }
+
+            fetch('/api/places')
+              .then(response => response.json())
+              .then(json => {
+                const data = json.data;
+                const html = data.reduce((acc, data) => acc + data, '');
+                const pages = json.info.pages;
+                const currentPg = json.info.current_page;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const htmlw = doc.body.innerHTML;
+                maxpages = pages;
+                currentPage = currentPg;
+                document.getElementById('games').innerHTML = htmlw;
+                document.getElementById('loader').style.display = "none";
+                document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+              });
+
+            filterButton.addEventListener('click', function (event) {
+              placeListMenu.classList.toggle('place-list-menu-show');
+              event.stopPropagation();
+            });
+			
+			placeListMenu.addEventListener('click', function (event) {
+				event.stopPropagation();
+			});
+
+            document.addEventListener('click', function () {
+              placeListMenu.classList.remove('place-list-menu-show');
+            });
+
+            searchInput.addEventListener('keyup', function (event) {
+                if (event.key === 'Enter') {
+                  doSearch();
+                }
+            });
+
+            searchButton.addEventListener('click', doSearch);
+
+            checkAll.addEventListener('click', function () {
+              if(version != "all") {
+                let query = "?";
+                version = "all";
+
+                if(gameType == "featured") {
+                  query += "type=featured";
+                } else {
+                  query += "type=all";
+                }
+
+                if(version == "all") {
+                  query += "&version=all";
+                } else if(version == "2012") {
+                  query += "&version=2012";
+                } else if(version == "2016") {
+                  query += "&version=2016";
+                }
+
+                if(searchQuery != "") {
+                  query += "&search=" + searchQuery;
+                }
+
+                if(!allButton.classList.contains('disabled')) {
+                  allButton.classList.add('disabled');
+                }
+
+                if(!featuredButton.classList.contains('disabled')) {
+                  featuredButton.classList.add('disabled');
+                }
+
+                if(searchInput.disabled != true) {
+                  searchInput.disabled = true;
+                }
+
+                if(searchButton.disabled != true) {
+                  searchButton.disabled = true;
+                }
+
+                checkAll.disabled = true;
+                check2012.disabled = true;
+                check2016.disabled = true;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+                document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+                document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+                document.getElementById('games').style.display = "none";
+                document.getElementById('loader').style.display = "";
+                fetch('/api/places' + query)
+                  .then(response => response.json())
+                  .then(json => {
+                    const data = json.data;
+                    const html = data.reduce((acc, data) => acc + data, '');
+                    const pages = json.info.pages;
+                    const currentPg = json.info.current_page;
+                    const parser = new DOMParser();
+                    maxpages = pages;
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const htmlw = doc.body.innerHTML;
+                    document.getElementById('games').innerHTML = htmlw;
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                    document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                    document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                    document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                    document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                    document.getElementById('games').style.display = "";
+                    checkAll.disabled = false;
+                    check2012.disabled = false;
+                    check2016.disabled = false;
+                    searchInput.disabled = false;
+                    searchButton.disabled = false;
+
+                    if(gameType == "featured") {
+                      allButton.classList.remove('disabled');
+                    } else {
+                      featuredButton.classList.remove('disabled');
+                    }
+                  });
+              }
+            });
+
+            check2012.addEventListener('click', function () {
+              if(version != "2012") {
+                let query = "?";
+                version = "2012";
+
+                if(gameType == "featured") {
+                  query += "type=featured";
+                } else {
+                  query += "type=all";
+                }
+
+                if(version == "all") {
+                  query += "&version=all";
+                } else if(version == "2012") {
+                  query += "&version=2012";
+                } else if(version == "2016") {
+                  query += "&version=2016";
+                }
+
+                if(searchQuery != "") {
+                  query += "&search=" + searchQuery;
+                }
+
+                if(!allButton.classList.contains('disabled')) {
+                  allButton.classList.add('disabled');
+                }
+
+                if(!featuredButton.classList.contains('disabled')) {
+                  featuredButton.classList.add('disabled');
+                }
+
+                if(searchInput.disabled != true) {
+                  searchInput.disabled = true;
+                }
+
+                if(searchButton.disabled != true) {
+                  searchButton.disabled = true;
+                }
+
+                checkAll.disabled = true;
+                check2012.disabled = true;
+                check2016.disabled = true;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+                document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+                document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+                document.getElementById('games').style.display = "none";
+                document.getElementById('loader').style.display = "";
+                fetch('/api/places' + query)
+                  .then(response => response.json())
+                  .then(json => {
+                    const data = json.data;
+                    const html = data.reduce((acc, data) => acc + data, '');
+                    const pages = json.info.pages;
+                    const currentPg = json.info.current_page;
+                    const parser = new DOMParser();
+                    maxpages = pages;
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const htmlw = doc.body.innerHTML;
+                    document.getElementById('games').innerHTML = htmlw;
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                    document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                    document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                    document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                    document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                    document.getElementById('games').style.display = "";
+                    checkAll.disabled = false;
+                    check2012.disabled = false;
+                    check2016.disabled = false;
+                    searchInput.disabled = false;
+                    searchButton.disabled = false;
+
+                    if(gameType == "featured") {
+                      allButton.classList.remove('disabled');
+                    } else {
+                      featuredButton.classList.remove('disabled');
+                    }
+                  });
+              }
+            });
+
+            check2016.addEventListener('click', function () {
+              if(version != "2016") {
+                let query = "?";
+                version = "2016";
+
+                if(gameType == "featured") {
+                  query += "type=featured";
+                } else {
+                  query += "type=all";
+                }
+
+                if(version == "all") {
+                  query += "&version=all";
+                } else if(version == "2012") {
+                  query += "&version=2012";
+                } else if(version == "2016") {
+                  query += "&version=2016";
+                }
+
+                if(searchQuery != "") {
+                  query += "&search=" + searchQuery;
+                }
+
+                if(!allButton.classList.contains('disabled')) {
+                  allButton.classList.add('disabled');
+                }
+
+                if(!featuredButton.classList.contains('disabled')) {
+                  featuredButton.classList.add('disabled');
+                }
+
+                if(searchInput.disabled != true) {
+                  searchInput.disabled = true;
+                }
+
+                if(searchButton.disabled != true) {
+                  searchButton.disabled = true;
+                }
+
+                checkAll.disabled = true;
+                check2012.disabled = true;
+                check2016.disabled = true;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+                document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+                document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+                document.getElementById('games').style.display = "none";
+                document.getElementById('loader').style.display = "";
+                fetch('/api/places' + query)
+                  .then(response => response.json())
+                  .then(json => {
+                    const data = json.data;
+                    const html = data.reduce((acc, data) => acc + data, '');
+                    const pages = json.info.pages;
+                    const currentPg = json.info.current_page;
+                    const parser = new DOMParser();
+                    maxpages = pages;
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const htmlw = doc.body.innerHTML;
+                    document.getElementById('games').innerHTML = htmlw;
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                    document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                    document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                    document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                    document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                    document.getElementById('games').style.display = "";
+                    checkAll.disabled = false;
+                    check2012.disabled = false;
+                    check2016.disabled = false;
+                    searchInput.disabled = false;
+                    searchButton.disabled = false;
+
+                    if(gameType == "featured") {
+                      allButton.classList.remove('disabled');
+                    } else {
+                      featuredButton.classList.remove('disabled');
+                    }
+                  });
+              }
+            });
+
+            featuredButton.addEventListener('click', function () {
+              if(gameType != "featured") {
+                let query = "?";
+                allButton.classList.remove('active');
+                allButton.classList.add('disabled');
+                featuredButton.classList.add('active');
+                featuredButton.classList.add('disabled');
+                gameType = "featured";
+                checkAll.disabled = true;
+                check2012.disabled = true;
+                check2016.disabled = true;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+                document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+                document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+                document.getElementById('games').style.display = "none";
+                document.getElementById('loader').style.display = "";
+
+                if(gameType == "featured") {
+                  query += "type=featured";
+                } else {
+                  query += "type=all";
+                }
+
+                if(version == "all") {
+                  query += "&version=all";
+                } else if(version == "2012") {
+                  query += "&version=2012";
+                } else if(version == "2016") {
+                  query += "&version=2016";
+                }
+
+                if(searchQuery != "") {
+                  query += "&search=" + searchQuery;
+                }
+
+                if(searchInput.disabled != true) {
+                  searchInput.disabled = true;
+                }
+
+                if(searchButton.disabled != true) {
+                  searchButton.disabled = true;
+                }
+
+                fetch('/api/places' + query)
+                  .then(response => response.json())
+                  .then(json => {
+                    const data = json.data;
+                    const html = data.reduce((acc, data) => acc + data, '');
+                    const pages = json.info.pages;
+                    const currentPg = json.info.current_page;
+                    const parser = new DOMParser();
+                    maxpages = pages;
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const htmlw = doc.body.innerHTML;
+                    document.getElementById('games').innerHTML = htmlw;
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                    document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                    document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                    document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                    document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                    document.getElementById('games').style.display = "";
+                    allButton.classList.remove('disabled');
+                    checkAll.disabled = false;
+                    check2012.disabled = false;
+                    check2016.disabled = false;
+                    searchInput.disabled = false;
+                    searchButton.disabled = false;
+                  });
+              }
+            });
+
+            allButton.addEventListener('click', function () {
+              if(gameType != "all") {
+                let query = "?";
+                allButton.classList.add('active');
+                allButton.classList.add('disabled');
+                featuredButton.classList.remove('active');
+                featuredButton.classList.add('disabled');
+                gameType = "all";
+                checkAll.disabled = true;
+                check2012.disabled = true;
+                check2016.disabled = true;
+                document.getElementById('input-form-data-v-e236382e-02').disabled = true;
+                document.getElementById('input-form-data-v-e236382e-01').classList.add('disabled');
+                document.getElementById('input-form-data-v-e236382e-04').classList.add('disabled');
+                document.getElementById('games').style.display = "none";
+                document.getElementById('loader').style.display = "";
+
+                if(gameType == "featured") {
+                  query += "type=featured";
+                } else {
+                  query += "type=all";
+                }
+
+                if(version == "all") {
+                  query += "&version=all";
+                } else if(version == "2012") {
+                  query += "&version=2012";
+                } else if(version == "2016") {
+                  query += "&version=2016";
+                }
+
+                if(searchQuery != "") {
+                  query += "&search=" + searchQuery;
+                }
+
+                if(searchInput.disabled != true) {
+                  searchInput.disabled = true;
+                }
+
+                if(searchButton.disabled != true) {
+                  searchButton.disabled = true;
+                }
+
+                fetch('/api/places' + query)
+                  .then(response => response.json())
+                  .then(json => {
+                    const data = json.data;
+                    const html = data.reduce((acc, data) => acc + data, '');
+                    const pages = json.info.pages;
+                    const currentPg = json.info.current_page;
+                    const parser = new DOMParser();
+                    maxpages = pages;
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const htmlw = doc.body.innerHTML;
+                    document.getElementById('games').innerHTML = htmlw;
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('input-form-data-v-e236382e-04').classList.remove('disabled');
+                    document.getElementById('input-form-data-v-e236382e-03').innerHTML = pages;
+                    document.getElementById('input-form-data-v-e236382e-02').value = currentPg;
+                    document.getElementById('input-form-data-v-e236382e-02').disabled = false;
+                    document.getElementById('input-form-data-v-e236382e-01').classList.remove('disabled');
+                    document.getElementById('games').style.display = "";
+                    featuredButton.classList.remove('disabled');
+                    checkAll.disabled = false;
+                    check2012.disabled = false;
+                    check2016.disabled = false;
+                    searchInput.disabled = false;
+                    searchButton.disabled = false;
+                  });
+              }
+            });
+          });
+        </script>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

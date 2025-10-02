@@ -1,0 +1,30 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 mt-3">
+                      <form method="POST" action="/app/inbox/message" class="mb-2"><input type="hidden" name="_token" value="{{ data.csrf_token }}"><input type="hidden" name="id" value="{{ data.message.id }}"><a class="btn btn-theme py-2" href="/app/inbox" style="padding-left: 10px; padding-right: 10px;"><i class="far fa-chevron-left"></i></a>{% if data.user.id != data.message.author %}<a class="btn btn-primary py-2" href="/app/inbox/compose?user={{ data.message.author }}&subject={{ "RE: " ~ data.message.subject }}" style="padding-left: 10px; padding-right: 10px; margin-left: 10px;"><i class="far fa-share fa-flip-horizontal"></i></a>{% endif %}<button type="submit" class="btn btn-info" style="margin-left: 10px;">archive{{ (data.message.archived == "y") ? "d" : "" }}</button></form>
+                        <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <h4 class="mb-3"><strong>{{ data.message.subject|raw }}</strong></h4>
+                                        <p class="mb-1"><strong>From:</strong> <a href="/user/{{ data.message.uid }}">{{ data.message.author }}</a></p>
+                                        <p class="mb-2"><strong>Date:</strong> {{ data.message.date }}</p>
+                                        <hr>
+                                        <p>{{ data.message.message | raw }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3">
+           <nav class="breadcrumb"><a href="/" class="breadcrumb-item">{{ (user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}</a> {% if section == "0" %}<span class="breadcrumb-item active">Forum Home</span>{% else %}<a href="/forum" class="breadcrumb-item">Forum Home</a> <span class="breadcrumb-item active">{% if search != false %}{{ "Search" }}{% elseif section == "0" %}{{ "All Sections" }}{% elseif section == "1" %}{{ "Announcements" }}{% elseif section == "2" %}{{ "General" }}{% elseif section == "3" %}{{ "Suggestions" }}{% elseif section == "4" %}{{ "Off Topic" }}{% elseif section == "5" %}{{ "Help" }}{% elseif section == "6" %}{{ "Development" }}{% elseif section == "7" %}{{ "Serious" }}{% elseif section == "8" %}{{ "Serious (Real World)" }}{% elseif section == "9" %}{{ "Trade Discussion" }}{% elseif section == "10" %}{{ "да (Русский)" }}{% endif %}</span>{% endif %}</nav>
+           <div class="card mb-4">
+              <div class="card-header bg-primary text-white">{% if section == "0" %}{{ (user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}{% elseif section == "0" %}{{ "All Sections" }}{% elseif section == "1" %}{{ "Announcements" }}{% elseif section == "2" %}{{ "General" }}{% elseif section == "3" %}{{ "Suggestions" }}{% elseif section == "4" %}{{ "Off Topic" }}{% elseif section == "5" %}{{ "Help" }}{% elseif section == "6" %}{{ "Development" }}{% elseif section == "7" %}{{ "Serious" }}{% elseif section == "8" %}{{ "Serious (Real World)" }}{% elseif section == "9" %}{{ "Trade Discussion" }}{% elseif section == "10" %}{{ "да (Русский)" }}{% endif %}</div>
+              <table class="table mb-0">
+                 <thead>
+                    <tr>
+					{% if section == "0" %}
+                       <th>Name</th>
+                       <th>Posts</th>
+                       <th>Replies</th>
+                       <th class="text-right">Last Post</th>
+					{% endif %}
+                    </tr>
+                 </thead>
+                 <tbody>
+					{% if section != "0" %}
+						{% for thread in threads.data %}
+							<tr>
+							   <td>
+								  <div class="float-left forum-title">
+									 <p class="my-0"><a href="/forum/post?id={{ thread.id }}" class="post-title">{% if thread.locked == "y" %}<i class="fa fa-lock"></i>{% endif %}{% if thread.pinned == "y" %}<i class="fa fa-thumbtack"></i>{% endif %}<span{{ (thread.locked == "y" or thread.pinned == "y") ? 'class="ml-1"' : '' }}>{{ thread.title | raw }}</span></a></p>
+									 <p class="my-0">by <a href="/user/{{ thread.uuid }}">{#♀#} {% if thread.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ thread.author }}</span>{% else %}{{ thread.author }}{% endif %}</a>, <span title="{{ thread.date }}">{{ thread.ago }}</span></p>
+									 <p class="my-0 text-muted">{{ thread.replies }} replies</p>
+								  </div>
+								  <div class="float-lg-right forum-right">
+									 <p class="my-0"><a href="/user/{{ thread.reply.uuid }}">{#♂#} {% if thread.reply.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ thread.reply.author }}</span>{% else %}{{ thread.reply.author }}{% endif %}</a></p>
+									 <p class="float-right my-0"><span title="{{ thread.reply.original }}">{{ thread.reply.date }}</span></p>
+								  </div>
+							   </td>
+							</tr>
+						{% endfor %}
+					{% else %}
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/1">Announcements</a></p>
+                          <p class="my-0">See the latest news about F* here!</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.1.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.1.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.1.id }}" title="{{ threads.v1.1.title }}">{{ threads.v1.1.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.1.uuid }}">{% if threads.v1.1.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ threads.v1.1.author }}</span>{% else %}{{ threads.v1.1.author }}{% endif %}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.1.original }}">{{ threads.v1.1.date }}</span></p>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/2">General</a></p>
+                          <p class="my-0">Discuss anything relevant to F* here.</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.2.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.2.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.2.id }}" title="{{ threads.v1.2.title }}">{{ threads.v1.2.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.2.uuid }}">{{ threads.v1.2.author }}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.1.original }}">{{ threads.v1.2.date }}</span></p>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/3">Suggestions</a></p>
+                          <p class="my-0">Suggest stuff for F* here.</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.3.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.3.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.3.id }}" title="{{ threads.v1.3.title }}">{{ threads.v1.3.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.3.uuid }}">{% if threads.v1.3.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ threads.v1.3.author }}</span>{% else %}{{ threads.v1.3.author }}{% endif %}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.3.original }}">{{ threads.v1.3.date }}</span></p>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/4">Off Topic</a></p>
+                          <p class="my-0">Anything.</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.4.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.4.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.4.id }}" title="{{ threads.v1.4.title }}">{{ threads.v1.4.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.4.uuid }}">{% if threads.v1.4.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ threads.v1.4.author }}</span>{% else %}{{ threads.v1.4.author }}{% endif %}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.4.original }}">{{ threads.v1.4.date }}</span></p>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/5">Help</a></p>
+                          <p class="my-0">Get support for the Finobe client/server here. Spam = ban.</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.5.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.5.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.5.id }}" title="{{ threads.v1.5.title }}">{{ threads.v1.5.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.5.uuid }}">{% if threads.v1.5.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ threads.v1.5.author }}</span>{% else %}{{ threads.v1.5.author }}{% endif %}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.5.original }}">{{ threads.v1.5.date }}</span></p>
+                       </td>
+                    </tr>
+                    <tr>
+                       <td class="rforum__table-4-col-1">
+                          <p class="my-0"><a href="/forum/home/7">Serious</a></p>
+                          <p class="my-0">Only serious content. Spam will be a ban.</p>
+                       </td>
+                       <td class="rforum__table-4-col-2">{{ threads.v1.6.posts }}</td>
+                       <td class="rforum__table-4-col-3">{{ threads.v1.6.replies }}</td>
+                       <td class="rforum__table-4-col-4 text-right">
+                          <p class="my-0"><a href="/forum/post?id={{ threads.v1.6.id }}" title="{{ threads.v1.6.title }}">{{ threads.v1.6.title }}</a></p>
+                          <p class="my-0"><a href="/user/{{ threads.v1.6.uuid }}">{% if threads.v1.6.status == "admin" %}<span style="color: rgb(255, 82, 82); font-weight: bold;">{{ threads.v1.6.author }}</span>{% else %}{{ threads.v1.6.author }}{% endif %}</a></p>
+                          <p class="my-0"><span title="{{ threads.v1.6.original }}">{{ threads.v1.6.date }}</span></p>
+                       </td>
+                    </tr>
+					{% endif %}
+                 </tbody>
+              </table>
+           </div>
+		   {% if section == "0" %}
+           <div class="card">
+              <div class="card-header bg-primary text-white">
+                 Statistics
+              </div>
+              <div class="card-body">
+                 <p>{{ threads.v1.stats.users }} users were online today.</p>
+                 <p class="mb-0">Our users have posted {{ threads.v1.stats.total }} times.</p>
+              </div>
+           </div>
+		   {% endif %}
+		   {% if section != "0" %}
+		   <ul class="pagination shadow-sm">
+			<li class="page-item{{ (threads.pages.info.previous_page == threads.pages.info.start_page) ? " disabled" : "" }}">
+			  <a class="page-link" id="previous-page" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.previous_page }}" rel="previous" aria-label="Previous <<" {{ (threads.pages.info.current_page <= 1) ? "style='pointer-events: none;'" : "" }}>«</a>
+			</li>
+			{% if threads.pages.info.start_page > 1 %}
+			  <li class="page-item">
+				<a class="page-link" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page=1">1</a>
+			  </li>
+			  {% if threads.pages.info.start_page > 2 %}
+				<li class="page-item">
+				  <a class="page-link" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page=2">2</a>
+				</li>
+			  {% endif %}
+			  <li class="page-item"><span class="page-link">...</span></li>
+			{% endif %}
+			{% for page in threads.pages.data %}
+			  <li class="page-item">
+				<a class="page-link{{ (page.page == threads.pages.info.current_page) ? " selected" : "" }}" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ page.page }}">
+				  {{ page.page }}
+				</a>
+			  </li>
+			{% endfor %}
+			{% if threads.pages.info.end_page < threads.pages.info.number_of_page %}
+			  {% if threads.pages.info.end_page + 1 < threads.pages.info.number_of_page %}
+				<li class="page-item"><span class="page-link">...</span></li>
+			  {% endif %}
+			  <li class="page-item">
+				<a class="page-link" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.number_of_page - 1 }}">{{ threads.pages.info.number_of_page - 1 }}</a>
+			  </li>
+			  <li class="page-item">
+				<a class="page-link" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.number_of_page }}">{{ threads.pages.info.number_of_page }}</a>
+			  </li>
+			{% endif %}
+			<li class="page-item{{ (threads.pages.info.next_page == threads.pages.info.end_page) ? " disabled" : "" }}">
+			  <a class="page-link" id="next-page" href="/forum/{{ (search == false) ? "home" : "search" }}{{ (section != "0") ? "/" ~ section : "" }}{{ (search != false) ? "?q=" ~ search : "" }}{{ (search != false) ? "&" : "?" }}page={{ threads.pages.info.next_page }}" rel="next" aria-label="Next >>" >»</a>
+			</li>
+		  </ul>
+		  {% endif %}
+        </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

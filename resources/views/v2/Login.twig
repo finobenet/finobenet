@@ -1,0 +1,54 @@
+<html>
+    <head>
+        {% include ('v2/Modules/head.twig') %}
+    </head>
+    <body>
+        <div class="d-flex flex-column justify-content-center align-items-center mh-100vh">
+            <form method="POST" action=""
+                class="col-sm-8 col-md-6 col-lg-4 py-5 align-items-center justify-content-center d-flex flex-column">
+                <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                {% if data.next %}
+                    <input type="hidden" name="next" value="{{ data.next }}">
+                {% endif %}
+                <div class="form-group text-center">
+                    <div><img src="/s/img/{% if data.user.branding == "finobe" %}{% if data.user.logo == "v1" %}{{ "BUSY.png" }}{% elseif data.user.logo == "v2" %}{{ "finnobe3.png" }}{% else %}{{ "finnobe3logo.png" }}{% endif %}{% else %}{{ "logo.png" }}{% endif %}" alt="
+                        {{ (data.user.branding == "finobe" ? "Finobe" : "Aesthetiful") }}"
+                        class="img-fluid login__logo-img">
+                    </div>
+                    <h2 class="my-3">Login</h2>
+                </div>
+                <div class="form-group w-75">
+                    <label for="login">Email</label>
+                    <div class="input-group">
+                        <input class="form-control{{ (data.errorlogin) ? " is-invalid" : "" }}" type="text"
+                        name="email" placeholder="email">
+                        {% if data.errorlogin %}
+                        <div class="input-group-append">
+                            <div class="input-group-text"><i class="fas fa-exclamation-circle text-danger"></i></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if data.errorlogin %}
+                    <small class="text-danger">These credentials do not match our records.</small>
+                    {% endif %}
+                </div>
+                <div class="form-group w-75"><label for="password">Password</label> <input class="form-control"
+                        type="password" name="password" placeholder="Password"></div>
+                <div class="form-group w-75">
+                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" name="remember_me" id="remember"> <label for="remember"
+                            class="custom-control-label">Remember me</label>
+                    </div>
+                </div>
+                <div class="form-group d-flex justify-content-between align-items-start w-75"><button
+                        class="btn btn-primary flex-grow-1 mr-2">
+                        Login
+                    </button> <a href="/" class="btn btn-light border flex-grow-2 ml-2">
+                        &lt; Back
+                    </a></div>
+                <div class="form-group"><a href="/password/reset" class="clearfix">
+                        Forgot your password?
+                    </a>
+            </form>
+        </div>
+    </body>
+</html>

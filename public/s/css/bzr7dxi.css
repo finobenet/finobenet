@@ -1,0 +1,217 @@
+/*
+ * The Typekit service used to deliver this font or fonts for use on websites
+ * is provided by Adobe and is subject to these Terms of Use
+ * http://www.adobe.com/products/eulas/tou_typekit. For font license
+ * information, see the list below.
+ *
+ * proxima-nova:
+ *   - http://typekit.com/eulas/00000000000000003b9b093b
+ *   - http://typekit.com/eulas/00000000000000003b9b093a
+ *   - http://typekit.com/eulas/00000000000000003b9b0934
+ *   - http://typekit.com/eulas/00000000000000003b9b0935
+ * proxima-nova-condensed:
+ *   - http://typekit.com/eulas/00000000000000003b9b094b
+ *   - http://typekit.com/eulas/00000000000000003b9b094a
+ *   - http://typekit.com/eulas/00000000000000003b9b0944
+ *   - http://typekit.com/eulas/00000000000000003b9b0945
+ * proxima-nova-extra-condensed:
+ *   - http://typekit.com/eulas/00000000000000003b9b095a
+ *   - http://typekit.com/eulas/00000000000000003b9b095b
+ *   - http://typekit.com/eulas/00000000000000003b9b0954
+ *   - http://typekit.com/eulas/00000000000000003b9b0955
+ * proxima-soft:
+ *   - http://typekit.com/eulas/00000000000000003b9af203
+ *   - http://typekit.com/eulas/00000000000000003b9af204
+ *   - http://typekit.com/eulas/00000000000000003b9af209
+ *   - http://typekit.com/eulas/00000000000000003b9af20a
+ * proxima-soft-condensed:
+ *   - http://typekit.com/eulas/00000000000000003b9af213
+ *   - http://typekit.com/eulas/00000000000000003b9af214
+ *   - http://typekit.com/eulas/00000000000000003b9af219
+ *   - http://typekit.com/eulas/00000000000000003b9af21a
+ * proxima-soft-extra-condensed:
+ *   - http://typekit.com/eulas/00000000000000003b9af223
+ *   - http://typekit.com/eulas/00000000000000003b9af224
+ *   - http://typekit.com/eulas/00000000000000003b9af229
+ *   - http://typekit.com/eulas/00000000000000003b9af22a
+ *
+ * © 2009-2020 Adobe Systems Incorporated. All Rights Reserved.
+ */
+/*{"last_published":"2018-11-06 21:50:12 UTC"}*/
+
+@import url("https://web.archive.org/web/20200410162809cs_/https://p.typekit.net/p.css?s=1&k=bzr7dxi&ht=tk&f=139.140.175.176.143.144.147.148.156.157.161.162.32897.32898.32903.32904.32913.32914.32919.32920.32929.32930.32935.32936&a=11032818&app=typekit&e=css");
+
+@font-face {
+font-family:"proxima-nova";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/71f83c/00000000000000003b9b093b/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/86b539/00000000000000003b9b093a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-nova";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-nova-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/290aa2/00000000000000003b9b094b/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/290aa2/00000000000000003b9b094b/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/290aa2/00000000000000003b9b094b/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/1c562a/00000000000000003b9b094a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/1c562a/00000000000000003b9b094a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/1c562a/00000000000000003b9b094a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/970510/00000000000000003b9b0944/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/970510/00000000000000003b9b0944/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/970510/00000000000000003b9b0944/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-nova-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/3854e3/00000000000000003b9b0945/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/3854e3/00000000000000003b9b0945/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/3854e3/00000000000000003b9b0945/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-nova-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/59819a/00000000000000003b9b095a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/59819a/00000000000000003b9b095a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/59819a/00000000000000003b9b095a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/857e67/00000000000000003b9b095b/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/857e67/00000000000000003b9b095b/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/857e67/00000000000000003b9b095b/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-nova-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/861181/00000000000000003b9b0954/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/861181/00000000000000003b9b0954/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/861181/00000000000000003b9b0954/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-nova-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/2a540a/00000000000000003b9b0955/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/2a540a/00000000000000003b9b0955/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/2a540a/00000000000000003b9b0955/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5beeef/00000000000000003b9af203/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5beeef/00000000000000003b9af203/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5beeef/00000000000000003b9af203/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/a3f146/00000000000000003b9af204/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/a3f146/00000000000000003b9af204/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/a3f146/00000000000000003b9af204/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/61d304/00000000000000003b9af209/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/61d304/00000000000000003b9af209/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/61d304/00000000000000003b9af209/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-soft";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/bd143b/00000000000000003b9af20a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/bd143b/00000000000000003b9af20a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/bd143b/00000000000000003b9af20a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-soft-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/cca679/00000000000000003b9af213/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/cca679/00000000000000003b9af213/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/cca679/00000000000000003b9af213/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4329db/00000000000000003b9af214/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4329db/00000000000000003b9af214/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/4329db/00000000000000003b9af214/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/915d69/00000000000000003b9af219/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/915d69/00000000000000003b9af219/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/915d69/00000000000000003b9af219/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-soft-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5b018a/00000000000000003b9af21a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5b018a/00000000000000003b9af21a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/5b018a/00000000000000003b9af21a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-soft-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/08b519/00000000000000003b9af223/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/08b519/00000000000000003b9af223/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/08b519/00000000000000003b9af223/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/b99164/00000000000000003b9af224/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/b99164/00000000000000003b9af224/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/b99164/00000000000000003b9af224/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:400;
+}
+
+@font-face {
+font-family:"proxima-soft-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/51eba5/00000000000000003b9af229/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/51eba5/00000000000000003b9af229/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/51eba5/00000000000000003b9af229/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("opentype");
+font-display:auto;font-style:normal;font-weight:700;
+}
+
+@font-face {
+font-family:"proxima-soft-extra-condensed";
+src:url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/c22b14/00000000000000003b9af22a/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/c22b14/00000000000000003b9af22a/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff"),url("https://web.archive.org/web/20200410162809im_/https://use.typekit.net/af/c22b14/00000000000000003b9af22a/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("opentype");
+font-display:auto;font-style:italic;font-weight:700;
+}
+
+.tk-proxima-nova { font-family: "proxima-nova",sans-serif; }
+.tk-proxima-nova-condensed { font-family: "proxima-nova-condensed",sans-serif; }
+.tk-proxima-nova-extra-condensed { font-family: "proxima-nova-extra-condensed",sans-serif; }
+.tk-proxima-soft { font-family: "proxima-soft",sans-serif; }
+.tk-proxima-soft-condensed { font-family: "proxima-soft-condensed",sans-serif; }
+.tk-proxima-soft-extra-condensed { font-family: "proxima-soft-extra-condensed",sans-serif; }
+
+/*
+     FILE ARCHIVED ON 16:28:09 Apr 10, 2020 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:51:56 Jun 15, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 423.897
+  exclusion.robots: 182.392
+  exclusion.robots.policy: 182.379
+  xauthn.identify: 133.677
+  xauthn.chkprivs: 48.358
+  cdx.remote: 0.095
+  esindex: 0.013
+  LoadShardBlock: 93.206 (3)
+  PetaboxLoader3.datanode: 138.032 (5)
+  CDXLines.iter: 11.549 (3)
+  load_resource: 306.054 (2)
+  PetaboxLoader3.resolve: 224.79 (2)
+*/

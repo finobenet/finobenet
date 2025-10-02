@@ -1,0 +1,56 @@
+eeeeeee<br>
+<h1>create server</h1>
+<form method="post">
+<input type="hidden" name="_token" value="{{ data.csrf_token }}">
+<input type="hidden" name="type" value="1">
+ip
+<input type="text" name="ip"><br>
+port
+<input type="text" name="port"><br>
+placeid
+<input type="text" name="placeid"><br>
+jobid
+<input type="text" name="jobid"><br>
+status
+<input type="text" name="version"><br>
+<input type="submit">
+</form>
+<br><br><br>
+<h1>delete all servers</h1>
+<form method="post">
+<input type="hidden" name="_token" value="{{ data.csrf_token }}">
+<input type="hidden" name="type" value="2">
+<input type="submit">
+</form>
+<br><br>
+{% if data.servers|length %}
+<table border="1">
+    <thead>
+        <tr>
+            {% for column in data.servers[0]|keys %}
+                <th>{{ column }}</th>
+            {% endfor %}
+            <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for server in data.servers %}
+            <tr>
+                {% for value in server %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                        <input type="hidden" name="type" value="3">
+                        <input type="hidden" name="jobId" value="{{ server.jobId }}">
+                        <input type="submit">
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No server data available.</p>
+{% endif %}

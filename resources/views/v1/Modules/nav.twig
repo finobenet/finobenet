@@ -1,0 +1,180 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-faded navbar-static-top mb-3">
+   <div class="container">
+      <a href="/" class="navbar-brand"><img src="/s/img/{% if data.user.branding == "finobe" %}{% if "now"|date("m") == "10" %}{{ "halloween3.png" }}{% elseif "now"|date("m") == "11" or "now"|date("m") == "12" %}{{ "finobe_xmas.png"}}{% elseif data.user.logo == "v1" %}{{ "BUSY.png" }}{% elseif data.user.logo == "v2" %}{{ "finnobe3.png" }}{% else %}{{ "finnobe3logo.png" }}{% endif %}{% else %}{{ "logo.png" }}{% endif %}" alt="Finobe" class="navbar-brandimg d-inline-block mr-2">
+      {{ (data.user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}
+      </a> <button type="button" data-toggle="collapse" data-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"><span class="navbar-toggler-icon"></span></button> 
+      <div id="navbar-collapse" class="collapse navbar-collapse">
+         <ul class="nav navbar-nav mr-auto">
+            {% if not data.siteusername %}
+            <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+            {% else %}
+			<li class="nav-item dropdown dropdown-notifications">
+              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell align-middle mr-2"></i> ({{ data.notifications.info.number }})<span class="caret"></span></a> 
+              <div class="dropdown-menu dropdown-menu-left">
+                 <div class="dropdown-header"><span class="align-middle">Notifications</span></div>
+                 <a href="/api/mark?id=all" id="notification-markall" class="dropdown-item">Mark all as read</a> 
+                 <div class="dropdown-divider"></div>
+						{% if data.notifications.data|length %}
+						<div class="navbar-notification-list">
+						{% endif %}
+							{% for notification in data.notifications.data %}
+							<a class="notification-title notification-link dropdown-item" data-notify-id="196905"
+								href="/api/mark?id={{ notification.id }}"><i class="far fa-mars align-center fa-fw"></i>
+								{{ notification.message }} at {{ notification.date }}</a>
+							{% endfor %}
+							{% if not data.notifications.data|length %}
+								<p class="dropdown-header">Nothingness.</p>
+							{% endif %}
+						{% if data.notification.data|length %}
+						</div>
+						{% endif %}
+              </div>
+           </li>
+            <li class="nav-item"><a href="/user/{{ data.user.id }}" class="nav-link">Profile</a></li>
+			<li class="nav-item"><a href="/app/places" class="nav-link">Games</a></li>
+            {% endif %}
+            <li class="nav-item"><a href="/catalog" class="nav-link">Catalog</a></li>
+			<li class="nav-item"><a href="/forum" class="nav-link">Forum</a></li>
+            <li class="nav-item"><a href="/users" class="nav-link">Users</a></li>
+            <li class="nav-item"><a href="https://blog.finobe.net/" class="nav-link">Blog</a></li>
+         </ul>
+         {% if data.siteusername %}
+         <ul class="nav navbar-nav my-2 my-lg-0">
+           <li data-animation="false" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="{{ data.user.Dius }} - 0h 0m 0s remaining" class="nav-item n-money-text"><a href="/user/transaction-log" class="nav-link"><img src="/s/img/v1/owo_16.png" alt="Diu" title="Diu" class="img-responsive align-middle "> {{ data.user.Dius }}
+              </a>
+           </li>
+           <li class="nav-item dropdown">
+              <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa align-middle fa-user mr-1"></i><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> {{ data.user.username }} </font></font><span class="caret"></span></a> 
+              <div class="navbar-nobelium-dropdown dropdown-menu dropdown-menu-right">
+                 <a class="dropdown-item" href="/create"><i class="fa align-middle fa-fw fa-plus mr-2"></i> Add Server</a><a href="/app/character" class="dropdown-item"><i class="fa fa-fw fa-user mr-2"></i> Character</a> <a href="/app/settings" class="dropdown-item"><i class="fa fa-fw fa-wrench mr-2"></i> Settings</a> <a href="https://finobe.com/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item"><i class="fa fa-fw fa-sign-out mr-2"></i> Logout</a> 
+                 <form id="logout-form" action="/logout" method="POST" style="display: none;"><input type="hidden" name="_token" value="{{ data.csrf_token }}"></form>
+              </div>
+           </li>
+         </ul>
+		 <script>
+                  $(document).ready(function() {
+                    var time = '{{ data.user.lastdiu }}';
+                
+                    var userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    var userLocalTime = new Date(time);
+                    var userLocalOffset = userLocalTime.getTimezoneOffset();
+                    userLocalTime = new Date(userLocalTime.getTime() - userLocalOffset);
+                
+                    function updateCountdown() {
+                      var targetDate = userLocalTime.getTime();
+                      var now = new Date().getTime();
+                      var distance = targetDate - now;
+                
+                      if (distance <= 0) {
+                        clearInterval(interval);
+                        $('.tooltip-inner').text('{{ data.user.Dius }} - 0h 0m 0s remaning');
+						$('[data-original-title]').attr('data-original-title', '{{ data.user.Dius }} - 0h 0m 0s remaning');
+                        return;
+                      }
+                      
+                      var hours = Math.abs(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                      var minutes = Math.abs(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                      var seconds = Math.abs(Math.floor((distance % (1000 * 60)) / 1000));
+                
+                      var countdownText = hours + 'h ' + minutes + 'm ' + seconds + 's remaining';
+                      
+                      $('.tooltip-inner').text("{{ data.user.Dius }} - " + countdownText);
+					  $('[data-original-title]').attr('data-original-title', '{{ data.user.Dius }} - ' + countdownText);
+                    }
+                
+                    updateCountdown();
+                
+                    setInterval(updateCountdown, 1000);
+                  });
+                </script>
+         {% else %}
+         <ul class="nav navbar-nav my-2 my-lg-0">
+            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="/register" class="nav-link">Register</a></li>
+         </ul>
+         {% endif %}
+      </div>
+   </div>
+</nav>
+<div class="alert alert-danger alert-skinny my-0 text-center">
+	<p class="mb-0 text-white">Version 1 is currently broken following the release of the rewrite, it may be fixed in the future or deprecated. Only the absolute essentials work for you to switch back to Version 2.</p>
+</div>
+{% for announcement in data.announcements %}
+<div class="alert alert-{{ announcement.color }} alert-skinny my-0 text-center">
+	<p class="mb-0" style="color: white;">{{ announcement.message | raw }}</p>
+</div>
+{% endfor %}
+{% if data.successv2 %}
+<div class="text-center alert alert-success alert-logged" role="alert" style="z-index:1;">
+	<div class="container success-container" style="color:white;">
+		<button type="button" id="x" class="close" onclick="" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ data.successv2 }}
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+    $("#x").click(function() {
+      $(".alert-logged").fadeOut(300);
+    });
+	});
+</script>
+{% endif %}
+{% if data.success %}
+<div class="alert alert-success alert-skinny my-0 text-center">
+	<p class="mb-0 text-white">{{ data.success }}</p>
+</div>
+{% endif %}
+{% if data.error %}
+<div class="alert alert-danger alert-skinny my-0 text-center">
+	<p class="mb-0 text-white">{{ data.error }}</p>
+</div>
+{% endif %}
+{% if "now"|date("m") == "11" or "now"|date("m") == "12" %}
+<style>
+			.snowflake {
+			color: #fff;
+			font-size: 1em;
+			font-family: Arial, sans-serif;
+			text-shadow: 0 0 5px #000;
+			}
+			@-webkit-keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}@-webkit-keyframes snowflakes-shake{0%,100%{-webkit-transform:translateX(0);transform:translateX(0)}50%{-webkit-transform:translateX(80px);transform:translateX(80px)}}@keyframes  snowflakes-fall{0%{top:-10%}100%{top:100%}}@keyframes  snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;-webkit-animation-name:snowflakes-fall,snowflakes-shake;-webkit-animation-duration:10s,3s;-webkit-animation-timing-function:linear,ease-in-out;-webkit-animation-iteration-count:infinite,infinite;-webkit-animation-play-state:running,running;animation-name:snowflakes-fall,snowflakes-shake;animation-duration:10s,3s;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-play-state:running,running}.snowflake:nth-of-type(0){left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s}.snowflake:nth-of-type(1){left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s}.snowflake:nth-of-type(2){left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s}.snowflake:nth-of-type(3){left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s}.snowflake:nth-of-type(4){left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s}.snowflake:nth-of-type(5){left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s}.snowflake:nth-of-type(6){left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s}.snowflake:nth-of-type(7){left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s}.snowflake:nth-of-type(8){left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s}.snowflake:nth-of-type(9){left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s}.snowflake:nth-of-type(10){left:25%;-webkit-animation-delay:2s,0s;animation-delay:2s,0s}.snowflake:nth-of-type(11){left:65%;-webkit-animation-delay:4s,2.5s;animation-delay:4s,2.5s}
+		</style>
+        <div class="snowflakes" aria-hidden="true">
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+		</div>
+{% endif %}

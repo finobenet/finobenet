@@ -1,0 +1,34 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+        <form role="form" method="POST" action="/app/inbox/compose" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1 mt-3">
+                      <a class="btn btn-theme py-2" href="{{ (data.sendto) ? "/user/" ~ data.sendto.id : "/app/inbox" }}" style="padding-left: 10px; padding-right: 10px;"><i class="far fa-chevron-left"></i></a><button type="submit" class="btn btn-primary" style="margin-left: 10px;">send</button>
+                        <div class="card mt-3">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <label for="username" class="col-form-label">Username</label>
+                                        <input type="text" id="username" name="username" class="form-control mt-2" placeholder="Username" value="{{ data.sendto.username }}" required="">
+                                        <label for="subject" class="col-form-label">Subject</label>
+                                        <input type="text" id="subject" name="subject" class="form-control mt-2" placeholder="Subject" value="{{ data.subject }}" required="">
+                                        <label for="message" class="col-form-label">Message</label>
+                                        <textarea type="text" id="message" name="message" class="form-control mt-2" placeholder="Message" required=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

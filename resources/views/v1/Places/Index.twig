@@ -1,0 +1,151 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3">
+             <div class="row">
+                 <div class="col-md-2">
+                     <a href="/create" class="btn btn-outline-primary full-width mb-3"><i class="far fa-fw fa-plus"></i> new server</a>
+                     <div class="card">
+                         <div class="card-header bg-primary text-white text-center">
+                             Versions
+                         </div>
+                         <div class="card-body">
+                             <button id="reload" onclick="reloadGames();" class="btn btn-info full-width"><i class="fa fa-sync-alt"></i></button>
+                             <button id="all" class="btn btn-primary full-width mt-1">all</button>
+                             <button id="2012" class="btn btn-outline-light full-width mt-1">2012</button>
+                             <button id="2016" class="btn btn-outline-light full-width mt-1">2016</button>
+							 <div class="custom-control custom-checkbox my-2">
+								<input type="checkbox" id="online" class="custom-control-input" autofill-prediction="UNKNOWN_TYPE">
+								<label for="online" class="custom-control-label pl-1">Online Only</label>
+							 </div>
+							 <a href="#" class="btn btn-info full-width mt-1 text-white"><i class="fa fa-download mr-1"></i> 2012</a>
+							 <a href="#" class="btn btn-info full-width mt-1 text-white"><i class="fa fa-download mr-1"></i> 2016</a>
+                             {#<div class="custom-input"><input class="custom-checkbox" type="checkbox" name="verified"><label class="custom-input-label" for="verified">eee</label></div>#}
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-10" id="games" style="display: none;">
+					 {#
+                     {% for game in games %}
+                     <div class="card mb-3">
+                         <div class="card-body">
+                             <div class="d-flex flex-row full-width">
+                                 <img src="/s/img/spinnerv2.gif" style="width: 25%; height: auto;">
+                                 <div class="d-flex flex-column" style="flex-grow: 1;">
+                                     <h4 class="mt-2"><a href="javascript:void(0);">{{ game.title }}</a></h4>
+                                     <p class="mb-0"><strong>User:</strong> <a href="/user/">{{ game.author }}</a></p>
+                                     <p class="mb-0"><strong>Date:</strong> {{ game.created }}</p>
+                                     <p class="mb-0"><strong>Version:</strong> {{ game.version }}</p>
+                                     <p class="mb-0"><strong>Status:</strong> <span class="{{ (game.players > 0) ? "text-success" : "text-danger" }}">{{ (game.players > 0) ? "Online" : "Offline" }}</span> | <i class="fa fa-user"></i> {{ game.players }}</p>
+                                 </div>
+                                 <div style="margin-left: auto;"><a href="javascript:void(0);" class="btn btn-success" style="width: 20rem;height: 75%;display: flex;justify-content: center;align-items: center;">play</a></div>
+                             </div>
+                         </div>
+                     </div>
+                     {% endfor %}
+					 #}
+                 </div>
+				 <div class="col-md-10" id="loader">
+					<div class="d-flex justify-content-center" style="height: 100%;">
+						<i class="fa fa-circle-notch fa-spin fa-3x" style="align-self: center;"></i>
+					</div>
+				 </div>
+             </div>
+         </div>
+		 <script>
+			var games = document.getElementById('games');
+			var loader = document.getElementById('loader');
+			var onlineonly = document.getElementById('online');
+			var reload = document.getElementById('reload');
+			var all = document.getElementById('all');
+			var button2012 = document.getElementById('2012');
+			var button2016 = document.getElementById('2016');
+			var version = "all";
+			var online = false;
+			
+			function updateGames(online, version) {
+				this.online = online == "" ? false : true;
+				this.version = version;
+				loader.style.display = "";
+				games.style.display = "none";
+				reload.disabled = true;
+				all.disabled = true;
+				button2012.disabled = true;
+				button2016.disabled = true;
+				onlineonly.disabled = true;
+				console.log(this.online);
+				console.log(this.version);
+				
+				fetch('/api/v1/places?version=' + this.version + '&online=' + this.online)
+					.then(response => response.json())
+					.then(json => {
+						const data = json.data;
+						games.innerHTML = data;
+						loader.style.display = "none";
+						games.style.display = "";
+						reload.disabled = false;
+						all.disabled = false;
+						button2012.disabled = false;
+						button2016.disabled = false;
+						onlineonly.disabled = false;
+					});
+			}
+			
+			function reloadGames() {
+				updateGames(online, version);
+			}
+			
+			onlineonly.addEventListener('click', function () {
+				updateGames(onlineonly.checked ? true : false, version);
+			});
+			
+			all.addEventListener('click', function () {
+				all.classList.remove("btn-primary");
+				button2012.classList.remove("btn-primary");
+				button2016.classList.remove("btn-primary");
+				all.classList.remove("btn-outline-light");
+				button2012.classList.remove("btn-outline-light");
+				button2016.classList.remove("btn-outline-light");
+				all.classList.add("btn-primary");
+				updateGames(onlineonly.checked ? true : false, 'all');
+			});
+
+			button2012.addEventListener('click', function () {
+				all.classList.remove("btn-primary");
+				button2012.classList.remove("btn-primary");
+				button2016.classList.remove("btn-primary");
+				all.classList.remove("btn-outline-light");
+				button2012.classList.remove("btn-outline-light");
+				button2016.classList.remove("btn-outline-light");
+				button2012.classList.add("btn-primary");
+				updateGames(onlineonly.checked ? true : false, '2012');
+			});
+
+			button2016.addEventListener('click', function () {
+				all.classList.remove("btn-primary");
+				button2012.classList.remove("btn-primary");
+				button2016.classList.remove("btn-primary");
+				all.classList.remove("btn-outline-light");
+				button2012.classList.remove("btn-outline-light");
+				button2016.classList.remove("btn-outline-light");
+				button2016.classList.add("btn-primary");
+				updateGames(onlineonly.checked ? true : false, '2016');
+			});
+			
+			all.classList.remove("btn-primary");
+			button2012.classList.remove("btn-primary");
+			button2016.classList.remove("btn-primary");
+			all.classList.remove("btn-outline-light");
+			button2012.classList.remove("btn-outline-light");
+			button2016.classList.remove("btn-outline-light");
+			all.classList.add("btn-primary");
+			updateGames(false, "all");
+		 </script>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

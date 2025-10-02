@@ -1,0 +1,56 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-1" style="margin-top:20px;">
+                            <div class="card">
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <div class="row" style="flex-grow: 1;">
+                                        <a href="/admin/"><button class="btn btn-theme col-md-1 mr-1"><i class="far fa-chevron-left"></i></button></a>
+                                        <h4><strong>Prune Forum Posts</strong></h4>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <form role="form" method="POST" action="/admin/prune-posts" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <div class="form-group row">
+                                            <label for="id" class="col-form-label text-md-right" style="margin-left:15px;">Forum ID</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="id" name="id" value="" placeholder="Forum ID" autofocus="autofocus" class="form-control">
+                                            </div>
+                                            <label for="id" class="col-form-label text-md-right" style="margin-left:15px;"><small>Note: MAKE SURE YOU KNOW WHAT YOU ARE DOING HERE (THIS DELETES FORUM THREADS AND ITS REPLIES FOREVER)</small></label>
+                                        </div>
+										<div class="form-group row">
+                                            <label for="replyid" class="col-form-label text-md-right" style="margin-left:15px;">Forum Reply ID</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="replyid" name="replyid" value="" placeholder="Forum Reply ID" autofocus="autofocus" class="form-control">
+                                            </div>
+                                            <label for="id" class="col-form-label text-md-right" style="margin-left:15px;"><small>This is for when you want to delete only a thread reply</small></label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="username" class="col-form-label text-md-right" style="margin-left:15px;">Delete By Username</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="username" name="username" value="" placeholder="Username" autofocus="autofocus" class="form-control">
+                                            </div>
+                                            <label for="id" class="col-form-label text-md-right" style="margin-left:15px;"><small>This is will delete any posts by username</small></label>
+                                        </div>
+                                        <div class="form-group" style="margin-top:40px;">
+                                            <button type="submit" class="btn btn-danger full-width">Delete</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

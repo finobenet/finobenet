@@ -1,0 +1,41 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+        <div class="row mt-4">
+          <div class="col-md-3">
+            <p class="mt-4">Sections</p>
+            <a href="/app/inbox" class="btn btn-{% if data.section == "inbox" %}{{ "theme" }}{% else %}{{ "md" }}{% endif %} btn-md full-width mt-1 text-left" style="text-transform: capitalize;{{ (data.user.theme != 0) ? 'color: #FFF;' : '' }}"><i class="far fa-inbox" style="margin-right: 3%"></i> Inbox {% if data.notifications.info.inbox > 0 %}<span class="float-right">{{ data.notifications.info.inbox }}</span>{% endif %}</a>
+            <a href="/app/inbox/sent" class="btn btn-{% if data.section == "sent" %}{{ "theme" }}{% else %}{{ "md" }}{% endif %} btn-md full-width mt-1 text-left" style="text-transform: capitalize;{{ (data.user.theme != 0) ? 'color: #FFF;' : '' }}"><i class="far fa-share-square" style="margin-right: 3%"></i> Sent</a>
+            <a href="/app/inbox/archive" class="btn btn-{% if data.section == "archive" %}{{ "theme" }}{% else %}{{ "md" }}{% endif %} btn-md full-width mt-1 text-left" style="text-transform: capitalize;{{ (data.user.theme != 0) ? 'color: #FFF;' : '' }}"><i class="far fa-folder" style="margin-right: 3%"></i> Archive</a>
+          </div>
+          <div class="col-md-9">
+            {% for message in data.messages.data %}
+            <a href="/app/inbox/message?id={{ message.id }}" class="forum-post overflow-hidden{{ (message.readed == "y") ? " text-muted" : ""}} {{ (loop.index > 1) ? "pt-2 pb-2" : "" }}">
+              <span class="d-flex flex-row"><p class="mt-0 mb-0 " style="height: 20px;">{{ message.author | raw }} </p><p class="small mb-0 mt-1" style="margin-left: 0.5%">{{ message.date }}</p></span>
+              <p class="my-0"><strong><span>{{ message.subject | raw }}</span></strong> - {{ message.message|slice(0, 50) ~ (message.message|length > 50 ? '...' : '') }}</p>
+            </a>
+            {% endfor %}
+            {% if not data.messages.data|length %}
+            <p>No results</p>
+            {% endif %}
+            <div data-v-4350f98c="" class="mt-4">
+              <form method="get" action="">
+              <div data-v-e236382e="" data-v-4350f98c="" class="paginator clearfix text-center clearfix">
+                <a data-v-e236382e="" class="btn btn-theme mr-2 {{ (data.messages.page <= 1) ? "disabled" : ""}}" href="/app/inbox{{ (data.section != "inbox") ? "/" ~ data.section : "" }}?page={{ data.messages.page - 1 }}"><i data-v-e236382e="" class="far fa-chevron-left"></i></a>
+                <span data-v-e236382e=""><input data-v-e236382e="" id="input-form-data-v-e236382e-02" type="number" min="1" value="{{ data.messages.page }}" name="page" class="form-control form-control-sm page-input mr-1"> of <span data-v-e236382e="" id="input-form-data-v-e236382e-03" place="total">{{ data.messages.number_of_pages }}</span></span>
+                <a data-v-e236382e="" class="btn btn-theme ml-2 {{ (data.messages.page >= data.messages.number_of_pages) ? "disabled" : ""}}" href="/app/inbox{{ (data.section != "inbox") ? "/" ~ data.section : "" }}?page={{ data.messages.page + 1 }}"><i data-v-e236382e="" class="far fa-chevron-right"></i></a>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

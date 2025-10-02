@@ -1,0 +1,666 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+            .badge-shen {
+                background: #f5c177;
+                color: #000;
+            }
+    
+            .badge-iago {
+                background: #6f5e56;
+                color: #fff;
+            }
+        </style>
+        <style>
+            .nav-scroller.mb-3,
+            .navbar.mb-3 {
+                margin-bottom: 0rem !important;
+            }
+    
+            .alert-padding {
+                display: none;
+            }
+    
+            .alert {
+                margin-bottom: 0;
+            }
+    
+            .banner {
+                background: url(/s/img/bannerlate2019-2.jpg) no-repeat center center;
+                background: url(/s/img/bannerlate2019-2.jpg) no-repeat center center, -webkit-linear-gradient(top left, #312a6c, #852d91);
+                background: url(/s/img/bannerlate2019-2.jpg) no-repeat center center, -moz-linear-gradient(top left, #312a6c, #852d91);
+                background-size: cover;
+                margin: 0;
+                padding: 0;
+                color: #fff;
+                display: flex;
+                height: calc(100vh - 60px);
+                min-height: 350px;
+            }
+    
+            .banner>.container {
+                display: flex;
+                flex-direction: column;
+                align-self: center;
+            }
+    
+            .banner h4 {
+                text-shadow: 1px 1px 4px #000;
+            }
+    
+            .banner,
+            .banner>.container,
+            .banner>.container>.row,
+            .banner>.container>.row>div {
+                height: calc(100vh - 60px);
+                min-height: 350px;
+            }
+    
+            .banner .down-arrow {
+                color: #ececec;
+            }
+    
+            .ending {
+                text-align: center;
+                font-size: 24px;
+                font-weight: 300;
+            }
+    
+            .ending>.left-line,
+            .ending>.right-line {
+                border-top: 1px solid #989898;
+                flex: 1;
+            }
+    
+            .ending>p {
+                flex: 2;
+            }
+        </style>
+        <style type="text/css">
+            .finobe__vloader[data-v-3ec8574b] {
+                display: flex;
+                width: 100%;
+                min-height: 250px;
+                z-index: 9999;
+                /* :thinking:; */
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        </style>
+        <style type="text/css">
+            /* Fat */
+            .page-input[data-v-e236382e] {
+                max-width: 2.5rem;
+                display: inline;
+                vertical-align: middle;
+                text-align: center;
+            }
+    
+            /* Number up/down thing is ugly */
+            input[type='number'][data-v-e236382e] {
+                -webkit-appearance: textfield;
+                -moz-appearance: textfield;
+                appearance: textfield;
+            }
+    
+            input[type='number'][data-v-e236382e]::-webkit-inner-spin-button,
+            input[type='number'][data-v-e236382e]::-webkit-outer-spin-button,
+            input[type='number'][data-v-e236382e]:hover::-webkit-inner-spin-button,
+            input[type='number'][data-v-e236382e]:hover::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
+        <style type="text/css">
+            .n-loading-center[data-v-6e596b1f] {
+                z-index: 9999;
+            }
+    
+            .col-thumbnail[data-v-6e596b1f] {
+                display: flex;
+                align-content: center;
+                align-items: center;
+            }
+        </style>
+        <style type="text/css">
+            .item-list[data-v-4533fc68] {
+                max-height: calc(100vh + 500px);
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+    
+            .trade-send-btn[data-v-4533fc68] {
+                max-width: 200px;
+            }
+    
+            .card>.selected-text[data-v-4533fc68] {
+                display: flex;
+                position: absolute;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                background-color: rgba(14, 14, 14, .5);
+                width: 100%;
+                height: 100%;
+                border-radius: 3px;
+                color: #fff;
+                z-index: 9999;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .1s linear;
+            }
+    
+            .card.card-is-selected>.selected-text[data-v-4533fc68] {
+                opacity: 1;
+            }
+    
+            .card.card-is-selected>.card-block[data-v-4533fc68] {
+                pointer-events: none;
+            }
+        </style>
+        <style type="text/css">
+            .btn-play[data-v-152bd39d] {
+                padding: .75rem 5rem;
+            }
+    
+            .fat-spin[data-v-152bd39d] {
+                -webkit-animation: fa-spin 1s infinite linear;
+                animation: fa-spin 1s infinite linear;
+                margin-right: 2px;
+            }
+    
+            .checkmark[data-v-152bd39d] {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                vertical-align: middle;
+                display: inline-block;
+                stroke-width: 8px;
+                stroke: #fff;
+                stroke-miterlimit: 10;
+                box-shadow: inset 0px 0px 0px #00b857;
+            }
+    
+            .checkmark.make-animate[data-v-152bd39d] {
+                -webkit-animation: fill-data-v-152bd39d .2s ease-in-out forwards, scale-data-v-152bd39d .3s ease-in-out .2s both;
+                animation: fill-data-v-152bd39d .2s ease-in-out forwards, scale-data-v-152bd39d .3s ease-in-out .2s both;
+            }
+    
+            .check[data-v-152bd39d] {
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+                stroke-dasharray: 48;
+                stroke-dashoffset: 48;
+                -webkit-animation: stroke-data-v-152bd39d .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+                animation: stroke-data-v-152bd39d .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+            }
+    
+            @-webkit-keyframes stroke-data-v-152bd39d {
+                100% {
+                    stroke-dashoffset: 0;
+                }
+            }
+    
+            @keyframes stroke-data-v-152bd39d {
+                100% {
+                    stroke-dashoffset: 0;
+                }
+            }
+    
+            @-webkit-keyframes scale-data-v-152bd39d {
+    
+                0%,
+                100% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+    
+                50% {
+                    -webkit-transform: scale3d(1.1, 1.1, 1);
+                    transform: scale3d(1.1, 1.1, 1);
+                }
+            }
+    
+            @keyframes scale-data-v-152bd39d {
+    
+                0%,
+                100% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+    
+                50% {
+                    -webkit-transform: scale3d(1.1, 1.1, 1);
+                    transform: scale3d(1.1, 1.1, 1);
+                }
+            }
+    
+            @-webkit-keyframes fill-data-v-152bd39d {
+                100% {
+                    box-shadow: inset 0px 0px 0px 30px #00b857;
+                }
+            }
+    
+            @keyframes fill-data-v-152bd39d {
+                100% {
+                    box-shadow: inset 0px 0px 0px 30px #00b857;
+                }
+            }
+    
+            .fade-enter-active[data-v-152bd39d],
+            .fade-leave-active[data-v-152bd39d] {
+                transition: opacity .2s;
+            }
+    
+            .fade-enter[data-v-152bd39d],
+            .fade-leave-to[data-v-152bd39d] {
+                opacity: 0;
+            }
+        </style>
+        <style type="text/css">
+            .option[data-v-ef83b9bc] {
+                width: 100%;
+                display: inline-block;
+                background-color: #fff;
+                padding: 6px 10px;
+                color: #000;
+                transition: all .15s linear;
+                border-radius: .25rem;
+                cursor: pointer;
+            }
+    
+            .option[data-v-ef83b9bc]:hover {
+                color: #000;
+                text-decoration: none;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1), 0 1px 4px 2px rgba(0, 0, 0, .1);
+            }
+    
+            .option.active[data-v-ef83b9bc],
+            .option.active[data-v-ef83b9bc]:hover {
+                border-color: #0270a6;
+                box-shadow: 0 0 0 .2rem rgba(3, 155, 229, .5);
+                cursor: default;
+            }
+        </style>
+        <style type="text/css">
+            @charset "UTF-8";
+    
+            .forum-voter[data-v-73be696c] {
+                display: flex;
+                width: 200px;
+            }
+    
+            .forum-voter>.total[data-v-73be696c] {
+                padding: 0 6px;
+                margin-right: 6px;
+                min-width: 30px;
+                text-align: center;
+                height: 22px;
+                border-radius: 4px;
+            }
+    
+            .forum-voter>.up[data-v-73be696c],
+            .forum-voter>.down[data-v-73be696c] {
+                background-color: #ececec;
+                padding: 0 6px;
+                min-width: 50px;
+                display: flex;
+                justify-content: space-around;
+                height: 22px;
+                color: #6b6b6b;
+                cursor: pointer;
+            }
+    
+            .forum-voter>.up.disabled[data-v-73be696c],
+            .forum-voter>.down.disabled[data-v-73be696c] {
+                cursor: not-allowed;
+            }
+    
+            .forum-voter>.up>i[data-v-73be696c]:before,
+            .forum-voter>.down>i[data-v-73be696c]:before {
+                display: inline-block;
+                margin-top: 4px;
+            }
+    
+            .forum-voter>.up[data-v-73be696c] {
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+                border: 1px solid #e6e6e6;
+                border-right: 1px solid #e6e6e6;
+            }
+    
+            .forum-voter>.down[data-v-73be696c] {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                border: 1px solid #e6e6e6;
+            }
+    
+            .forum-voter>.up.active[data-v-73be696c] {
+                color: #039be5;
+            }
+    
+            .forum-voter>.down.active[data-v-73be696c] {
+                color: #ba68c8;
+            }
+    
+            .forum-voter>.up[data-v-73be696c]:hover:not(.active):not(.disabled),
+            .forum-voter>.down[data-v-73be696c]:hover:not(.active):not(.disabled) {
+                color: #000;
+            }
+    
+            .finobe-dark .forum-voter>.up[data-v-73be696c],
+            .finobe-dark .forum-voter>.down[data-v-73be696c] {
+                background-color: #2b2d31;
+                color: #d6dbdd;
+            }
+    
+            .finobe-dark .forum-voter>.up[data-v-73be696c] {
+                border: 1px solid rgba(246, 246, 246, .125);
+                border-right: 1px solid rgba(246, 246, 246, .125);
+            }
+    
+            .finobe-dark .forum-voter>.down[data-v-73be696c] {
+                border: 1px solid rgba(246, 246, 246, .125);
+            }
+    
+            .finobe-dark .forum-voter>.up.active[data-v-73be696c] {
+                color: #039be5;
+            }
+    
+            .finobe-dark .forum-voter>.down.active[data-v-73be696c] {
+                color: #ba68c8;
+            }
+    
+            .finobe-dark .forum-voter>.up[data-v-73be696c]:hover:not(.active):not(.disabled),
+            .finobe-dark .forum-voter>.down[data-v-73be696c]:hover:not(.active):not(.disabled) {
+                color: #dcdcdc;
+            }
+    
+            .far.fa-arrow-up[data-v-73be696c]:before {
+                content: "\F062";
+            }
+    
+            .far.fa-arrow-down[data-v-73be696c]:before {
+                content: "\F063";
+            }
+        </style>
+        <style type="text/css">
+            .modal[data-v-2386736f] {
+                transition: all .2s ease;
+            }
+    
+            .modal-enter[data-v-2386736f],
+            .modal-leave-active[data-v-2386736f] {
+                opacity: 0;
+            }
+    
+            .modal-enter.modal[data-v-2386736f],
+            .modal-leave-active.modal[data-v-2386736f] {
+                -webkit-transform: scale(.9);
+                transform: scale(.9);
+            }
+        </style>
+        <style type="text/css">
+            .whats-this[data-v-1377793b] {
+                line-height: 2;
+            }
+        </style>
+        <style type="text/css">
+            .btn-play[data-v-20da418e] {
+                padding: .75rem 5rem;
+            }
+    
+            .fat-spin[data-v-20da418e] {
+                -webkit-animation: fa-spin 1s infinite linear;
+                animation: fa-spin 1s infinite linear;
+                margin-right: 2px;
+            }
+    
+            .checkmark[data-v-20da418e] {
+                width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                vertical-align: middle;
+                display: inline-block;
+                stroke-width: 8px;
+                stroke: #fff;
+                stroke-miterlimit: 10;
+                box-shadow: inset 0px 0px 0px #00b857;
+            }
+    
+            .checkmark.make-animate[data-v-20da418e] {
+                -webkit-animation: fill-data-v-20da418e .2s ease-in-out forwards, scale-data-v-20da418e .3s ease-in-out .2s both;
+                animation: fill-data-v-20da418e .2s ease-in-out forwards, scale-data-v-20da418e .3s ease-in-out .2s both;
+            }
+    
+            .check[data-v-20da418e] {
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+                stroke-dasharray: 48;
+                stroke-dashoffset: 48;
+                -webkit-animation: stroke-data-v-20da418e .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+                animation: stroke-data-v-20da418e .3s cubic-bezier(.65, 0, .45, 1) .1s forwards;
+            }
+    
+            @-webkit-keyframes stroke-data-v-20da418e {
+                100% {
+                    stroke-dashoffset: 0;
+                }
+            }
+    
+            @keyframes stroke-data-v-20da418e {
+                100% {
+                    stroke-dashoffset: 0;
+                }
+            }
+    
+            @-webkit-keyframes scale-data-v-20da418e {
+    
+                0%,
+                100% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+    
+                50% {
+                    -webkit-transform: scale3d(1.1, 1.1, 1);
+                    transform: scale3d(1.1, 1.1, 1);
+                }
+            }
+    
+            @keyframes scale-data-v-20da418e {
+    
+                0%,
+                100% {
+                    -webkit-transform: none;
+                    transform: none;
+                }
+    
+                50% {
+                    -webkit-transform: scale3d(1.1, 1.1, 1);
+                    transform: scale3d(1.1, 1.1, 1);
+                }
+            }
+    
+            @-webkit-keyframes fill-data-v-20da418e {
+                100% {
+                    box-shadow: inset 0px 0px 0px 30px #00b857;
+                }
+            }
+    
+            @keyframes fill-data-v-20da418e {
+                100% {
+                    box-shadow: inset 0px 0px 0px 30px #00b857;
+                }
+            }
+    
+            .fade-enter-active[data-v-20da418e],
+            .fade-leave-active[data-v-20da418e] {
+                transition: opacity .2s;
+            }
+    
+            .fade-enter[data-v-20da418e],
+            .fade-leave-to[data-v-20da418e] {
+                opacity: 0;
+            }
+        </style>
+        <style type="text/css">
+            .whats-this[data-v-59802440] {
+                line-height: 2;
+            }
+        </style>
+        <style type="text/css">
+            .game-card-div[data-v-5ad0ed22] {
+                display: inline-flex;
+                height: 178px;
+            }
+    
+            .game-card[data-v-5ad0ed22]:hover,
+            .game-card-div[data-v-5ad0ed22]:hover,
+            .game-card-div:hover>.game-card-link[data-v-5ad0ed22] {
+                z-index: 10000;
+            }
+    
+            .game-card[data-v-5ad0ed22] {
+                position: relative;
+                overflow-y: hidden;
+                height: 170px;
+            }
+    
+            .game-card-link>.game-card>.visits[data-v-5ad0ed22] {
+                display: none;
+            }
+    
+            .game-card-link:hover>.game-card[data-v-5ad0ed22] {
+                height: auto;
+            }
+    
+            .game-card-link:hover>.game-card>.visits[data-v-5ad0ed22] {
+                display: block;
+                padding: .25rem 0 .5rem .65rem;
+                border-top: 1px solid #ccc;
+            }
+        </style>
+        <style type="text/css">
+            .group-members-select[data-v-318d200a] {
+                min-width: 200px;
+            }
+    
+            .group-member-link>span>img[data-v-318d200a] {
+                max-width: 64px;
+            }
+    
+            .group-member-link[data-v-318d200a] {
+                text-decoration: none !important;
+            }
+    
+            .finobe-light .group-member-link[data-v-318d200a]:link,
+            .finobe-light .group-member-link[data-v-318d200a]:hover,
+            .finobe-light .group-member-link[data-v-318d200a]:visited {
+                color: #212529;
+            }
+    
+            .finobe-dark .group-member-link[data-v-318d200a]:link,
+            .finobe-dark .group-member-link[data-v-318d200a]:hover,
+            .finobe-dark .group-member-link[data-v-318d200a]:visited {
+                color: #ececec;
+            }
+    
+            .group-member-card[data-v-318d200a] {
+                width: 112px;
+            }
+        </style>
+        <style type="text/css">
+            .no-default-chevron::after {
+                content: none !important;
+            }
+        </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                {{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }} General Guidelines
+                            </div>
+                            <div class="card-body">
+                                <ol>
+                                    <li>You must be at least 13 years of age before registering.</li>
+                                    <li>Don’t be racist or hateful. If you use a racist word (<i>e.g.</i> any variant of the N
+                                        word) or a slur (<i>e.g.</i> the homophobic slur starting with F), you will be banned.
+                                    </li>
+                                    <li>Don’t be immature. For example, erotic roleplay and general sexual behaviour are not
+                                        allowed. Comments about the human reproductive system are not allowed either.</li>
+                                    <li>Don’t cause drama.</li>
+                                    <li>Don’t exploit servers. Don’t post IP trackers on the forum either.</li>
+                                    <li>Don’t bully or attack other people. Everybody messes up from time to time. In that
+                                        regard, be respectful and understanding of other users.</li>
+                                    <li>Don’t grief servers. You will be banned for griefing if an admin deems it necessary.
+                                        User reports will not be taken for this infraction.</li>
+                                    <li>Don't make off-site deals or you'll be permanently banned. What happens on Finobe
+                                        <i>stays</i> on Finobe.
+                                    </li>
+                                    <li>Don't farm Dius or attempt to manipulate the economy. You are not allowed to create
+                                        alternate accounts for the purpose of gaining more Dius on your main account.</li>
+                                    <li>Don’t make death threats. You will be permanently banned if you make any death threats.
+                                    </li>
+                                    <li>Don’t evade bans by the usage of alternate accounts. If you are found evading a ban, all
+                                        of your accounts will be permanently banned.</li>
+                                    <li>Don’t downvote things just because you don’t like them. The downvote button is present
+                                        to show that something doesn’t belong somewhere.</li>
+                                    <li>Don’t sell invite keys and don’t use sold invite keys. Any accounts that use purchased
+                                        invite keys will be banned.</li>
+                                    <li>Don’t scam or manipulate users for personal gain. Your trading rights may be revoked for
+                                        such actions, and you may even be permanently banned for larger offenses. For example,
+                                        don’t try to convince users that an item is worth more than its actual worth.</li>
+                                    <li>Don’t create an offensive or otherwise inappropriate username. For example, usernames
+                                        with slurs, bodily functions, and other things that would be considered “immature” are
+                                        not allowed.</li>
+                                </ol>
+                                <p class="mb-0">You should use your common sense. These are the most common infractions that we
+                                    take action against. If something is not listed here, it doesn't mean it's not against the
+                                    rules.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                {{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }} Content Guidelines
+                            </div>
+                            <div class="card-body">
+                                <ol class="mb-0">
+                                    <li>Don’t upload or post copyrighted content.</li>
+                                    <li>Don’t upload furry content. A lot of furry content creators do not like their art being
+                                        stolen and uploaded on another website.</li>
+                                    <li>Don't upload content that is NSFW, including “borderline” NSFW content. Examples of this
+                                        include overt breast shading on shirts and t-shirts. We also do not allow “muscle” content.
+                                    </li>
+                                    <li>Don’t upload fascist, neo-Nazi, or generally-extremist imagery. This includes symbols
+                                        actively used by white supremacists and neo-Nazi groups.</li>
+                                    <li>Politics are generally not allowed on {{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }}, with the main exception being posts in the
+                                        “Serious” forum category.</li>
+                                    <li>Don't kick or ban administrators from your place. Your place will be disapproved.</li>
+                                    <li>Don’t upload models or places with obfuscated scripts. You will be permanently banned.</li>
+                                    <li>Don’t create or use content that can potentially harm people, for example things that cause
+                                        seizures for people with epilepsy.</li>
+                                    <li>Do not upload models with viruses or potential backdoors for the purpose of exploiting.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

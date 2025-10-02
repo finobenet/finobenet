@@ -1,0 +1,58 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <strong><h3>Asset Moderation</h3></strong>
+                <div class="catalog_container">
+                <div class="row" style="margin: auto; display: ;">
+                    {% if not data.assets|length %}
+                        <p>There are no items to moderate.</p>
+                    {% endif %}
+                    {% for asset in data.assets %}
+                        <div class="col-lg-4 mb-2">
+                                <div class="card">
+                                    <div class="card-body" style="text-align: center;">
+                                        <h3 style="text-align: center;"> {{ asset.title }}</h3>
+                                        {% if asset.asset_type == 3 %}
+										<p>Processed</p>
+                                        <audio controls="controls" controlslist="nodownload"><source src="/dynamic/reviewing/{{ asset.file }}" type="audio/mpeg">Your browser does not support the audio element.</audio>
+										<p>Original</p>
+                                        <audio controls="controls" controlslist="nodownload"><source src="/dynamic/temp/{{ asset.file }}" type="audio/mpeg">Your browser does not support the audio element.</audio>
+                                        {% elseif asset.asset_type == 2 or asset.asset_type == 11 or asset.asset_type == 12 or asset.asset_type == 18 %}
+                                        <div class="d-flex flex-row{{ (asset.asset_type == 18) ? ' justify-content-center' : '' }}">
+                                            <img src="{{ asset.additional.media.thumbnail }}" style="width: 50%; height: auto;">
+                                            {% if asset.asset_type != 18 %}
+                                                <img src="https://www.finobe.net/asset/?id={{ asset.additional.media.textureAssetId }}" style="width: 50%; height: auto; background-color: #000;">
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        <hr>
+                                        <p class="mb-0">Suggested by: {{ asset.author }}</p>
+                                        <p>Date Added: {{ asset.publish }}</p>
+                                        <hr>
+                                        <center>
+                                            <a href="/api/accept?id={{ asset.id }}"><button class="btn btn-success btn-lg col-md-5 mr-1" style="text-transform: capitalize;">Accept</button></a>
+                                            <a href="/api/deny?id={{ asset.id }}"><button class="btn btn-danger btn-lg col-md-5 mr-1" style="text-transform: capitalize;">Deny</button></a>
+                                        </center>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endfor %}
+                    <script>
+                        document.querySelectorAll('audio').forEach(element => {
+                            element.volume = 0.1;
+                        });
+
+                        document.currentScript.remove();
+                    </script>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

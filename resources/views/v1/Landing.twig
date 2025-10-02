@@ -1,0 +1,105 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app main-content">
+         {% include ('v1/Modules/nav.twig') %}
+         {% if not IsLoggedIn %}
+         <div class="main-content">
+            <div class="container">
+               <h1 class="mb-4">We make old new again</h1>
+               <p>Finobe's goal is to emulate an old brickbuilding game.</p>
+               <p><a href="/register" class="btn btn-primary btn-lg mt-3 mr-2">Get started </a></p>
+            </div>
+         </div>
+         <div class="container mt-4">
+            <div class="row">
+               <div class="col-lg-3 mb-2">
+                  <a href="https://discord.gg/invite/wgwb6z8krC" class="catalog-card">
+                     <div class="card">
+                        <div class="card-body">
+                           <h3><img src="/s/img/social/Discord-Logo-Color.svg" class="img-inline" style="max-width: 30px; max-height: 30px; vertical-align: middle;"> Discord</h3>
+                           <p class="text-muted">Join our Discord server and engage in conversations (and meme) with our community!</p>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-lg-3 mb-2">
+                  <a href="https://www.youtube.com/Aesthetiful" class="catalog-card">
+                     <div class="card">
+                        <div class="card-body">
+                           <h3><img src="/s/img/social/ytlogo.png" class="img-inline" style="max-width: 30px; max-height: 30px; vertical-align: middle;"> YouTube</h3>
+                           <p class="text-muted">Check out some of our videos on YouTube, which detail some new and upcoming features.</p>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-lg-3 mb-2">
+                  <a href="https://twitter.com/Aesthetiful" class="catalog-card">
+                     <div class="card">
+                        <div class="card-body">
+                           <h3><img src="/s/img/social/Twitter_Logo_Blue.svg" class="img-inline" style="max-width: 30px; max-height: 30px; vertical-align: middle;"> Twitter</h3>
+                           <p class="text-muted">We tweet whenever we post a video, and may even hint at some upcoming events on our Twitter.</p>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+               <div class="col-lg-3 mb-2">
+                  <a href="https://www.reddit.com/user/DrChic0" class="catalog-card">
+                     <div class="card">
+                        <div class="card-body">
+                           <h3><img src="/s/img/social/reddit.svg" class="img-inline" style="max-width: 30px; max-height: 30px; vertical-align: middle;"> Subreddit</h3>
+                           <p class="text-muted">While largely unused, our subreddit can be a place to obtain an answer to a burning question you have.</p>
+                        </div>
+                     </div>
+                  </a>
+               </div>
+            </div>
+         </div>
+		 {% else %}
+		 <div class="main-content pb-5" style="height: auto;">
+            <div class="container align-items-center" style="align-self: start;">
+               <img src="/s/img/{{ (user.branding == "finobe") ? "fatnobe.png" : "logo.png" }}" style="width: {{ (user.branding == "finobe") ? "50" : "25" }}%; height: auto; vertical-align: middle;">
+			   <div class="row">
+				   <div class="card ml-1">
+					  <a href="https://discord.gg/invite/wgwb6z8krC" class="catalog-card">
+						<div class="card-body py-2">
+							<img src="/s/img/v1/Discord-Logo-Color.svg" style="width: 30px; height: auto; vertical-align: middle;">
+						</div>
+					  </a>
+				   </div>
+				   <div class="card ml-1">
+					  <a href="https://www.youtube.com/Aesthetiful" class="catalog-card">
+						<div class="card-body py-2">
+							<img src="/s/img/v1/ytlogo.png" style="width: 40px; height: auto; vertical-align: middle;">
+						</div>
+					  </a>
+				   </div>
+				   <div class="card ml-1">
+					  <a href="https://twitter.com/Aesthetiful" class="catalog-card">
+						<div class="card-body py-2">
+							<img src="/s/img/v1/Twitter_Logo_Blue.svg" style="width: 30px; height: auto; vertical-align: middle;">
+						</div>
+					  </a>
+				   </div>
+				   <div class="card ml-1">
+					  <a href="https://www.reddit.com/user/DrChic0" class="catalog-card">
+						<div class="card-body py-2">
+							<img src="/s/img/v1/reddit.svg" style="width: 30px; height: auto; vertical-align: middle;">
+						</div>
+					  </a>
+				   </div>
+			   </div>
+			   <div class="card full-width mt-4 mb-5">
+				<div class="card-body text-center">
+					<p class="mb-0">Welcome to {{ (user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}! Our project's goal is to emulate an old brickbuilding game. We will never be able to truly bring the experience back, but we are making it possible to play old games and experience the old clients in the best way possible! To play, you will need an account and the client. Make an account by signing up, and <a href="https://discord.gg/invite/wgwb6z8krC">get the client from our Discord server!</a></p>
+				</div>
+			   </div>
+            </div>
+         </div>
+         {% endif %}
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

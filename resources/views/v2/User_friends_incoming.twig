@@ -1,0 +1,44 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <h3 class="text-center">Incoming Friend Requests</h3>
+                <div class="row">
+                    {% for user in data.user.friends %}
+                    <div class="col-md-3">
+                        <div class="col-16 mt-3 ml-1">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center mt-0">
+                                        <div>
+                                            <p class="mb-0"><a href="/user/{{ user.userid }}">{{ user.username }}</a></p>
+                                        </div>
+                                        <div class="btn-group"><a href="/user/{{ user.userid }}/accept?feature=incoming" class="btn btn-success">accept</a><a href="/user/{{ user.userid }}/remove?feature=incoming" class="btn btn-danger">deny</a></div>
+                                        <div class="ml-1">
+                                            <a href="/user/{{ user.userid }}">
+                                                {% if user.pfp == "" %}
+                                                <img src="/s/img/spinnerv2.gif" style="max-width: 100px;">
+                                                {% else %}
+                                                <img src="https://cdn.finobe.net/{{ user.pfp }}" style="max-width: 100px;">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if not data.user.friends|length %}
+                    <p>No results</p>
+                    {% endif %}
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

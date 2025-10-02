@@ -1,0 +1,266 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <strong><h3>Admin Panel</h3></strong>
+                <div class="catalog_container" style="margin-top:20px;">
+                    <div class="row" style="margin: auto;">
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-gavel mr-1 fa-4x text-danger"></i><br><br>
+                                            <p class="mb-0 text-danger">IP Bans</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2"
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-user mr-1 fa-4x text-primary"></i><br><br>
+                                            <p class="mb-0 text-primary">Users</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-tshirt mr-1 fa-4x text-success"></i><br><br>
+                                            <p class="mb-0 text-success">Assets</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card" href="/admin/bans">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-ban mr-1 fa-4x text-danger"></i><br><br>
+                                            <p class="mb-0 text-danger">Bans</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card" href="/admin/decider">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-question mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Oui/Non Decider</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body" style="color:#ba68c8">
+                                            <i class="far align-middle fa-sync fa-rotate-0 mr-1 fa-4x text-purple"></i><br><br>
+                                            <p class="mb-0 text-purple">Force Regen Character</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a href="/admin/prune-posts" class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-trash mr-1 fa-4x text-danger"></i><br><br>
+                                            <p class="mb-0 text-danger">Prune Forum Posts</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-hexagon mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Purge Inactive Accounts</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/createxml">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-layer-plus mr-1 fa-4x text-primary"></i><br><br>
+                                            <p class="mb-0 text-primary">New XML Asset</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/rbxcreatexml">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <img src="/s/img/roblox-r.png" class="far align-middle fa-fw fa-r mr-1 fa-3x text-danger"></img><br><br>
+                                            <p class="mb-0 text-danger">Create XML Assset</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body" style="color:#ba68c8">
+                                            <i class="far align-middle fa-fw fa-shopping-cart mr-1 fa-4x text-purple"></i><br><br>
+                                            <p class="mb-0 text-purple">Item Purchase L...</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/give_dius">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-dollar-sign mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Give Dius</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-hexagon mr-1 fa-4x text-primary"></i><br><br>
+                                            <p class="mb-0 text-primary">Give Asset (Dep...</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-cart-plus mr-1 fa-4x text-success"></i><br><br>
+                                            <p class="mb-0 text-success">Give Asset (No...</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/assets">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-book mr-1 fa-4x text-danger"></i><br><br>
+                                            <p class="mb-0 text-danger">Asset Approval</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-image mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Player List Thu...</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a href="/admin/warn" class="catalog-card">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-ban mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Give warning</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2">
+                            <a class="catalog-card" href="/admin/announcements">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-megaphone mr-1 fa-4x text-warning"></i><br><br>
+                                            <p class="mb-0 text-warning">Make site announcement</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/give_badges">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-badge-check mr-1 fa-4x text-success"></i><br><br>
+                                            <p class="mb-0 text-success">Give Badges</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+						<div class="col-lg-2 mb-2" style="margin-top:20px">
+                            <a class="catalog-card" href="/admin/elections">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-body">
+                                            <i class="far align-middle fa-fw fa-vote-yea mr-1 fa-4x text-primary"></i><br><br>
+                                            <p class="mb-0 text-primary">Elections</p>
+                                        </div>
+                                    </center>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:100px">
+                    <p>- <a href="">Set User Rank</a></p>
+                    <p>- <a href="/admin/servers">Manage servers</a> </p>
+                    <p>- <a href="">Modify User Permissions</a></p>
+                    <p>- <a href="">Clear Timed Cache</a></p>
+                    <p>- <a href="">Force Username Change</a></p>
+                    <p>- <a href="">Invite Tree</a></p>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

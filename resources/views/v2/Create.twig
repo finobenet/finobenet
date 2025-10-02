@@ -1,0 +1,52 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <a href="/catalog/new" class="catalog-card">
+                <div class="container" style="margin-top: 20px; margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="icon-container">
+                                <i class="far fa-fw fa-child mr-1 fa-8x"></i>
+                                <div class="content">
+                                    <h4>Asset</h4>
+                                    <p class="mb-1">Click here to create a shirt, t-shirt, or pants.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .icon-container {
+                        display: flex;
+                        align-items: center;
+                        margin-left: 80px;
+                    }
+
+                    .content {
+                        margin-left: 80px;
+                    }
+                </style>
+            </a>
+            <a href="/app/place/new" class="catalog-card">
+                <div class="container" style="margin-top: 20px; margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="icon-container">
+                                <i class="far fa-fw fa-trophy mr-1 fa-8x"></i>
+                                <div class="content">
+                                    <h4>Place</h4>
+                                    <p class="mb-1">Click here to create a place.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

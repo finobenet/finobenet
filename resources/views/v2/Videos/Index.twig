@@ -1,0 +1,206 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+	<style>
+		.video-index__thumbnail {
+		    width: 100%;
+		    margin-left: auto;
+		    margin-right: auto;
+		    background: #000;
+		}
+
+		.h-100 {
+			height: 100%;
+		}
+
+		.video-card:hover {
+			text-decoration: none;
+			color: inherit;
+		}
+	</style>
+  </head>
+  <body>
+    <div id="app">
+   {% include ('v2/Modules/nav.twig') %}
+   <div class="container mt-3">
+      <h3 class="font-weight-light mb-0">Videos</h3>
+	  {% if not data.siteusername %}
+      <p class="mb-0"><strong>Note:</strong> More videos may be available after logging in.</p>
+	  {% endif %}
+      <div class="mb-4"></div>
+      {% if not data.videos.data|length %}
+	  <p>No results</p>
+	  {% endif %}
+	  {#
+      <div class="container-fluid content-row d-none d-lg-block">
+         <div class="row">
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/115" alt="Top 5 Romanian Technolagy Invention 2020!!  😎💗💛💙" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/115" alt="Top 5 Romanian Technolagy Invention 2020!!  😎💗💛💙" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Top 5 Romanian Technolagy Invention 2020!!  😎💗💛💙</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/114" alt="Finobe in a Dumpster Fire" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/114" alt="Finobe in a Dumpster Fire" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Finobe in a Dumpster Fire</span> <span class="catalog-no-overflow-plz text-muted">
+               by Raymonf		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/113" alt="Cat" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/113" alt="Cat" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Cat</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/110" alt="Finobe Halloween Special" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/110" alt="Finobe Halloween Special" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Finobe Halloween Special</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/109" alt="hhgreg ytp rap" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/109" alt="hhgreg ytp rap" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">hhgreg ytp rap</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/108" alt="secret video from the 2003 spongebob xbox dvd" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/108" alt="secret video from the 2003 spongebob xbox dvd" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">secret video from the 2003 spongebob xbox dvd</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid content-row d-none d-lg-block">
+         <div class="row">
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/107" alt="FUCK drake and josh" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/107" alt="FUCK drake and josh" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">FUCK drake and josh</span> <span class="catalog-no-overflow-plz text-muted">
+               by coke		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/106" alt="sauce" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/106" alt="sauce" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">sauce</span> <span class="catalog-no-overflow-plz text-muted">
+               by Uni		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/104" alt="spongebob dead" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/104" alt="spongebob dead" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">spongebob dead</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/103" alt="anime" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/103" alt="anime" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">anime</span> <span class="catalog-no-overflow-plz text-muted">
+               by Uni		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/102" alt="Chicken Tendies" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/102" alt="Chicken Tendies" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Chicken Tendies</span> <span class="catalog-no-overflow-plz text-muted">
+               by Uni		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/101" alt="uwu" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/101" alt="uwu" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">uwu</span> <span class="catalog-no-overflow-plz text-muted">
+               by Uni		</span></span></a>
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid content-row d-none d-lg-block">
+         <div class="row">
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/100" alt="Big Floppa" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/100" alt="Big Floppa" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Big Floppa</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/99" alt="troll" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/99" alt="troll" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">troll</span> <span class="catalog-no-overflow-plz text-muted">
+               by coke		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/98" alt="poop loop" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/98" alt="poop loop" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">poop loop</span> <span class="catalog-no-overflow-plz text-muted">
+               by coke		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/97" alt="Slurpee" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/97" alt="Slurpee" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Slurpee</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/96" alt="squiward" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/96" alt="squiward" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">squiward</span> <span class="catalog-no-overflow-plz text-muted">
+               by Iagattack		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/94" alt="Russian Shrek" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/94" alt="Russian Shrek" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">Russian Shrek</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+         </div>
+      </div>
+      <div class="container-fluid content-row d-none d-lg-block">
+         <div class="row">
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/88" alt="hi" class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/88" alt="hi" class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">hi</span> <span class="catalog-no-overflow-plz text-muted">
+               by linguni		</span></span></a>
+            </div>
+            <div class="col-lg-2 mb-4"><a href="https://web.archive.org/web/20201202223618mp_/https://finobe.com/video/87" alt="a message..." class="game-card h-100 video-card"><span class="thumbnail"><img src="https://web.archive.org/web/20201202223618im_/https://finobe.com/video/thumb/87" alt="a message..." class="card-img-top"></span> <span class="data py-2 px-2 d-flex flex-column"><span class="catalog-no-overflow-plz">a message...</span> <span class="catalog-no-overflow-plz text-muted">
+               by Zlarb		</span></span></a>
+            </div>
+         </div>
+      </div>
+	  #}
+	  {% for videosBatch in data.videos.data|batch(6) %}
+			<div class="container-fluid content-row d-block d-md-none">
+				<div class="row">
+					{% for video in videosBatch %}
+						<div class="col-lg-2 mb-4">
+							<a href="/video/{{ video.id }}" alt="{{ video.title }}" class="game-card h-100 video-card">
+								<span class="thumbnail"><img src="/video/thumb/{{ video.id }}" alt="{{ video.title }}" class="card-img-top"></span>
+								<span class="data py-2 px-2 d-flex flex-column">
+									<span class="catalog-no-overflow-plz">{{ video.title }}</span>
+									<span class="catalog-no-overflow-plz text-muted">{{ video.author }}</span>
+								</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	  {% for videosBatch in data.videos.data|batch(6) %}
+			<div class="container-fluid content-row d-none d-md-block d-lg-none">
+				<div class="row">
+					{% for video in videosBatch %}
+						<div class="col-lg-2 mb-4">
+							<a href="/video/{{ video.id }}" alt="{{ video.title }}" class="game-card h-100 video-card">
+								<span class="thumbnail"><img src="/video/thumb/{{ video.id }}" alt="{{ video.title }}" class="card-img-top"></span>
+								<span class="data py-2 px-2 d-flex flex-column">
+									<span class="catalog-no-overflow-plz">{{ video.title }}</span>
+									<span class="catalog-no-overflow-plz text-muted">{{ video.author }}</span>
+								</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+		{% for videosBatch in data.videos.data|batch(6) %}
+			<div class="container-fluid content-row d-none d-lg-block">
+				<div class="row">
+					{% for video in videosBatch %}
+						<div class="col-lg-2 mb-4">
+							<a href="/video/{{ video.id }}" alt="{{ video.title }}" class="game-card h-100 video-card">
+								<span class="thumbnail"><img src="/video/thumb/{{ video.id }}" alt="{{ video.title }}" class="card-img-top"></span>
+								<span class="data py-2 px-2 d-flex flex-column">
+									<span class="catalog-no-overflow-plz">{{ video.title }}</span>
+									<span class="catalog-no-overflow-plz text-muted">{{ video.author }}</span>
+								</span>
+							</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	  <div class="my-4">
+        <ul class="pagination shadow-sm">
+			<li class="page-item{{ (data.videos.pages.info.previous_page == data.videos.pages.info.start_page) ? " disabled" : "" }}">
+			  <a class="page-link" id="previous-page" href="/videos?page={{ data.videos.pages.info.previous_page }}" rel="previous" aria-label="Previous <<" {{ (data.videos.pages.info.current_page <= 1) ? "style='pointer-events: none;'" : "" }}>«</a>
+			</li>
+			{% if data.videos.pages.info.start_page > 1 %}
+			  <li class="page-item">
+				<a class="page-link" href="/videos?page=1">1</a>
+			  </li>
+			  {% if data.videos.pages.info.start_page > 2 %}
+				<li class="page-item">
+				  <a class="page-link" href="/videos?page=2">2</a>
+				</li>
+			  {% endif %}
+			  <li class="page-item"><span class="page-link">...</span></li>
+			{% endif %}
+			{% for page in data.videos.pages.data %}
+			  <li class="page-item">
+				<a class="page-link{{ (page.page == data.videos.pages.info.current_page) ? " selected" : "" }}" href="/videos?page={{ page.page }}">
+				  {{ page.page }}
+				</a>
+			  </li>
+			{% endfor %}
+			{% if data.videos.pages.info.end_page < data.videos.pages.info.number_of_pages %}
+			  {% if data.videos.pages.info.end_page + 1 < data.videos.pages.info.number_of_pages %}
+				<li class="page-item"><span class="page-link">...</span></li>
+			  {% endif %}
+			  <li class="page-item">
+				<a class="page-link" href="/videos?page={{ data.videos.pages.info.number_of_pages - 1 }}">{{ data.videos.pages.info.number_of_pages - 1 }}</a>
+			  </li>
+			  <li class="page-item">
+				<a class="page-link" href="/videos?page={{ data.videos.pages.info.number_of_pages }}">{{ data.videos.pages.info.number_of_pages }}</a>
+			  </li>
+			{% endif %}
+			<li class="page-item{{ (data.videos.pages.info.next_page == data.videos.pages.info.end_page) ? " disabled" : "" }}">
+			  <a class="page-link" id="next-page" href="/videos?page={{ data.videos.pages.info.next_page }}" rel="next" aria-label="Next >>" >»</a>
+			</li>
+		  </ul>
+        </div>
+   </div>
+</div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

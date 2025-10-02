@@ -1,0 +1,100 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <div class="row">
+                    <div class="col-lg-2 mb-2">
+                        <div>
+                            <strong><p>Settings</p></strong>
+                            <p class="mb-1"><a href="/app/settings">User Details</a></p>
+                            <p class="mb-1">Password</p>
+                            <p class="mb-1">Security</p>
+                            <p class="mb-1">Privacy</p>
+                            <p class="mb-1 text-primary"><strong>Theming</strong></p>
+                            <p class="mb-1">Language</p>
+                            <p class="mb-1"><a href="/app/games">Places</a></p>
+                            <p class="mb-1"><a href="/app/connect">Connect</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 mb-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <input type="hidden" name="dark" value="e">
+                                    <label for="submit" class="col-form-label">Dark Theme</label>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary full-width" style="text-transform: capitalize;">Toggle Dark Theme</button>
+                                    </div>
+                                </form>
+                                <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <input type="hidden" name="gary" value="e">
+                                    <label for="submit" class="col-form-label">Dark Gary Mode</label>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary full-width" style="text-transform: capitalize;">Toggle Dark Gary Mode</button>
+                                    </div>
+                                </form>
+                                <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <input type="hidden" name="upsidedown" value="e">
+                                    <label for="submit" class="col-form-label">Upside Down Mode</label>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary full-width" style="text-transform: capitalize;">Toggle Upside Down Mode</button>
+                                    </div>
+                                </form>
+                                <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <div class="form-group">
+                                        <label for="type" class="col-form-label">Branding</label>
+                                        <select id="branding" name="branding" value="e" class="form-control mt-2" required>
+                                            <option value="aesthetiful"{{ (data.user.branding == "aesthetiful") ? " selected" : "" }}>Aesthetiful</option>
+                                            <option value="finobe"{{ (data.user.branding == "finobe") ? " selected" : "" }}>Finobe</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary full-width">Change</button>
+                                    </div>
+                                </form>
+								<form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+									<div class="form-group">
+										<label for="version" class="col-form-label">Version</label>
+										<select id="version" name="version" value="e" class="form-control mt-2" required>
+											<option value="v1"{{ (data.user.version == "v1") ? " selected" : "" }}>Version 1</option>
+											<option value="v2"{{ (data.user.version == "v2") ? " selected" : "" }}>Version 2</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-primary full-width">Change</button>
+									</div>
+								</form>
+                                {% if data.user.branding == "finobe" %}
+                                <form role="form" method="POST" action="/app/theme" enctype="multipart/form-data">
+                                    <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                    <div class="form-group">
+                                        <label for="type" class="col-form-label">Logo</label>
+                                        <select id="logo" name="logo" class="form-control mt-2" required>
+                                            <option value="v1"{{ (data.user.logo == "v1") ? " selected" : "" }}>Finobe v1 (mid 2017 - late 2018)</option>
+                                            <option value="v2"{{ (data.user.logo == "v2") ? " selected" : "" }}>Finobe v2 (mid 2018)</option>
+                                            <option value="v3"{{ (data.user.logo == "v3") ? " selected" : "" }}>Finobe v3 (early 2019 - present)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary full-width">Change</button>
+                                    </div>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

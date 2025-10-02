@@ -1,0 +1,17 @@
+<html>
+  <head>
+    {% include ('v1/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v1/Modules/nav.twig') %}
+	  <div class="container mt-3">
+		  <h3>You have been IP banned from {{ (user.branding == "finobe") ? "Finobe" : "Aesthetiful" }}</h3>
+		  <p>It was probably not nice knowing you, Bye!!!!!!!!!</p>
+		  <br>
+		  <iframe width="560" height="315" src="https://www.youtube.com/embed/dKbceIjuny0?si=UuIIgEZZFPY9CzL6&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen autoplay></iframe>
+	  </div>
+    </div>
+    {% include ('v1/Modules/footer.twig') %}
+  </body>
+</html>

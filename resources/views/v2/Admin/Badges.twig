@@ -1,0 +1,60 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-1" style="margin-top:20px;">
+                            <div class="card">
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <div class="row" style="flex-grow: 1;">
+                                        <a href="/admin/"><button class="btn btn-theme col-md-1 mr-1"><i class="far fa-chevron-left"></i></button></a>
+                                        <h4><strong>Give Badge</strong></h4>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <form role="form" method="POST" action="" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <div class="form-group row">
+                                            <label for="username" class="col-form-label text-md-right" style="margin-left:15px;">Username</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="username" name="username" value="" placeholder="Username" required="required" autofocus="autofocus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="message" class="col-form-label text-md-right" style="margin-left:15px;">Message</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="message" name="message" value="" placeholder="Message" required="required" autofocus="autofocus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="color" class="col-form-label text-md-right" style="margin-left:15px;">Color</label>
+                                            <div class="col-md-12">
+                                                <select type="select" id="color" name="color" class="form-control">
+                                                    <option value="success">green</option>
+                                                    <option value="primary">blue</option>
+                                                    <option value="danger">red</option>
+                                                    <option value="info">purple</option>
+                                                    <option value="warning">yellow</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <small>Note: this gives a user a badge with a custom message on their profile and forum posts, keep it short.</small>
+                                        <div class="form-group" style="margin-top:40px;">
+                                            <button type="submit" class="btn btn-success full-width">Give Custom Badge</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

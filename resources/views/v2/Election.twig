@@ -1,0 +1,48 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        {{ data.election.css | raw }}
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3">
+          <div class="card">
+              <div class="card-body text-center">
+                  <h4>{{ data.election.title | raw }}</h4>
+                  <p>Pick elections</p>
+                  <div class="d-flex justify-content-around p-3">
+                      {% for option in data.election.options %}
+                      <div class="card" style="min-width: 20%;width: auto;">
+                          {% if option.image != "" %}
+                            <div class="card-header p-0">
+                                <img src="{{ option.image }}" style="width: 220px;height: auto;">
+                            </div>
+                          {% endif %}
+                          <div class="card-body">
+                              <p>{{ option.title | raw }}</p>
+                              <p><strong>Votes: {{ data.election.votes|filter(vote => vote.id == option.id)|length }}</strong></p>
+                          </div>
+                          <form method="post" action="">
+                            <div class="card-body">
+                                <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                <input type="hidden" name="index" value="{{ option.id }}">
+                                <button class="btn btn-{{ (data.election.votes|filter(vote => vote.id == option.id)|filter(vote2 => vote2.username == data.user.username)) ? "success" : "secondary" }} full-width">vote{{ (data.election.votes|filter(vote => vote.id == option.id)|filter(vote2 => vote2.username == data.user.username)) ? "d" : "" }}</button>
+                            </div>
+                          </form>
+                      </div>
+                      {% endfor %}
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

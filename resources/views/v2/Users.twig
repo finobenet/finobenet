@@ -1,0 +1,100 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-4">
+                <h3 style="font-weight: 300;">User List</h3>
+                <form method="get" action="/users" class="mt-2 mb-3 col-mb-3">
+                    <div class="input-group input-group-lg search-input">
+                        <input type="text" name="search" placeholder="Search..." value="{{ (data.search) ? data.search : "" }}" class="form-control form-control-lg border-right-0 border">
+                        <span class="input-group-append">
+                            <button type="submit" class="btn btn-secondary  border-left-0 border"><i class="far fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+                <div class="row">
+                    {% for user in data.users %}
+                    <div class="col-md-3">
+                        <div class="col-16 mt-3 ml-1">
+                            <a href="/user/{{ user.id }}" class="catalog-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex mt-0">
+                                            <div class="ml-1">
+                                                {% if user.pfp == "" %}
+                                                <img src="/s/img/spinnerv2.gif" style="max-width: 40px;">
+                                                {% else %}
+                                                <img src="https://cdn.finobe.net/{{ user.pfp }}" style="max-width: 40px;">
+                                                {% endif %}
+                                            </div>
+                                            <div class="offset-md-1">
+                                                <p class="mb-0">{{ user.username }}</p>
+                                                {% if user.IsOnline and not user.InGame %}
+                                                <p class="mb-0 text-success">Online</p>
+                                                {% elseif user.InGame %}
+                                                <p class="mb-0 text-success">{{ user.game.title|raw }}</p>
+                                                {% else %}
+                                                <p class="mb-0">{{ user.lastlogin }}</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% if not data.users|length %}
+                    <p>No results</p>
+                    {% endif %}
+                </div>
+                <div class="mt-2" style="display: flex; justify-content: center;">
+  <ul class="pagination shadow-sm">
+    <li class="page-item">
+      <a class="page-link" id="previous-page" href="/users?page={{ data.pagination.pages.info.current_page - 1 }}" rel="previous" aria-label="Previous <<" {{ (data.pagination.pages.info.current_page <= 1) ? "style='pointer-events: none;'" : "" }}>«</a>
+    </li>
+    {% if data.pagination.pages.info.start_page > 1 %}
+      <li class="page-item">
+        <a class="page-link" href="/users?page=1">1</a>
+      </li>
+      {% if data.pagination.pages.info.start_page > 2 %}
+        <li class="page-item">
+          <a class="page-link" href="/users?page=2">2</a>
+        </li>
+      {% endif %}
+      {% if data.pagination.pages.info.start_page - 1 > 2 %}
+        <li class="page-item"><span class="page-link">...</span></li>
+      {% endif %}
+    {% endif %}
+    {% for page in data.pagination.pages.data %}
+      <li class="page-item">
+        <a class="page-link{{ (page.page == data.pagination.pages.info.current_page) ? " selected" : "" }}" href="/users?page={{ page.page }}">
+          {{ page.page }}
+        </a>
+      </li>
+    {% endfor %}
+    {% if data.pagination.pages.info.end_page < data.pagination.pages.info.number_of_pages %}
+      {% if data.pagination.pages.info.end_page + 1 < data.pagination.pages.info.number_of_pages - 1 %}
+        <li class="page-item"><span class="page-link">...</span></li>
+      {% endif %}
+      {% for page in [data.pagination.pages.info.number_of_pages - 1, data.pagination.pages.info.number_of_pages] %}
+        {% if page > data.pagination.pages.info.end_page %}
+          <li class="page-item">
+            <a class="page-link" href="/users?page={{ page }}">{{ page }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <li class="page-item">
+      <a class="page-link" id="next-page" href="/users?page={{ data.pagination.pages.info.next_page }}" rel="next" aria-label="Next >>" {{ (data.pagination.pages.info.current_page >= data.pagination.pages.info.number_of_pages) ? "style='pointer-events: none;'" : "" }}>»</a>
+    </li>
+  </ul>
+</div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

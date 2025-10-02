@@ -1,0 +1,103 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-3">
+             <div class="row">
+                 <div class="col-md-3">
+                     <div class="card">
+                         <div class="card-header text-center">
+                             Character
+                         </div>
+                         <div class="card-body" style="height: auto;">
+                             <button class="btn btn-primary full-width"><i class="fa fa-sync-alt"></i> regen</button>
+                             <img src="{{ (user.pfp == "") ? "/s/img/spinnerv2.gif" : "https://cdn.finobe.net/" ~ user.pfp }}" class="full-width mt-2" style="height: auto;">
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-9">
+                     <div class="card">
+                         <div class="card-header">
+                             <ul class="nav nav-tabs card-header-tabs">
+                              <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#bodycolours">Body Colours</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#hats">Hats</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#t-shirts">T-Shirts</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#shirts">Shirts</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#pants">Pants</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#faces">Faces</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#gear">Gear</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#heads">Heads</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#packages">Packages</a>
+                              </li>
+                             </ul>
+                         </div>
+                         <div class="card-body tab-content">
+                            <div class="tab-pane show active" id="bodycolours">
+                              <p>da</p>
+                            </div>
+                            <div class="tab-pane" id="hats">
+                              <div class="row">
+                                  <div class="col-md-4 mb-4 pr-3">
+                                      <div class="card">
+                                          <div class="card-body">
+                                              <div class="d-flex justify-content-center">
+                                                 <img src="https://cdn.finobe.net/{{ user.pfp }}" style="width: 50%; height: auto;">
+                                              </div>
+                                              <p class="mt-2 mb-0"><a href="/item/0">Test</a></p>
+                                              <p class="mt-0 mb-0">by {% if item.uuid == false %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ "winsupermario1234" }}</a>{% endif %}</p>
+                                              <button class="btn btn-primary full-width mt-2">equip</button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="tab-pane" id="t-shirts">
+                              <p>t-shirts</p>
+                            </div>
+                            <div class="tab-pane" id="shirts">
+                              <p>shirts</p>
+                            </div>
+                            <div class="tab-pane" id="pants">
+                              <p>pants</p>
+                            </div>
+                            <div class="tab-pane" id="faces">
+                              <p>faces</p>
+                            </div>
+                            <div class="tab-pane" id="gear">
+                              <p>gear</p>
+                            </div>
+                            <div class="tab-pane" id="heads">
+                              <p>heads</p>
+                            </div>
+                            <div class="tab-pane" id="packages">
+                              <p>packages</p>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

@@ -1,0 +1,276 @@
+{% if data.user.gary == 1 %}
+<img src="/s/img/me_irl_lol_23423.png" id="6RLe9KwU6iqN3GRWHaVdFT6RaZY4vDSt" style="position:fixed;pointer-events:none;z-index:9999999;opacity:0.05;width:100%;height:100%;">
+{% endif %}
+<nav class="navbar navbar-expand-lg navbar-{% if data.user.theme == 1 or data.user.gary == 1 %}{{ "dark" }}{% else %}{{ "light" }}{% endif %}{% if "now"|date("m") == "10" and data.user.theme == 0 %}{{ " navbar-light-halloween" }}{% endif %} bg-{{ (data.user.theme == 1 or data.user.gary == 1 or data.user.theme == "halloween") ? "dark" : "faded" }} navbar-static-top">
+  <div class="container"><a href="/" class="navbar-brand"><img src="/s/img/{% if data.user.branding == "finobe" %}{% if "now"|date("m") == "10" %}{{ "halloween3.png" }}{% elseif "now"|date("m") == "11" or "now"|date("m") == "12" %}{{ "finobe_xmas.png"}}{% elseif data.user.logo == "v1" %}{{ "BUSY.png" }}{% elseif data.user.logo == "v2" %}{{ "finnobe3.png" }}{% else %}{{ "finnobe3logo.png" }}{% endif %}{% else %}{{ "logo.png" }}{% endif %}" alt="{{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }}"
+        class="navbar-brandimg d-inline-block mr-2" style="width: auto;">
+      {{ (data.user.branding == "finobe") ? "Finobe" : "Aesthetiful" }} </a> <button type="button" data-toggle="collapse" data-target="#navbar-collapse"
+      aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation"
+      class="navbar-toggler navbar-toggler-right"><span class="navbar-toggler-icon"></span></button>
+    <div id="navbar-collapse" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav mr-auto">
+        {% if not data.siteusername %}
+        <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+        {% else %}
+        <li class="nav-item"><a href="/user/{{ data.user.id }}" class="nav-link">Profile</a></li>
+        <li class="nav-item"><a href="/app/places" class="nav-link">Games</a></li>
+        <li class="nav-item"><a href="/catalog/" class="nav-link">Catalog</a></li>
+		{% endif %}
+        <li class="nav-item"><a href="/forum/home" class="nav-link">Forum</a></li>
+        {% if data.siteusername %}
+        <li class="nav-item"><a href="/users" class="nav-link">Users</a></li>
+        {% endif %}
+        <li class="nav-item"><a href="https://blog.finobe.net/" class="nav-link">Blog</a></li>
+		{% if not data.siteusername %}
+		<li class="nav-item"><a href="/videos" class="nav-link">Videos</a></li>
+		{% endif %}
+		{% if data.siteusername %}
+		<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>More</strong></a>
+						<div class="navbar-nobelium-dropdown dropdown-menu">
+							<a class="dropdown-item" href="{#https://wiki.finobe.com#}javascript:void(0);">Wiki</a>
+							<a class="dropdown-item" href="/videos">Videos</a>
+						</div>
+					</li>
+		{% endif %}
+        {% if data.user.status == "admin" %}
+        <li class="nav-item"><a href="/admin/" class="nav-link">Admin</a></li>
+        {% endif %}
+      </ul>
+      {% if not data.siteusername %}
+      <ul class="nav navbar-nav my-2 my-lg-0">
+        <li class="nav-item"><a href="/auth/login" class="nav-link">Login</a></li>
+        <li class="nav-item"><a href="/auth/register" class="nav-link">Register</a></li>
+      </ul>
+      {% else %}
+      <ul class="nav navbar-nav my-2 my-lg-0">
+				<li class="nav-item">
+					<a href="/app/inbox" class="nav-link">
+						<i class="far align-middle fa-envelope mt-1 mr-1"></i>
+            {% if data.notifications.info.inbox > 0 %}
+						<span class="badge badge-danger badge-notification ml-1">{{ data.notifications.info.inbox }}</span>
+            {% endif %}
+					</a>
+				</li>
+				<li class="nav-item dropdown dropdown-notifications">
+					<a class="nav-link dropdown-toggle" href="#"  data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						<i class="far fa-bell align-middle mr-1"></i>
+            {% if data.notifications.info.number > 0 %}
+						<span class="badge badge-danger badge-notification ml-1">{{ data.notifications.info.number }}</span>
+            {% endif %}
+						<span class="caret"></span>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						<div class="dropdown-header">
+							<span class="align-middle">Notifications</span>
+              {% if data.notifications.info.number > 0 %}
+							<span class="badge badge-danger badge-notification">{{ data.notifications.info.number }}</span>
+              {% endif %}
+						</div>
+						<a href="/api/mark?id=all" class="dropdown-item" id="notification-markall">Mark as read</a>
+						<div class="dropdown-divider"></div>
+						<div class="navbar-notification-list">
+							{% for notification in data.notifications.data %}
+							<a class="notification-title notification-link dropdown-item" data-notify-id="196905"
+								href="/api/mark?id={{ notification.id }}"><i class="far fa-mars align-center fa-fw"></i>
+								{{ notification.message }} at {{ notification.date }}</a>
+							{% endfor %}
+							{% if not data.notifications %}
+								<p class="dropdown-header">Nothingness.</p>
+							{% endif %}
+						</div>
+					</div>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false">
+						<i class="far fa-users align-middle" aria-hidden="true"></i>
+						{% if data.notifications.info.incomingFriends > 0 %}
+							<span class="badge badge-danger badge-notification">{{ data.notifications.info.incomingFriends }}</span>
+              			{% endif %}
+					</a>
+					<div class="navbar-nobelium-dropdown dropdown-menu dropdown-menu-right">
+						<a class="dropdown-item" href="/friends/incoming">
+							Incoming
+							{% if data.notifications.info.incomingFriends > 0 %}
+							<span class="badge badge-danger badge-notification">{{ data.notifications.info.incomingFriends }}</span>
+              			{% endif %}
+						</a>
+						<a class="dropdown-item" href="/user/{{ data.user.id }}/friends">Friends</a>
+					</div>
+				</li>
+                <script>
+                  $(document).ready(function() {
+                    var time = '{{ data.user.lastdiu }}';
+                
+                    var userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    var userLocalTime = new Date(time);
+                    var userLocalOffset = userLocalTime.getTimezoneOffset();
+                    userLocalTime = new Date(userLocalTime.getTime() - userLocalOffset);
+                
+                    function updateCountdown() {
+                      var targetDate = userLocalTime.getTime();
+                      var now = new Date().getTime();
+                      var distance = targetDate - now;
+                
+                      if (distance <= 0) {
+                        clearInterval(interval);
+						if($('[x-placement="bottom"]').find('.tooltip-inner').text().includes('s remaining')) {
+                        	$('[x-placement="bottom"]').find('.tooltip-inner').text('{{ data.user.Dius }} - 0h 0m 0s remaining');
+						}
+						$('[title="Diu"]').attr('data-original-title', '{{ data.user.Dius }} - 0h 0m 0s remaining');
+                        return;
+                      }
+                      
+                      var hours = Math.abs(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                      var minutes = Math.abs(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+                      var seconds = Math.abs(Math.floor((distance % (1000 * 60)) / 1000));
+                
+                      var countdownText = hours + 'h ' + minutes + 'm ' + seconds + 's remaining';
+                      
+					  if($('[x-placement="bottom"]').find('.tooltip-inner').text().includes('s remaining')) {
+                      	$('[x-placement="bottom"]').find('.tooltip-inner').text("{{ data.user.Dius }} - " + countdownText);
+					  }
+					  $('[data-original-title="Diu"]').attr('data-original-title', '{{ data.user.Dius }} - ' + countdownText);
+					  $('#test[data-toggle="tooltip"]').attr('data-original-title', '{{ data.user.Dius }} - ' + countdownText);
+                    }
+                
+                    updateCountdown();
+                
+                    setInterval(updateCountdown, 1000);
+                  });
+                </script>
+				<li id="test" data-animation="false" data-toggle="tooltip" data-placement="bottom" title="Diu" data-original-title="{{ data.user.Dius }} - 0h 0m 0s remaining" class="nav-item n-money-text" ><a href="/user/transaction-log" class="nav-link"><img src="/s/img/diu_16.png" "alt="Diu" title="Diu" class="img-responsive align-middle "> {{ data.user.formattedDius }}</a></li>
+							<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+								><i class="far align-middle fa-user mr-1"></i> {{ data.user.username }}
+							<span class="caret"></span>
+						</a>
+						<div class="navbar-nobelium-dropdown dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="/create"><i class="far align-middle fa-fw fa-plus mr-1"></i> Create</a>
+							<a class="dropdown-item" href="/app/character"><i class="far align-middle fa-fw fa-user mr-1"></i> Character</a>
+							<a class="dropdown-item" href="/app/settings"><i
+									class="far align-middle fa-fw fa-wrench mr-1"></i> Settings</a>
+                            <a class="dropdown-item" href="/invites"><i
+									class="far align-middle fa-fw fa-user-plus mr-1"></i> Invites</a>
+							<a class="dropdown-item" href="/logout"
+								onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
+									class="far align-middle fa-fw fa-sign-out mr-1"></i> Logout</a>
+							<form id="logout-form" action="/logout" method="POST" style="display: none;">
+								<input type="hidden" name="_token" value="{{ data.csrf_token }}">
+							</form>
+						</div>
+					</li>
+				</ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+{% if data.siteusername %}
+<div class="nav-scroller navbar-{{ (data.user.theme == 1) ? "dark" : "light" }}{% if "now"|date("m") == "10" and data.user.theme == 0 %}{{ " navbar-light-halloween" }}{% endif %} bg-{{ (data.user.theme == 0) ? "faded" : "dark" }}">
+	<div class="container">
+		<nav class="nav nav-underline nav-scroller-inner">
+			<a class="nav-link" href="/create"><i class="far align-middle fa-fw fa-plus mr-1"></i> Create</a>
+			<a class="nav-link" href="/app/character"><i class="far align-middle fa-fw fa-user mr-1"></i> Character</a>
+			<a class="nav-link" href="/trades"><i class="far fa-fw align-middle fa-exchange-alt mr-1"></i> Trades</a>
+		</nav>
+	</div>
+</div>
+{% endif %}
+{% for announcement in data.alerts.announcements %}
+<div class="alert alert-{{ announcement.color }} alert-skinny my-0 text-center">
+	<p class="mb-0" style="color: white;">{{ announcement.message | raw }}</p>
+</div>
+{% endfor %}
+{% if data.alerts.successv2 %}
+<div class="text-center alert alert-success alert-logged" role="alert" style="z-index:1;">
+	<div class="container success-container" style="color:white;">
+		<button type="button" id="x" class="close" onclick="" data-dismiss="alert" aria-hidden="true">×</button>
+			{{ data.alerts.successv2 }}
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+    $("#x").click(function() {
+      $(".alert-logged").fadeOut(300);
+    });
+	});
+</script>
+{% endif %}
+{% if data.alerts.success %}
+<div class="alert alert-success alert-skinny my-0 text-center">
+	<p class="mb-0 text-white">{{ data.alerts.success }}</p>
+</div>
+{% endif %}
+{% if data.alerts.error %}
+<div class="alert alert-danger alert-skinny my-0 text-center">
+	<p class="mb-0 text-white">{{ data.alerts.error }}</p>
+</div>
+{% endif %}
+{% if "now"|date("m") == "11" or "now"|date("m") == "12" %}
+<style>
+			.snowflake {
+			color: #fff;
+			font-size: 1em;
+			font-family: Arial, sans-serif;
+			text-shadow: 0 0 5px #000;
+			}
+			@-webkit-keyframes snowflakes-fall{0%{top:-10%}100%{top:100%}}@-webkit-keyframes snowflakes-shake{0%,100%{-webkit-transform:translateX(0);transform:translateX(0)}50%{-webkit-transform:translateX(80px);transform:translateX(80px)}}@keyframes  snowflakes-fall{0%{top:-10%}100%{top:100%}}@keyframes  snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}.snowflake{position:fixed;top:-10%;z-index:9999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default;-webkit-animation-name:snowflakes-fall,snowflakes-shake;-webkit-animation-duration:10s,3s;-webkit-animation-timing-function:linear,ease-in-out;-webkit-animation-iteration-count:infinite,infinite;-webkit-animation-play-state:running,running;animation-name:snowflakes-fall,snowflakes-shake;animation-duration:10s,3s;animation-timing-function:linear,ease-in-out;animation-iteration-count:infinite,infinite;animation-play-state:running,running}.snowflake:nth-of-type(0){left:1%;-webkit-animation-delay:0s,0s;animation-delay:0s,0s}.snowflake:nth-of-type(1){left:10%;-webkit-animation-delay:1s,1s;animation-delay:1s,1s}.snowflake:nth-of-type(2){left:20%;-webkit-animation-delay:6s,.5s;animation-delay:6s,.5s}.snowflake:nth-of-type(3){left:30%;-webkit-animation-delay:4s,2s;animation-delay:4s,2s}.snowflake:nth-of-type(4){left:40%;-webkit-animation-delay:2s,2s;animation-delay:2s,2s}.snowflake:nth-of-type(5){left:50%;-webkit-animation-delay:8s,3s;animation-delay:8s,3s}.snowflake:nth-of-type(6){left:60%;-webkit-animation-delay:6s,2s;animation-delay:6s,2s}.snowflake:nth-of-type(7){left:70%;-webkit-animation-delay:2.5s,1s;animation-delay:2.5s,1s}.snowflake:nth-of-type(8){left:80%;-webkit-animation-delay:1s,0s;animation-delay:1s,0s}.snowflake:nth-of-type(9){left:90%;-webkit-animation-delay:3s,1.5s;animation-delay:3s,1.5s}.snowflake:nth-of-type(10){left:25%;-webkit-animation-delay:2s,0s;animation-delay:2s,0s}.snowflake:nth-of-type(11){left:65%;-webkit-animation-delay:4s,2.5s;animation-delay:4s,2.5s}
+		</style>
+        <div class="snowflakes" aria-hidden="true">
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+			<div class="snowflake">
+				❅
+			</div>
+			<div class="snowflake">
+				❆
+			</div>
+		</div>
+{% endif %}
+{% if data.siteusername and data.page != '/' and data.notifications.ads %}
+<div class="mt-3 mb-3 d-flex justify-content-center">
+    {#
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2537513323123758"
+     crossorigin="anonymous"></script>
+    <!-- Finobe -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:970px;height:90px"
+         data-ad-client="ca-pub-2537513323123758"
+         data-ad-slot="8094585543"></ins>
+    <script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    #}
+    <iframe data-aa='2314227' src='//ad.a-ads.com/2314227?size=728x90' style='width:728px; height:90px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe>
+</div>
+{% endif %}

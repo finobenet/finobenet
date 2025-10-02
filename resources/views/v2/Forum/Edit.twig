@@ -1,0 +1,105 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="forumContainer container mt-3">
+                <nav class="breadcrumb"><a href="/" class="breadcrumb-item">{{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }}</a> <a href="/forum/home"
+                        class="breadcrumb-item">Forum Home</a> <a href="/forum/home/{{ data.post.category }}" class="breadcrumb-item">
+                        {% if data.post.category == "1" %}{{ "Announcements" }}{% elseif data.post.category == "2" %}{{ "General" }}{% elseif data.post.category == "3" %}{{ "Suggestions" }}{% elseif data.post.category == "4" %}{{ "Off Topic" }}{% elseif data.post.category == "5" %}{{ "Help" }}{% elseif data.post.category == "6" %}{{ "Development" }}{% elseif data.post.category == "7" %}{{ "Serious" }}{% elseif data.post.category == "8" %}{{ "Serious (Real World)" }}{% elseif data.post.category == "9" %}{{ "Trade Discussion" }}{% elseif data.post.category == "10" %}{{ "да (Русский)" }}{% endif %}
+                    </a> <a href="/forum/post?id={{ data.post.id }}" class="breadcrumb-item">{{ data.post.title }}</a> <span class="breadcrumb-item overflow-hidden">
+                        Editing Reply
+                    </span></nav>
+                {% if data.post.category == "7" or data.post.category == "8" %}
+                    <div class="alert alert-danger mb-4">
+                        <div class="container">
+                            <h5 class="font-weight-light my-2"><i
+                                    class="far fa-exclamation-triangle fa-fw align-middle mr-1"></i> Serious replies only</h5>
+                            <p class="mb-2">Only serious replies are allowed in this section. Offenders may be banned.</p>
+                        </div>
+                    </div>
+                {% endif %}
+                <div id="forum-posts">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Editing to {{ data.post.title|raw }}
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 post-content overflow-hidden">
+                                    <form role="form" method="POST" action="" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <input type="hidden" name="id" value="{{ data.reply.id }}">
+                                        <input type="hidden" name="postId" value="{{ data.post.id }}">
+                                        <div class="form-group row">
+                                            <label for="note" class="col-form-label text-md-right mb-2" style="margin-left:15px;">Note: Use Markdown syntax.</label>
+                                            <div class="col-md-12">
+                                                {% if data.user.status == "admin" %}
+												<button style="margin-top: 5px;" type="button" class="btn btn-sm btn-secondary col-md-3 mb-1" onclick="addImage()">Add image</button>
+												<script>
+												function addImage() {
+													var imageUrl = prompt("Please enter the image URL:", "/s/img/user/image.jpg");
+
+													if (imageUrl !== null) {
+														var img = new Image();
+														img.onload = function () {
+															var maxWidth = 1000;
+															var maxHeight = 1000;
+															var width = img.width;
+															var height = img.height;
+
+															if (width > maxWidth || height > maxHeight) {
+																var ratio = Math.min(maxWidth / width, maxHeight / height);
+																width *= ratio;
+																height *= ratio;
+															}
+
+															var imgTag = '<img src="' + imageUrl + '" width="' + width + '" height="' + height + '" alt="Image" style="max-width: 100%; height: auto;">';
+															var textarea = document.getElementById("content");
+															textarea.value += imgTag;
+														};
+
+														img.src = imageUrl;
+													}
+												}
+												
+												function addVideo() {
+                                                    var videoUrl = prompt("Please enter the video URL:", "/s/img/user/video.mp4");
+
+                                                    if (videoUrl !== null) {
+                                                        var video = document.createElement("video");
+                                                        video.controls = true;
+                                                        video.style.maxWidth = "100%";
+                                                        video.style.height = "auto";
+                                                        
+                                                        var source = document.createElement("source");
+                                                        source.src = videoUrl;
+                                                        source.type = "video/mp4";
+
+                                                        video.appendChild(source);
+
+                                                        var textarea = document.getElementById("content");
+                                                        textarea.value += video.outerHTML;
+                                                    }
+                                                }
+												</script>
+												{% endif %}
+                                                <textarea rows="10" minlength="3" type="text" id="content" name="content" value="" placeholder="Enter your reply here (minimum 3 characters)." class="form-control">{{ data.reply.comment }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary full-width">edit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

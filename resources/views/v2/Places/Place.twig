@@ -1,0 +1,213 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+            @keyframes fadeInSetup {
+                0% {
+                    opacity: 0
+                }
+
+                to {
+                    opacity: 0.6
+                }
+            }
+            .fadeInto-setup {
+                position: fixed;
+                z-index: 9999999;
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .fadeInto-setup .background {
+                position: absolute;
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                opacity: 0.6;
+                animation: fadeInSetup 0.25s ease;
+            }
+
+            .fadeInto-setup .card {
+                opacity: 1;
+                animation: fadeInUp 0.25s ease;
+            }
+
+            .fa-spin-2 {
+                -webkit-animation: fa-spin 1s linear infinite;
+                animation: fa-spin 1s linear infinite
+            }
+        </style>
+  </head>
+  <body>
+    <div class="" id="client-setup" style="display: none;">
+            <div class="background"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="card col-md-7 mt-4" style="padding: 0;">
+                        <div class="card-body text-center">
+                            <p>It looks like the client didn't launch. If it did, just ignore this.</p>
+                            <br>
+                            <p>Otherwise, here:</p>
+                            <button class="btn btn-success btn-lg"><i class="far fa-download"></i> download client</button>
+                        </div>
+						<hr>
+						<div class="card-body text-center" style="padding-top: 0;">
+                            <button class="btn btn-primary float-right" id="btn-close-setup">oh, okay</button>
+						</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+                <div class="row">
+                    <div class="full-width">
+                        <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="card-header bg-primary text-white">
+                                    {{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }} Place
+                                </div>
+                                <div class="card-body mt-2">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <img src="https://cdn.finobe.net/{{ data.place.thumbnail }}" class="mt-2 full-width" style="max-height: 250px; object-fit: contain;">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h3>{{ data.place.title|raw }}{% if data.place.username == data.user.username %}<button class="btn btn-secondary float-right" onclick="window.location.href='/place/{{ data.place.id }}/settings'"><i class="far fa-cog"></i></button>{% endif %}</h3>
+                                            <p style="margin-bottom:0px;">by <a href="/user/{{ data.place.author }}">{{ data.place.username }}</a></p>
+                                            <i class="far align-middle fa-bomb mr-1"></i>{% if data.place.additional.version == "2016" %}<span data-v-5ad0ed22="" class="badge badge-danger position-absolute">2016</span>{% else %}<span class="badge badge-primary position-absolute">2012</span>{% endif %}
+                                            <p class="mt-3" style="max-height: 84px; overflow-y: auto;">{{ (data.place.description|length) ? data.place.description|raw : 'No description' }}</p>
+                                            {% if data.place.username == data.user.username %}
+                                                <button class="btn btn-primary full-width mr-1 mb-2" onclick="window.open('https://www.finobe.net/asset?id={{ data.place.id }}', '_blank')">download place file</button>
+                                            {% endif %}
+                                            <button class="btn btn-success btn-lg full-width" id="data-v-4350f98c" style="text-transform: capitalize;"><i class="far fa-play mr-1"></i> Play</button>
+                                            <p class="mt-3" id="data-v-h53h6hfd" style="display: none;"></p>
+                                            <script>
+                                                var play = document.getElementById('data-v-4350f98c');
+                                                var info = document.getElementById('data-v-h53h6hfd');
+                                                var clientDownload = document.getElementById('client-setup');
+                                                var setupClose = document.getElementById('btn-close-setup');
+
+                                                function joinGame(serverid = false) {
+                                                    console.log(serverid);
+                                                    info.style.display = "";
+                                                    play.disabled = true;
+                                                    info.classList.remove("text-success");
+                                                    info.innerHTML = '';
+                                                    info.innerHTML = '<i class="far align-middle fa-circle-notch mr-1 fa-spin-2"></i> Waiting for server...';
+                                                    setTimeout(function () {
+                                                        info.innerHTML = '<i class="far align-middle fa-circle-notch mr-1 fa-spin-2"></i> Starting the client...';
+                                                        openUri(`finobe-launcher:///1+launchmode:play+gameinfo:{{ data.user.token }}+placelauncherurl:https://assetgame.finobe.net/Game/PlaceLauncher.ashx?request=RequestGame${serverid ? 'Job' : ''}&isTeleport=false&placeId={{ data.place.id }}${serverid ? '&gameId=' + serverid : ''}+k:l`, () => {
+                                                            info.classList.add("text-success");
+                                                            info.innerHTML = '<i class="far align-middle fa-check-circle mr-1" id="data-v-h64n346"></i> Started client!';
+                                                            var icon = document.getElementById('data-v-h64n346');
+                                                            icon.classList.remove("fa-spin-2s");
+                                                            icon.classList.remove("fa-circle-notch");
+                                                            icon.classList.add("fa-circle-check");
+                                                        }, () => {
+                                                            info.classList.add("text-success");
+                                                            info.innerHTML = '<i class="far align-middle fa-check-circle mr-1" id="data-v-h64n346"></i> Started client!';
+                                                            var icon = document.getElementById('data-v-h64n346');
+                                                            icon.classList.remove("fa-spin-2s");
+                                                            icon.classList.remove("fa-circle-notch");
+                                                            icon.classList.add("fa-circle-check");
+                                                            clientDownload.style.display = "";
+                                                            clientDownload.classList.add('fadeInto-setup');
+                                                        });
+                                                    }, 250);
+                                                    setTimeout(function () {
+                                                        info.style.display = "none";
+                                                        play.disabled = false;
+                                                    }, 15000);
+                                                }
+                                                
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    setupClose.addEventListener('click', function() {
+                                                        clientDownload.style.display = "none";
+                                                        clientDownload.classList.remove('fadeInto-setup');
+                                                    });
+
+                                                    play.addEventListener('click', () => joinGame());
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="mt-3 mb-0" style="font-weight: 300;">Statistics</h4>
+                        <div class="full-width">
+                            <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="finobe-tabs-card">
+                                    <div class="nav nav-fill finobe-tabs">
+                                        <a data-toggle="tab" href="#stats" class="nav-item nav-link tab active">Statistics</a>
+                                        <a data-toggle="tab" href="#badges" class="nav-item nav-link tab">Badges</a>
+                                    </div>
+                                </div>
+                                <div class="card-body tab-content">
+                                    <div class="tab-pane show active" id="stats">
+                                        <div class="d-flex row justify-content-around">
+                                            <div class="text-center">
+                                                <p>Created</p>
+                                                <p class="mb-0">{{ data.place.created }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Updated</p>
+                                                <p class="mb-0">{{ data.place.updated }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Visits</p>
+                                                <p class="mb-0">{{ data.place.visits }}</p>
+                                            </div>
+                                            <div class="text-center">
+                                                <p>Max Players</p>
+                                                <p class="mb-0">{{ data.place.additional.maxplayers }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane" id="badges">
+                                        <p class="text-center">There are currently no badges for this place.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="mt-3 mb-0" style="font-weight: 300;">Servers</h4>
+                        <div class="full-width">
+                            <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="card-body">
+                                    {% for server in data.place.servers %}
+                                    <div class="row mt-1">
+                                        <div class="col-md-2">
+                                            <p class="mb-1">{{ server.players|length }} of {{ data.place.additional.maxplayers }} players</p>
+                                            {% if server.players|length < data.place.additional.maxplayers %}
+                                                <button onclick=";joinGame('{{ server.jobId }}');" class="btn btn-success full-width mr-1">Join</button>
+                                            {% else %}
+                                                <p>Server is full.</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-10">
+                                            {% for player in server.players %}
+                                                <a href="/user/{{ player.userid }}"><img data-animation="true" data-toggle="tooltip" data-placement="top" title="{{ player.username }}" data-original-title="{{ player.username }}" src="{{ (player.avatar|length) ? 'https://cdn.finobe.net/' ~ player.avatar : 'https://finobe.net/s/img/spinnerv2.gif' }}" height="64" weight="64"></a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% if not data.place.servers|length %}
+                                        <p class="text-center">There are currently no servers running for this place.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

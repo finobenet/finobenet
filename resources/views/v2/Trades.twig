@@ -1,0 +1,53 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+	<style>
+	th, td {
+		padding: 1.5%;
+	}
+	th {
+	    color: #FFF;
+	}
+	thead {
+	    background-color: #000;
+	}
+	tr:nth-child(even) {
+		{% if user.theme == 1 %}
+        background-color: rgba(255, 255, 255, 0.01);
+		{% else %}
+		background-color: rgba(0, 0, 0, 0.05);
+		{% endif %}
+    }
+	</style>
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container mt-3" style="margin-bottom:10px">
+        <div class="card">
+            <div class="card-header">Trades</div>
+            <div class="card-body">
+								<table class="full-width">
+									<thead>
+										<tr>
+											<th style="width: 20%;">Date</th>
+											<th style="width: 35%;">Partner</th>
+											<th style="width: 45%;">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+									    {#
+										<td></td>
+										<td class="text-center">No trades are available</td>
+										<td></td>
+										#}
+									</tbody>
+								</table>
+								<p class="text-center p-3 m-0">No trades are available</p>
+				</div>
+			</div>
+        </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

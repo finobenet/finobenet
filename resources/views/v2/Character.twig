@@ -1,0 +1,741 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+	<style>
+		.background {
+            position: absolute;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0.6;
+            animation: fadeInSetup 0.25s ease;
+        }
+		
+		.fadeInCard .card, .fadeOutCard .card {
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+		}
+		
+		@-webkit-keyframes fadeInSpinner {
+			0% {
+				opacity: 0
+			}
+
+			to {
+				opacity: 0.6
+			}
+		}
+		
+		.fadeInCard, .fadeOutCard {
+            position: fixed;
+            z-index: 9999999;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+		
+		.fadeInCard .loading-overlay {
+            opacity: 0.6;
+            animation: fadeInSpinner 0.15s ease;
+        }
+		
+		.fadeInCard .card {
+            opacity: 1;
+            animation: fadeIn 0.25s ease;
+        }
+		
+		.fadeOutCard {
+            opacity: 0;
+            animation: fadeOut 0.25s ease;
+        }
+		
+		.colorCard {
+			width: 40px;height: 40px;
+			border: 1px solid #555;
+			cursor: pointer;
+		}
+		
+		.colorCard:hover {
+			border-width: 2px;
+			border-color: black;
+		}
+		
+		#head, #r-arm, #torso, #l-arm, #r-leg, #l-leg {
+			cursor: pointer;
+		}
+		
+		.spinner-border {
+			animation: spin 1s linear infinite;
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+	</style>
+  </head>
+  <body>
+	<div class="" id="colorCard" style="display: none;">
+        <div class="background"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card col-md-5 mb-4 p-0">
+					<div class="card-header">
+						<h3>Select Color <button class="btn float-right p-1" id="btn-close"><i class="fas fa-fw fa-plus fa-lg" style="filter: invert(1);transform: rotate(45deg);"></i></button></h3>
+					</div>
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-center mt-3">
+							<div class="colorCard" style="background-color: #f1f1f1;"></div>
+							<div class="colorCard ml-2" style="background-color: #d7c49b;"></div>
+							<div class="colorCard ml-2" style="background-color: #e6b7c4;"></div>
+							<div class="colorCard ml-2" style="background-color: #81bbd9;"></div>
+							<div class="colorCard ml-2" style="background-color: #c78c6c;"></div>
+							<div class="colorCard ml-2" style="background-color: #bf1d20;"></div>
+							<div class="colorCard ml-2" style="background-color: #1e6aa8;"></div>
+							<div class="colorCard ml-2" style="background-color: #f5cd40;"></div>
+						</div>
+						<div class="d-flex justify-content-center mt-3">
+							<div class="colorCard" style="background-color: #1d2938;"></div>
+							<div class="colorCard ml-2" style="background-color: #35804c;"></div>
+							<div class="colorCard ml-2" style="background-color: #a2c48d;"></div>
+							<div class="colorCard ml-2" style="background-color: #519851;"></div>
+							<div class="colorCard ml-2" style="background-color: #9d5c37;"></div>
+							<div class="colorCard ml-2" style="background-color: #b6d2e2;"></div>
+							<div class="colorCard ml-2" style="background-color: #d98380;"></div>
+							<div class="colorCard ml-2" style="background-color: #7498cb;"></div>
+						</div>
+						<div class="d-flex justify-content-center mt-3">
+							<div class="colorCard" style="background-color: #69337d;"></div>
+							<div class="colorCard ml-2" style="background-color: #dc9846;"></div>
+							<div class="colorCard ml-2" style="background-color: #d48243;"></div>
+							<div class="colorCard ml-2" style="background-color: #20909b;"></div>
+							<div class="colorCard ml-2" style="background-color: #a3bd50;"></div>
+							<div class="colorCard ml-2" style="background-color: #e8b794;"></div>
+							<div class="colorCard ml-2" style="background-color: #78849d;"></div>
+							<div class="colorCard ml-2" style="background-color: #29442e;"></div>
+						</div>
+						<div class="d-flex justify-content-center mt-3">
+							<div class="colorCard" style="background-color: #788d85;"></div>
+							<div class="colorCard ml-2" style="background-color: #917877;"></div>
+							<div class="colorCard ml-2" style="background-color: #663f2a;"></div>
+							<div class="colorCard ml-2" style="background-color: #a5a2a5;"></div>
+							<div class="colorCard ml-2" style="background-color: #635e61;"></div>
+							<div class="colorCard ml-2" style="background-color: #e4e1e4;"></div>
+							<div class="colorCard ml-2" style="background-color: #7c5948;"></div>
+							<div class="colorCard ml-2" style="background-color: #fde990;"></div>
+						</div>
+						<div class="mt-3">
+							<div class="colorCard" style="background-color: #f6f6f5;margin-left: 7.5%;"></div>
+						</div>
+                    </div>
+					<div class="loading-overlay position-absolute top-0 start-0 w-100 h-100 justify-content-center align-items-center" style="left: 0;opacity: 0.6;background-color: #000;display: none;" id="spinner">
+						<div class="spinner-border text-light" role="status">
+							<i class="far fa-spinner-third fa-4x"></i>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="app">
+         {% include ('v2/Modules/nav.twig') %}
+         <div class="container mt-3">
+             <div class="row">
+                 <div class="col-md-3">
+                     <div class="card">
+                         <div class="card-header text-center">
+                             Character
+                         </div>
+                         <div class="card-body" style="height: auto;">
+                             <button id="renderbtn" onclick="regen();" class="btn btn-primary full-width"><i class="fa fa-sync-alt"></i> regen</button>
+                             <img id="renderimg" src="{{ (data.user.pfp == "") ? "/s/img/spinnerv2.gif" : "https://cdn.finobe.net/" ~ data.user.pfp }}" class="full-width mt-2" style="height: auto;">
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-md-9">
+                     <div class="card">
+                         <div class="card-header">
+                             <ul class="nav nav-tabs card-header-tabs">
+                              <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#bodycolors">Body Colors</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#hats">Hats</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#t-shirts">T-Shirts</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#shirts">Shirts</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#pants">Pants</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#faces">Faces</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#gear">Gear</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#heads">Heads</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#packages">Packages</a>
+                              </li>
+                             </ul>
+                         </div>
+                         <div class="card-body tab-content">
+                            <div class="tab-pane show active" id="bodycolors">
+                              <div class="d-flex justify-content-center">
+								<div id="head" style="width: 50px;height: 50px;background-color: #f4cc43;border: 1px solid #555;"></div>
+							  </div>
+							  <div class="d-flex justify-content-center mt-2">
+								<div id="r-arm" style="width: 45px;height: 100px;background-color: #f4cc43;border: 1px solid #555;"></div>
+								<div id="torso" style="width: 100px;height: 100px;background-color: #176baa;margin-left: 10px;border: 1px solid #555;"></div>
+								<div id="l-arm" style="width: 45px;height: 100px;background-color: #f4cc43;margin-left: 10px;border: 1px solid #555;"></div>
+							  </div>
+							  <div class="d-flex justify-content-center mt-2">
+								<div id="r-leg" style="width: 45px;height: 100px;background-color: #a5bc50;border: 1px solid #555;"></div>
+								<div id="l-leg" style="width: 45px;height: 100px;background-color: #a5bc50;margin-left: 10px;border: 1px solid #555;"></div>
+							  </div>
+                            </div>
+                            <div class="tab-pane" id="hats">
+                              <div class="{{ (data.purchases|filter(p => p.asset_type == 8)|length) ? 'row' : '' }}">
+							  	{% for item in data.purchases %}
+								  {% if item.asset_type == 8 %}
+									<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+										<div class="card">
+											<div class="card-body">
+												<div class="d-flex justify-content-center">
+													<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+												</div>
+												<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+												<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+												<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 'hat');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+											</div>
+										</div>
+									</div>
+								  {% endif %}
+								{% endfor %}
+                              </div>
+							  <script>
+								const colorCard = document.getElementById('colorCard');
+								const close = document.getElementById('btn-close');
+								const head = document.getElementById('head');
+								const torso = document.getElementById('torso');
+								const rarm = document.getElementById('r-arm');
+								const larm = document.getElementById('l-arm');
+								const rleg = document.getElementById('r-leg');
+								const lleg = document.getElementById('l-leg');
+								const spinner = document.getElementById('spinner');
+								const render = document.getElementById('renderbtn');
+								const avatar = JSON.parse('{{ data.user.avatar | json_encode | raw }}');
+								const avatarimg = document.getElementById('renderimg');
+								const robloxColors = {
+									"White": { rgb: [242, 243, 243], id: 1 },
+									"Grey": { rgb: [161, 165, 162], id: 2 },
+									"Light yellow": { rgb: [249, 233, 153], id: 3 },
+									"Brick yellow": { rgb: [215, 197, 154], id: 5 },
+									"Light green (Mint)": { rgb: [194, 218, 184], id: 6 },
+									"Light reddish violet": { rgb: [232, 186, 200], id: 9 },
+									"Pastel Blue": { rgb: [128, 187, 219], id: 11 },
+									"Light orange brown": { rgb: [203, 132, 66], id: 12 },
+									"Nougat": { rgb: [204, 142, 105], id: 18 },
+									"Bright red": { rgb: [196, 40, 28], id: 21 },
+									"Med. reddish violet": { rgb: [196, 112, 160], id: 22 },
+									"Bright blue": { rgb: [13, 105, 172], id: 23 },
+									"Bright yellow": { rgb: [245, 205, 48], id: 24 },
+									"Earth orange": { rgb: [98, 71, 50], id: 25 },
+									"Black": { rgb: [27, 42, 53], id: 26 },
+									"Dark grey": { rgb: [109, 110, 108], id: 27 },
+									"Dark green": { rgb: [40, 127, 71], id: 28 },
+									"Medium green": { rgb: [161, 196, 140], id: 29 },
+									"Lig. Yellowich orange": { rgb: [243, 207, 155], id: 36 },
+									"Bright green": { rgb: [75, 151, 75], id: 37 },
+									"Dark orange": { rgb: [160, 95, 53], id: 38 },
+									"Light bluish violet": { rgb: [193, 202, 222], id: 39 },
+									"Transparent": { rgb: [236, 236, 236], id: 40 },
+									"Tr. Red": { rgb: [205, 84, 75], id: 41 },
+									"Tr. Lg blue": { rgb: [193, 223, 240], id: 42 },
+									"Tr. Blue": { rgb: [123, 182, 232], id: 43 },
+									"Tr. Yellow": { rgb: [247, 241, 141], id: 44 },
+									"Light blue": { rgb: [180, 210, 228], id: 45 },
+									"Tr. Flu. Reddish orange": { rgb: [217, 133, 108], id: 47 },
+									"Tr. Green": { rgb: [132, 182, 141], id: 48 },
+									"Tr. Flu. Green": { rgb: [248, 241, 132], id: 49 },
+									"Phosph. White": { rgb: [236, 232, 222], id: 50 },
+									"Light red": { rgb: [238, 196, 182], id: 100 },
+									"Medium red": { rgb: [218, 134, 122], id: 101 },
+									"Medium blue": { rgb: [110, 153, 202], id: 102 },
+									"Light grey": { rgb: [199, 193, 183], id: 103 },
+									"Bright violet": { rgb: [107, 50, 124], id: 104 },
+									"Br. yellowish orange": { rgb: [226, 155, 64], id: 105 },
+									"Bright orange": { rgb: [218, 133, 65], id: 106 },
+									"Bright bluish green": { rgb: [0, 143, 156], id: 107 },
+									"Earth yellow": { rgb: [104, 92, 67], id: 108 },
+									"Bright bluish violet": { rgb: [67, 84, 147], id: 110 },
+									"Tr. Brown": { rgb: [191, 183, 177], id: 111 },
+									"Medium bluish violet": { rgb: [104, 116, 172], id: 112 },
+									"Tr. Medi. reddish violet": { rgb: [229, 173, 200], id: 113 },
+									"Med. yellowish green": { rgb: [199, 210, 60], id: 115 },
+									"Med. bluish green": { rgb: [85, 165, 175], id: 116 },
+									"Light bluish green": { rgb: [183, 215, 213], id: 118 },
+									"Br. yellowish green": { rgb: [164, 189, 71], id: 119 },
+									"Lig. yellowish green": { rgb: [217, 228, 167], id: 120 },
+									"Med. yellowish orange": { rgb: [231, 172, 88], id: 121 },
+									"Br. reddish orange": { rgb: [211, 111, 76], id: 123 },
+									"Bright reddish violet": { rgb: [146, 57, 120], id: 124 },
+									"Light orange": { rgb: [234, 184, 146], id: 125 },
+									"Tr. Bright bluish violet": { rgb: [165, 165, 203], id: 126 },
+									"Gold": { rgb: [220, 188, 129], id: 127 },
+									"Dark nougat": { rgb: [174, 122, 89], id: 128 },
+									"Silver": { rgb: [156, 163, 168], id: 131 },
+									"Neon orange": { rgb: [213, 115, 61], id: 133 },
+									"Neon green": { rgb: [216, 221, 86], id: 134 },
+									"Sand blue": { rgb: [116, 134, 157], id: 135 },
+									"Sand violet": { rgb: [135, 124, 144], id: 136 },
+									"Medium orange": { rgb: [224, 152, 100], id: 137 },
+									"Sand yellow": { rgb: [149, 138, 115], id: 138 },
+									"Earth blue": { rgb: [32, 58, 86], id: 140 },
+									"Earth green": { rgb: [39, 70, 45], id: 141 },
+									"Tr. Flu. Blue": { rgb: [207, 226, 247], id: 143 },
+									"Sand blue metallic": { rgb: [121, 136, 161], id: 145 },
+									"Sand violet metallic": { rgb: [149, 142, 163], id: 146 },
+									"Sand yellow metallic": { rgb: [147, 135, 103], id: 147 },
+									"Dark grey metallic": { rgb: [87, 88, 87], id: 148 },
+									"Black metallic": { rgb: [22, 29, 50], id: 149 },
+									"Light grey metallic": { rgb: [171, 173, 172], id: 150 },
+									"Sand green": { rgb: [120, 144, 130], id: 151 },
+									"Sand red": { rgb: [149, 121, 119], id: 153 },
+									"Dark red": { rgb: [123, 46, 47], id: 154 },
+									"Tr. Flu. Yellow": { rgb: [255, 246, 123], id: 157 },
+									"Tr. Flu. Red": { rgb: [225, 164, 194], id: 158 },
+									"Gun metallic": { rgb: [117, 108, 98], id: 168 },
+									"Red flip/flop": { rgb: [151, 105, 91], id: 176 },
+									"Yellow flip/flop": { rgb: [180, 132, 85], id: 178 },
+									"Silver flip/flop": { rgb: [137, 135, 136], id: 179 },
+									"Curry": { rgb: [215, 169, 75], id: 180 },
+									"Fire Yellow": { rgb: [249, 214, 46], id: 190 },
+									"Flame yellowish orange": { rgb: [232, 171, 45], id: 191 },
+									"Reddish brown": { rgb: [105, 64, 40], id: 192 },
+									"Flame reddish orange": { rgb: [207, 96, 36], id: 193 },
+									"Medium stone grey": { rgb: [163, 162, 165], id: 194 },
+									"Royal blue": { rgb: [70, 103, 164], id: 195 },
+									"Dark Royal blue": { rgb: [35, 71, 139], id: 196 },
+									"Bright reddish lilac": { rgb: [142, 66, 133], id: 198 },
+									"Dark stone grey": { rgb: [99, 95, 98], id: 199 },
+									"Lemon metalic": { rgb: [130, 138, 93], id: 200 },
+									"Light stone grey": { rgb: [229, 228, 223], id: 208 },
+									"Dark Curry": { rgb: [176, 142, 68], id: 209 },
+									"Faded green": { rgb: [112, 149, 120], id: 210 },
+									"Turquoise": { rgb: [121, 181, 181], id: 211 },
+									"Light Royal blue": { rgb: [159, 195, 233], id: 212 },
+									"Medium Royal blue": { rgb: [108, 129, 183], id: 213 },
+									"Rust": { rgb: [144, 76, 42], id: 216 },
+									"Brown": { rgb: [124, 92, 70], id: 217 },
+									"Reddish lilac": { rgb: [150, 112, 159], id: 218 },
+									"Lilac": { rgb: [107, 98, 155], id: 219 },
+									"Light lilac": { rgb: [167, 169, 206], id: 220 },
+									"Bright purple": { rgb: [205, 98, 152], id: 221 },
+									"Light purple": { rgb: [228, 173, 200], id: 222 },
+									"Light pink": { rgb: [220, 144, 149], id: 223 },
+									"Light brick yellow": { rgb: [240, 213, 160], id: 224 },
+									"Warm yellowish orange": { rgb: [235, 184, 127], id: 225 },
+									"Cool yellow": { rgb: [253, 234, 141], id: 226 },
+									"Dove blue": { rgb: [125, 187, 221], id: 232 },
+									"Medium lilac": { rgb: [52, 43, 117], id: 268 },
+									"Slime green": { rgb: [80, 109, 84], id: 301 },
+									"Smoky grey": { rgb: [91, 93, 105], id: 302 },
+									"Dark blue": { rgb: [0, 16, 176], id: 303 },
+									"Parsley green": { rgb: [44, 101, 29], id: 304 },
+									"Steel blue": { rgb: [82, 124, 174], id: 305 },
+									"Storm blue": { rgb: [51, 88, 130], id: 306 },
+									"Lapis": { rgb: [16, 42, 220], id: 307 },
+									"Dark indigo": { rgb: [61, 21, 133], id: 308 },
+									"Sea green": { rgb: [52, 142, 64], id: 309 },
+									"Shamrock": { rgb: [91, 154, 76], id: 310 },
+									"Fossil": { rgb: [159, 161, 172], id: 311 },
+									"Mulberry": { rgb: [89, 34, 89], id: 312 },
+									"Forest green": { rgb: [31, 128, 29], id: 313 },
+									"Cadet blue": { rgb: [159, 173, 192], id: 314 },
+									"Electric blue": { rgb: [9, 137, 207], id: 315 },
+									"Eggplant": { rgb: [123, 0, 123], id: 316 },
+									"Moss": { rgb: [124, 156, 107], id: 317 },
+									"Artichoke": { rgb: [138, 171, 133], id: 318 },
+									"Sage green": { rgb: [185, 196, 177], id: 319 },
+									"Ghost grey": { rgb: [202, 203, 209], id: 320 },
+									"Plum": { rgb: [123, 47, 123], id: 322 },
+									"Olivine": { rgb: [148, 190, 129], id: 323 },
+									"Laurel green": { rgb: [168, 189, 153], id: 324 },
+									"Quill grey": { rgb: [223, 223, 222], id: 325 },
+									"Crimson": { rgb: [151, 0, 0], id: 327 },
+									"Mint": { rgb: [177, 229, 166], id: 328 },
+									"Baby blue": { rgb: [152, 194, 219], id: 329 },
+									"Carnation pink": { rgb: [255, 152, 220], id: 330 },
+									"Persimmon": { rgb: [255, 89, 89], id: 331 },
+									"Maroon": { rgb: [117, 0, 0], id: 332 },
+									"Daisy orange": { rgb: [248, 217, 109], id: 334 },
+									"Pearl": { rgb: [231, 231, 236], id: 335 },
+									"Fog": { rgb: [199, 212, 228], id: 336 },
+									"Salmon": { rgb: [255, 148, 148], id: 337 },
+									"Terra Cotta": { rgb: [190, 104, 98], id: 338 },
+									"Cocoa": { rgb: [86, 36, 36], id: 339 },
+									"Wheat": { rgb: [241, 231, 199], id: 340 },
+									"Buttermilk": { rgb: [254, 243, 187], id: 341 },
+									"Mauve": { rgb: [224, 178, 208], id: 342 },
+									"Sunrise": { rgb: [212, 144, 189], id: 343 },
+									"Tawny": { rgb: [150, 85, 85], id: 344 },
+									"Cashmere": { rgb: [211, 190, 150], id: 346 },
+									"Khaki": { rgb: [226, 220, 188], id: 347 },
+									"Lily white": { rgb: [237, 234, 234], id: 348 },
+									"Seashell": { rgb: [233, 218, 218], id: 349 },
+									"Burgundy": { rgb: [136, 62, 62], id: 350 },
+									"Cork": { rgb: [188, 155, 93], id: 351 },
+									"Burlap": { rgb: [199, 172, 120], id: 352 },
+									"Beige": { rgb: [202, 191, 163], id: 353 },
+									"Oyster": { rgb: [187, 179, 178], id: 354 },
+									"Pine Cone": { rgb: [108, 88, 75], id: 355 },
+									"Fawn brown": { rgb: [160, 132, 79], id: 356 },
+									"Hurricane grey": { rgb: [149, 137, 136], id: 357 },
+									"Cloudy grey": { rgb: [171, 168, 158], id: 358 },
+									"Linen": { rgb: [175, 148, 131], id: 359 },
+									"Copper": { rgb: [150, 103, 102], id: 360 },
+									"Dirt brown": { rgb: [86, 66, 54], id: 361 },
+									"Bronze": { rgb: [126, 104, 63], id: 362 },
+									"Flint": { rgb: [105, 102, 92], id: 363 },
+									"Dark taupe": { rgb: [90, 76, 66], id: 364 },
+									"Burnt Sienna": { rgb: [106, 57, 9], id: 365 },
+									"Institutional white": { rgb: [248, 248, 248], id: 1001 },
+									"Mid gray": { rgb: [205, 205, 205], id: 1002 },
+									"Really black": { rgb: [17, 17, 17], id: 1003 },
+									"Really red": { rgb: [255, 0, 0], id: 1004 },
+									"Deep orange": { rgb: [255, 176, 0], id: 1005 },
+									"Alder": { rgb: [180, 128, 255], id: 1006 },
+									"Dusty Rose": { rgb: [163, 75, 75], id: 1007 },
+									"Olive": { rgb: [193, 190, 66], id: 1008 },
+									"New Yeller": { rgb: [255, 255, 0], id: 1009 },
+									"Really blue": { rgb: [0, 0, 255], id: 1010 },
+									"Navy blue": { rgb: [0, 32, 96], id: 1011 },
+									"Deep blue": { rgb: [33, 84, 185], id: 1012 },
+									"Cyan": { rgb: [4, 175, 236], id: 1013 },
+									"CGA brown": { rgb: [170, 85, 0], id: 1014 },
+									"Magenta": { rgb: [170, 0, 170], id: 1015 },
+									"Pink": { rgb: [255, 102, 204], id: 1016 },
+									"Deep orange": { rgb: [255, 175, 0], id: 1017 },
+									"Teal": { rgb: [18, 238, 212], id: 1018 },
+									"Toothpaste": { rgb: [0, 255, 255], id: 1019 },
+									"Lime green": { rgb: [0, 255, 0], id: 1020 },
+									"Camo": { rgb: [58, 125, 21], id: 1021 },
+									"Grime": { rgb: [127, 142, 100], id: 1022 },
+									"Lavender": { rgb: [140, 91, 159], id: 1023 },
+									"Pastel light blue": { rgb: [175, 221, 255], id: 1024 },
+									"Pastel orange": { rgb: [255, 201, 201], id: 1025 },
+									"Pastel violet": { rgb: [177, 167, 255], id: 1026 },
+									"Pastel blue-green": { rgb: [159, 243, 233], id: 1027 },
+									"Pastel green": { rgb: [204, 255, 204], id: 1028 },
+									"Pastel yellow": { rgb: [255, 255, 204], id: 1029 },
+									"Pastel brown": { rgb: [255, 204, 153], id: 1030 },
+									"Royal purple": { rgb: [98, 37, 209], id: 1031 },
+									"Hot pink": { rgb: [255, 0, 191], id: 1032 },
+								};
+								
+								var type = "";
+								
+								head.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.headColorId) + ")";
+								torso.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.torsoColorId) + ")";
+								rarm.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.rightArmColorId) + ")";
+								larm.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.leftArmColorId) + ")";
+								rleg.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.rightLegColorId) + ")";
+								lleg.style.backgroundColor = "rgb(" + toRgbColor(avatar[0].bodyColors.leftLegColorId) + ")";
+								
+								head.addEventListener('click', () => openCard('head'));
+								torso.addEventListener('click', () => openCard('torso'));
+								rarm.addEventListener('click', () => openCard('r-arm'));
+								larm.addEventListener('click', () => openCard('l-arm'));
+								rleg.addEventListener('click', () => openCard('r-leg'));
+								lleg.addEventListener('click', () => openCard('l-leg'));
+								close.addEventListener('click', () => closeCard());
+								document.querySelectorAll('.colorCard').forEach(card => {
+									card.addEventListener('click', () => {
+										const color = card.style.backgroundColor;
+										spinner.classList.add("fadeInCard");
+										spinner.style.display = "flex";
+										document.getElementById(type).style.backgroundColor = color;
+										
+										const formData = new FormData();
+										formData.append('type', this.type);
+										formData.append('color', toRbxColor(color));
+										formData.append('_token', '{{ data.csrf_token }}');
+										
+										fetch("/api/character", {
+											method: 'POST',
+											body: formData
+										  })
+										  .then(response => response.json())
+										  .then(response => {
+											closeCard();
+											if(response.code != 200) {
+											  alert('Network response was not ok');
+											  return;
+											}
+											return response.text();
+										  });
+									});
+								});
+								
+								function regen() {
+									const formData = new FormData();
+									formData.append('_token', '{{ data.csrf_token }}');
+									render.disabled = true;
+									render.innerHTML = "working...";
+
+									fetch("/api/render", {
+										method: 'POST',
+										body: formData
+									  })
+									  .then(response => response.json())
+									  .then(data => {
+										if(data.code != 200) {
+											alert(data.message);
+										} else {
+											avatarimg.src = data.image;
+										}
+										
+										render.innerHTML = "Done";
+										setTimeout(() => {
+											render.innerHTML = '<i class="fa fa-sync-alt"></i> regen';
+											render.disabled = false;
+										}, 10000);
+									  });
+								}
+								
+								function openCard(type) {
+									this.type = type;
+									colorCard.classList.add('fadeInCard');
+									colorCard.classList.remove('fadeOutCard');
+									colorCard.style.display = "flex";
+								}
+								
+								function closeCard() {
+									colorCard.classList.remove('fadeInCard');
+									colorCard.classList.add('fadeOutCard');
+									spinner.classList.remove('fadeInCard');
+									spinner.style.display = "none";
+									setTimeout(() => {
+										colorCard.style.display = "none";
+									}, 250);
+								}
+								
+								function toRbxColor(rgbString) {
+									const rgbArray = rgbString.match(/\d+/g).map(Number);
+
+									let closestColor = null;
+									let closestDistance = Number.MAX_SAFE_INTEGER;
+									for (const [name, color] of Object.entries(robloxColors)) {
+										const distance = Math.sqrt(
+											Math.pow(rgbArray[0] - color.rgb[0], 2) +
+											Math.pow(rgbArray[1] - color.rgb[1], 2) +
+											Math.pow(rgbArray[2] - color.rgb[2], 2)
+										);
+										if (distance < closestDistance) {
+											closestColor = color.id;
+											closestDistance = distance;
+										}
+									}
+
+									return closestColor;
+								}
+								
+								function toRgbColor(id) {
+									const colorEntry = Object.values(robloxColors).find(color => color.id === id);
+									if (colorEntry) {
+										return colorEntry.rgb;
+									} else {
+										let closestId = null;
+										let closestDistance = Number.MAX_SAFE_INTEGER;
+										for (const [colorId, color] of Object.entries(robloxColors)) {
+											const distance = Math.abs(id - color.id);
+											if (distance < closestDistance) {
+												closestId = colorId;
+												closestDistance = distance;
+											}
+										}
+										return robloxColors[closestId].rgb;
+									}
+								}
+
+								function wear(assetid, type) {
+									const formData = new FormData();
+									formData.append('type', type);
+									formData.append('assetid', assetid);
+									formData.append('_token', '{{ data.csrf_token }}');
+
+									document.getElementById(assetid).children[0].children[0].querySelector('button').disabled = true;
+
+									fetch("/api/character", {
+										method: 'POST',
+										body: formData
+									  })
+									  .then(response => response.json())
+									  .then(response => {
+										document.getElementById(assetid).children[0].children[0].querySelector('button').disabled = false;
+
+										if(response.code != 200) {
+											alert(response.message);
+											return;
+										}
+
+										console.log(document.getElementById(assetid).classList.contains('equipped'));
+
+										if(document.getElementById(assetid).classList.contains('equipped')) {
+											document.getElementById(assetid).children[0].children[0].querySelector('button').classList.remove('btn-danger');
+											document.getElementById(assetid).children[0].children[0].querySelector('button').classList.add('btn-primary');
+											document.getElementById(assetid).children[0].children[0].querySelector('button').innerHTML = 'equip';
+											document.getElementById(assetid).classList.remove('equipped');
+										} else {
+											document.getElementById(assetid).children[0].children[0].querySelector('button').classList.remove('btn-primary');
+											document.getElementById(assetid).children[0].children[0].querySelector('button').classList.add('btn-danger');
+											document.getElementById(assetid).children[0].children[0].querySelector('button').innerHTML = 'unequip';
+											document.getElementById(assetid).classList.add('equipped');
+										}
+
+										return response;
+									  })
+									  .catch(error => {
+										alert(error);
+									  });
+								}
+							  </script>
+                            </div>
+                            <div class="tab-pane" id="t-shirts">
+							  <div class="{{ (data.purchases|filter(p => p.asset_type == 2)|length) ? 'row' : '' }}">
+                              {% for item in data.purchases %}
+								  {% if item.asset_type == 2 %}
+									<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+										<div class="card">
+											<div class="card-body">
+												<div class="d-flex justify-content-center">
+													<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+												</div>
+												<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+												<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+												<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 't-shirt');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+											</div>
+										</div>
+									</div>
+								  {% endif %}
+								{% endfor %}
+								{% if not data.purchases|filter(p => p.asset_type == 2)|length %}
+									<p>No results</p>
+								{% endif %}
+							  </div>
+                            </div>
+                            <div class="tab-pane" id="shirts">
+								<div class="{{ (data.purchases|filter(p => p.asset_type == 11)|length) ? 'row' : '' }}">
+                              	{% for item in data.purchases %}
+								  {% if item.asset_type == 11 %}
+									<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+										<div class="card">
+											<div class="card-body">
+												<div class="d-flex justify-content-center">
+													<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+												</div>
+												<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+												<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+												<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 'shirt');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+											</div>
+										</div>
+									</div>
+								  {% endif %}
+								{% endfor %}
+								{% if not data.purchases|filter(p => p.asset_type == 11)|length %}
+									<p>No results</p>
+								{% endif %}
+								</div>
+                            </div>
+                            <div class="tab-pane" id="pants">
+								<div class="{{ (data.purchases|filter(p => p.asset_type == 12)|length) ? 'row' : '' }}">
+								{% for item in data.purchases %}
+									{% if item.asset_type == 12 %}
+										<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+											<div class="card">
+												<div class="card-body">
+													<div class="d-flex justify-content-center">
+														<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+													</div>
+													<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+													<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+													<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 'pants');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
+								{% if not data.purchases|filter(p => p.asset_type == 12)|length %}
+									<p>No results</p>
+								{% endif %}
+								</div>
+                            </div>
+                            <div class="tab-pane" id="faces">
+                              	<div class="{{ (data.purchases|filter(p => p.asset_type == 18)|length) ? 'row' : '' }}">
+								{% for item in data.purchases %}
+									{% if item.asset_type == 18 %}
+										<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+											<div class="card">
+												<div class="card-body">
+													<div class="d-flex justify-content-center">
+														<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+													</div>
+													<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+													<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+													<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 'face');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
+								{% if not data.purchases|filter(p => p.asset_type == 18)|length %}
+									<p>No results</p>
+								{% endif %}
+								</div>
+                            </div>
+                            <div class="tab-pane" id="gear">
+                              	<div class="{{ (data.purchases|filter(p => p.asset_type == 19)|length) ? 'row' : '' }}">
+								{% for item in data.purchases %}
+									{% if item.asset_type == 19 %}
+										<div class="col-md-4 mb-4 pr-3 {{ (item.equipped) ? 'equipped' : 'unequipped' }}" id="{{ item.assetid }}">
+											<div class="card">
+												<div class="card-body">
+													<div class="d-flex justify-content-center">
+														<img src="{{ (item.visibility != 'n') ? '/s/img/spinnerv2.gif' : item.thumbnail }}" style="width: 50%; height: auto;">
+													</div>
+													<p class="mt-2 mb-0"><a href="/item/{{ item.assetid }}">{{ item.title|raw }}</a></p>
+													<p class="mt-0 mb-0">by {% if not item.uuid %}{{ "test" }}{% else %}<a href="/user/{{ item.uuid }}">{{ item.author }}</a>{% endif %}</p>
+													<button class="btn btn-{{ (item.equipped) ? 'danger' : 'primary' }} full-width mt-2" onclick=";wear('{{ item.assetid }}', 'gear');">{{ (item.equipped) ? 'unequip' : 'equip' }}</button>
+												</div>
+											</div>
+										</div>
+									{% endif %}
+								{% endfor %}
+								{% if not data.purchases|filter(p => p.asset_type == 19)|length %}
+									<p>No results</p>
+								{% endif %}
+								</div>
+                            </div>
+                            <div class="tab-pane" id="heads">
+                              <p>heads</p>
+                            </div>
+                            <div class="tab-pane" id="packages">
+                              <p>packages</p>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </div>
+      {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

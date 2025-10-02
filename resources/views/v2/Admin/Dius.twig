@@ -1,0 +1,70 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-1" style="margin-top:20px;">
+                            <div class="card">
+                                <div class="card-header" style="display: flex; align-items: center;">
+                                    <div class="row" style="flex-grow: 1;">
+                                        <a href="/admin/"><button class="btn btn-theme col-md-1 mr-1"><i class="far fa-chevron-left"></i></button></a>
+                                        <h4><strong>Give Dius</strong></h4>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <form role="form" method="POST" action="/admin/give_dius" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-form-label text-md-right" style="margin-left:15px;">Username</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="name" name="name" value="" placeholder="Username" required="required" autofocus="autofocus" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="amount" class="col-form-label text-md-right" style="margin-left:15px;">Amount</label>
+                                            <div class="col-md-12">
+                                                <input type="number" id="amount" name="amount" placeholder="Amount" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="margin-top:40px;">
+                                            <button type="submit" class="btn btn-warning full-width">Give Dius</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-1" style="margin-top:20px;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4><strong>Shadow ban</strong></h4>
+                                </div>
+                                <div class="card-body text-center">
+                                    <form role="form" method="POST" action="/admin/give_dius" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                        <input type="hidden" name="toggler" value="">
+                                        <div class="form-group row">
+                                            <label for="name" class="col-form-label text-md-right" style="margin-left:15px;">Username</label>
+                                            <div class="col-md-12">
+                                                <input type="text" id="name" name="name" value="" placeholder="Username" required="required" autofocus="autofocus" class="form-control">
+                                            </div>
+                                            <label for="name" class="custom-label" style="margin-left: 15px"><small>This prevents a user from getting their daily dius</small></label>
+                                        </div>
+                                        <div class="form-group" style="margin-top:40px;">
+                                            <button type="submit" class="btn btn-danger full-width">Toggle ban</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

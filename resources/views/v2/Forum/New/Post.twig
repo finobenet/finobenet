@@ -1,0 +1,164 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container" style="margin-bottom:10px">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-1" style="margin-top:20px;">
+                            <div class="row">
+                                <a href="/forum/home"><button class="btn btn-theme col-md-1 mr-1"><i class="far fa-chevron-left"></i></button></a>
+                                <h4 style="margin:2.5px 0 0 5px"><strong>New Post</strong></h4>
+                            </div>
+                            <form role="form" method="POST" action="" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{ data.csrf_token }}">    
+                                <div class="form-group row">
+                                    <label for="type" class="col-form-label text-md-right" style="margin-left:15px;">Type</label>
+                                    <div class="col-md-12">
+                                        <select id="section" name="section" class="form-control mt-2" required>
+                                            {% if data.user.status == "admin" %}
+                                                <option value="1">Annoucements</option>
+                                            {% endif %}
+                                            <option value="2">General</option>
+                                            <option value="3">Suggestions</option>
+                                            <option value="4">Off Topic</option>
+                                            <option value="5">Help</option>
+                                            <option value="6">Development</option>
+                                            <option value="7">Serious</option>
+                                            <option value="8">Serious (Real World)</option>
+                                            <option value="9">Trade Discussion</option>
+                                            <option value="10">да (Русский)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="title" class="col-form-label text-md-right" style="margin-left:15px;">Title</label>
+                                    <div class="col-md-12">
+                                        <input type="text" id="title" name="title" value="" placeholder="Title" minlength="3" class="form-control" required></input>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="description" class="col-form-label text-md-right" style="margin-left:15px;">Content</label>
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <strong>Tip:</strong> Use Markdown syntax.
+                                            </div>
+                                            <textarea type="text" id="content" name="content" value="" placeholder="Content" minlength="3" class="form-control" style="border-radius:0;border:0;" required></textarea>
+                                            <div class="card-footer text-center disabled">
+                                                <button type="button" class="btn btn-sm btn-secondary col-md-3" onclick="addTag('strong')" disabled><strong>**bold**</strong></button>
+                                                <button type="button" class="btn btn-sm btn-secondary col-md-3" onclick="addTag('em')" disabled><em>_italic_</em></button>
+                                                <button type="button" class="btn btn-sm btn-secondary col-md-3" onclick="addTag('strike')" disabled><strike>~~striked out~~</strike></button>
+												{% if data.user.status == "admin" %}
+												<button style="margin-top: 5px;" type="button" class="btn btn-sm btn-secondary col-md-3" onclick="addImage()">Add image</button>
+                                                <button style="margin-top: 5px;" type="button" class="btn btn-sm btn-secondary col-md-3" onclick="addVideo()">Add video</button>
+												<script>
+												function addImage() {
+													var imageUrl = prompt("Please enter the image URL:", "http://example.com/image.jpg");
+
+													if (imageUrl !== null) {
+														var img = new Image();
+														img.onload = function () {
+															var maxWidth = 1000;
+															var maxHeight = 1000;
+															var width = img.width;
+															var height = img.height;
+
+															if (width > maxWidth || height > maxHeight) {
+																var ratio = Math.min(maxWidth / width, maxHeight / height);
+																width *= ratio;
+																height *= ratio;
+															}
+
+															var imgTag = '<img class="mb-1" src="' + imageUrl + '" width="' + width + '" height="' + height + '" alt="Image" style="max-width: 100%; height: auto;">';
+															var textarea = document.getElementById("content");
+															textarea.value += imgTag;
+														};
+
+														img.src = imageUrl;
+													}
+												}
+
+                                                function addVideo() {
+                                                    var videoUrl = prompt("Please enter the video URL:", "http://example.com/video.mp4");
+
+                                                    if (videoUrl !== null) {
+                                                        var video = document.createElement("video");
+                                                        video.controls = true;
+                                                        video.style.maxWidth = "100%";
+                                                        video.style.height = "auto";
+                                                        
+                                                        var source = document.createElement("source");
+                                                        source.src = videoUrl;
+                                                        source.type = "video/mp4";
+
+                                                        video.appendChild(source);
+
+                                                        var textarea = document.getElementById("content");
+                                                        textarea.value += video.outerHTML;
+                                                    }
+                                                }
+												</script>
+												{% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-end" style="margin-top: 20px;">
+                                    <div class="col-md-3">
+                                        <a href="/forum/home">
+                                            <button type="button" class="btn btn-outline-danger btn-lg btn-block" style="margin-left:20px;">cancel</button>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-success btn-lg btn-block" style="margin-right:5px;">post</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+					{% if data.user.status == "admin" %}
+					<div class="row">
+						<div class="col-md-9">
+                            <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="card-header">
+                                    File Upload                                </div>
+                                <div class="card-body mt-2">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <form method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="_token" value="{{ data.csrf_token }}">
+                                                <input type="file" name="file" />
+                                                <input type="submit" value="Upload" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					<div class="row">
+						<div class="col-md-9">
+                            <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="card-header">
+                                    File Directory                                </div>
+                                <div class="card-body mt-2">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                        {{ data.list | raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					{% endif %}
+                </div>
+            </div>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

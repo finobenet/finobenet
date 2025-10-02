@@ -1,0 +1,52 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+  </head>
+  <body>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="home-main-content">
+      {% if not data.siteusername %}
+        <div class="container d-flex justify-content-center">
+          <h1 class="mb-4 home-text">We do what {{ (data.user.branding == "finobe") ? 'Finobe' : 'Aesthetiful' }} does</h1>
+          <p class="home-text">{{ (data.user.branding == "finobe") ? 'Finobe' : 'Aesthetiful' }} puts games on your not-phone.</p>
+          <p><a href="/auth/register" class="btn btn-primary btn-lg mt-3 mr-2">Get started ›</a></p>
+        </div>
+      </div>
+      <div class="container mt-4"></div>
+      <div class="container mt-4">
+        <div class="row"><div class="col-sm-6 mb-2"><a href="https://discord.gg/invite/wgwb6z8krC" class="catalog-card"><div class="card"><div class="card-body"><h3><i class="fab fa-fw fa-discord"></i> Discord</h3> <p class="text-muted mb-0">Join our Discord server and talk to people in our community!</p></div></div></a></div> <div class="col-sm-6 mb-2"><a href="https://twitter.com/Aesthetiful" class="catalog-card"><div class="card"><div class="card-body"><h3><i class="fab fa-fw fa-twitter"></i> Twitter</h3> <p class="text-muted mb-0">We tweet whenever we post a video, and may even hint at some upcoming events on our Twitter.</p></div></div></a></div></div>
+      </div>
+      {% else %}
+      <div class="container" style="display:flex;flex-direction:row;margin-top:3%;">
+				<div style="width:75%;">
+					<h1 class="mt-5 home-text">Hi there, {{ data.user.username }}</h1>
+					<p>
+						<a href="/app/places" class="btn btn-success btn-lg mt-3 mr-2">join a game ›</a>
+					</p>
+				</div>
+				<div style="width:25%">
+          {% if data.user.pfp == "" %}
+					<img width="250" height="250" src="/s/img/spinnerv2.gif">
+          {% else %}
+          <img width="250" height="250" src="https://cdn.finobe.net/{{ data.user.pfp }}">
+          {% endif %}
+				</div>
+			</div>
+      {% endif %}
+    </div>
+    {% if data.siteusername %}
+      <div class="container mt-4"><h3>Latest Places</h3>
+      {% for game in data.games %}
+        <div data-v-5ad0ed22="" title="{{ game.title }}" class="game-card-div"><a data-v-5ad0ed22="" href="/place/{{ game.id }}" class="game-card-link"><span data-v-5ad0ed22="" class="game-card d-flex flex-column">{{ (game.version == "2016") ? '<span data-v-5ad0ed22="" class="badge badge-danger position-absolute">2016</span>' }}<span data-v-5ad0ed22="" class="thumbnail"><div data-v-5ad0ed22="" class="vue-load-image"><img data-v-5ad0ed22="" src="https://cdn.finobe.net/{{ game.thumbnail }}" class="card-img-top"></div></span> <span data-v-5ad0ed22="" class="data"><p data-v-5ad0ed22="" class="catalog-no-overflow-plz">{{ game.title }}</p> <p data-v-5ad0ed22="" class="catalog-no-overflow-plz author">by {{ game.author }}</p> <p data-v-5ad0ed22="" class="catalog-no-overflow-plz text-muted">{{ game.players }} online</p></span> <p data-v-5ad0ed22="" class="catalog-no-overflow-plz text-muted mb-0 visits"><small data-v-5ad0ed22="">{{ game.visits }} visits</small></p></span></a></div>
+      {% endfor %}
+      {% if not data.games|length %}
+        <p>No games found.</p>
+      {% endif %}
+      </div>
+      <div class="container mt-4"><h3 class="mb-2">Quick Links</h3> <div class="row"><div class="col-lg-4 mb-2"><a href="https://discord.gg/invite/wgwb6z8krC" class="catalog-card"><div class="card"><div class="card-body"><h3><i class="fab fa-fw fa-discord"></i> Discord</h3> <p class="text-muted mb-0">Join our Discord server and talk to people in our community!</p></div></div></a></div> <div class="col-lg-4 mb-2"><a href="https://www.eracast.cc/rick.jpg" class="catalog-card"><div class="card"><div class="card-body"><h3><i class="fab fa-fw fa-youtube"></i> YouTube</h3> <p class="text-muted mb-0">Check out some of our videos, which detail some new and upcoming features.</p></div></div></a></div> <div class="col-lg-4 mb-2"><a href="https://twitter.com/aesthetiful" class="catalog-card"><div class="card"><div class="card-body"><h3><i class="fab fa-fw fa-twitter"></i> Twitter</h3> <p class="text-muted mb-0">We tweet whenever we post a video, and may even hint at some upcoming events on our Twitter.</p></div></div></a></div></div></div>
+    {% endif %}
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>

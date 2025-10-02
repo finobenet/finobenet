@@ -1,0 +1,46 @@
+<html>
+   <head>
+      {% include ('v1/Modules/head.twig') %}
+   </head>
+   <body>
+      <div id="app main-content">
+         {% include ('v1/Modules/nav.twig') %}
+         <div class="container mt-5 mb-5 ">
+             <div class="container d-flex justify-content-center">
+                 <div class="col-md-10">
+                     <div class="card mr-auto ml-auto">
+                         <div class="card-header">User List</div>
+                         <div class="card-body">
+                             <div class="d-flex justify-content-center">
+                                <form method="get" action="/users" class="mt-1 mb-3 col-md-5">
+                                    <div class="input-group search-input">
+                                        <input type="text" name="search" placeholder="Search User" value="{{ (search != false) ? search : "" }}" class="form-control border">
+                                        <button type="submit" class="btn btn-primary border ml-3">search</button>
+                                    </div>
+                                </form>
+                            </div>
+                             {% for user in users %}
+                             <div class="card mb-1">
+                                 <div class="card-body">
+                                     <div class="d-flex flex-row justify-content-center">
+                                         {% if user.pfp == "" %}
+                                         <img src="/s/img/spinnerv2.gif" style="width: 5%;height: auto;">
+                                         {% else %}
+                                         <img src="https://cdn.finobe.net/{{ user.pfp }}" style="width: 5%;height: auto;">
+                                         {% endif %}
+                                         <p class="mt-0 mb-0 ml-1" style="align-self: center;"><a href="/user/{{ user.id }}">{{ user.username }}</a></p>
+                                         <p class="mt-0 mb-0 ml-1" style="align-self: center;">{{ (user.blurb|length) ? user.blurb|slice(0, 15) ~ '...' : "" }}</p>
+                                         <p class="mt-0 mb-0 ml-1" style="align-self: center;">{{ user.lastlogin }}</p>
+                                     </div>
+                                 </div>
+                             </div>
+                             {% endfor %}
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+      </div>
+      {% include ('v1/Modules/footer.twig') %}
+   </body>
+</html>

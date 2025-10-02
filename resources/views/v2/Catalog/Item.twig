@@ -1,0 +1,251 @@
+<html>
+  <head>
+    {% include ('v2/Modules/head.twig') %}
+    <style>
+            @keyframes purchaserFadeIn {
+                0% {
+                    opacity: 0
+                }
+
+                to {
+                    opacity: 0.6
+                }
+            }
+            .purchaser {
+                position: fixed;
+                z-index: 999;
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .purchaser .background {
+                position: absolute;
+                pointer-events: none;
+                width: 100%;
+                height: 100%;
+                background-color: black;
+                opacity: 0.6;
+                animation: purchaserFadeIn 0.25s ease;
+            }
+            
+            .purchase-success, .purchase-error {
+                position: absolute;
+                left: 40%;
+                z-index: 999999;
+                width: 20%;
+            }
+
+            .purchaser .card {
+                opacity: 1;
+                animation: fadeInUp 0.25s ease;
+            }
+
+            .fa-spin-2 {
+                -webkit-animation: fa-spin 1s linear infinite;
+                animation: fa-spin 1s linear infinite
+            }
+        </style>
+  </head>
+  <body>
+    <div class="btn-success purchase-success text-center" id="purchase-complete" style="display: none;"><p class="mt-2">You've successfully purchased this.</p></div>
+    <div class="btn-danger purchase-error text-center" id="purchase-error" style="display: none;"><p class="mt-2">Not enough dius</p></div>
+    <div class=" justify-content-center align-items-center" id="purchaser" style="display: none;">
+            <div class="background"></div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="card col-md-7 mt-5" style="padding: 0;">
+                        <div class="card-body text-center">
+                            <h2>Purchase item</h2>
+                            <br>
+                            <div class="d-flex align-items-center justify-content-center"><div class="d-flex flex-row"><p>Are you sure you want to buy <strong>{{ data.item.title|raw }}</strong> for <div class="nav-item nav-link n-money-text" data-placement="bottom" style="padding:0px;margin-left: 5px;"><a><img src="/s/img/diu_16.png" alt="Diu" title="Diu" class="img-responsive align-middle "> {{ data.item.additional.price }}</a></div>?</p></div></div><br>
+                            <button class="btn text-danger" id="btn-cancel">cancel</button>
+                            <button class="btn btn-outline-primary" id="purchase-confirm">purchase</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div id="app">
+      {% include ('v2/Modules/nav.twig') %}
+      <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        {% if (data.item.visibility == "r" and data.item.uuid == data.user.id) or data.item.visibility == "d" %}
+                            <div class="alert alert-warning rounded text-center" style="color:white;margin:20px 0 20px 0;background-color:rgb(245, 69, 69);">
+								{{ (data.item.visibility != 'd') ? "This item is under review." : "This item was not approved" }}
+                            </div>
+                        {% endif %}
+                        <div class="card" style="margin: 10px 0px 10px 0px;">
+                                <div class="card-header">
+                                    {{ (data.user.branding == "aesthetiful") ? "Aesthetiful" : "Finobe" }} {{ (data.item.asset_type == 3) ? "Audio" : (data.item.asset_type == 8) ? "Hat" : "" }}
+                                </div>
+                                <div class="card-body mt-2">
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <h4>{{ data.item.title | raw }}</h4>
+                                            <p style="margin-bottom:0px;">by {% if data.item.uuid matches '/^[0-9]+$/'%}<a href="/user/{{ data.item.uuid }}">{{ data.item.author }}</a>{% else %}{{ data.item.author }}{% endif %}</p>
+                                            <img src="{% if data.item.asset_type == 3 %}/s/img/{{ ((data.item.visibility == "r" and data.item.author == data.user.username) or data.item.visibility == "d") ? "spinnerv2.gif" : data.item.thumbnail }}{% else %}{% if data.item.visibility == 'd' or data.item.visibility == 'r' %}/s/img/spinnerv2.gif{% else %}{{ data.item.additional.media.thumbnail }}{% endif %}{% endif %}" class="mt-2" style="max-width:200px; display: block;">
+                                            {% if data.item.asset_type == 3 %}
+                                            <audio src="https://www.finobe.net/asset/?id={{ data.item.id }}" controls="controls" controlslist="nodownload">
+                                            Your browser does not support the audio element.
+                                            </audio>
+                                            {% endif %}
+                                            <p class="mt-3 mb-0"><strong>Description:</strong></p>
+                                            <p>{{ (data.item.description|length) ? data.item.description|raw : 'No description' }}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            {% if data.user.username == data.item.author or data.user.status == 'admin' %}
+                                                <div class="float-left mr-2 d-flex flex-column">
+                                                    {% if data.user.username == data.item.author %}
+                                                    <button class="btn btn-secondary mb-2" onclick="window.location.href='/item/{{ data.item.id }}/settings'"><i class="far fa-cog"></i></button>
+                                                    {% endif %}
+                                                    {% if data.user.status == 'admin' %}
+                                                    <button class="btn btn-danger" onclick="window.location.href='/api/deny?id=2068'"><i class="far fa-trash-alt"></i></button>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                            <div class="card">
+                                                <div class="card-body mt-2">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-auto">
+                                                            <p>Price: </p>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <li class="nav-item nav-link n-money-text" style="padding-top:0px;" data-placement="bottom" style="padding-left:0px;">
+                                                                <a><img src="/s/img/diu_16.png" alt="Diu" title="Diu" class="img-responsive align-middle"> {{ data.item.additional.price }}</a>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-auto">
+                                                            <p>Sold: {{ data.item.sales }}</p>
+                                                        </div>
+                                                    </div>
+                                                    {% if data.item.visibility != "d" and data.item.visibility != "r" %}
+                                                        {% if not data.item.additional.onSale %}
+                                                        <div class="row justify-content-center mt-2">
+                                                            <div class="col-auto text-muted">
+                                                                <p><b>This item is off-sale.</b></p>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if not data.item.isOwned %}
+                                                            <button id="btn-purchase" class="btn btn-success btn-lg col-md-12 mb-1">purchase</button>
+                                                        {% else %}
+                                                        <div class="row justify-content-center mt-2">
+                                                            <div class="col-auto text-muted">
+                                                                <p>Item Owned.</p>
+                                                            </div>
+                                                        </div>
+                                                        {% endif %}
+                                                        {% if data.item.asset_type == 3 %}
+                                                        <button id="CopyButton" class="btn btn-primary btn-lg col-md-12 mr-1" style="text-transform: capitalize;">Copy ID</button>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 offset-md-1" style="padding: 0 0 0 0;">
+                        <div class="card" style="margin: 10px 0px 10px 0px;">
+                            <div class="card-body row">
+                                <div class="text-center" style="margin-left:25%">
+                                    <p>Created</p>
+                                    <p class="mb-0">{{ data.item.publish }}</p>
+                                </div>
+                                <div class="text-center" style="margin-right:25%;margin-left:auto;">
+                                    <p>Updated</p>
+                                    <p class="mb-0">{{ data.item.updated }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p id="ID" style="display: none;">http://www.finobe.net/asset/?id={{ data.item.id }}</p>
+            <script>
+            function copy(copyId) {
+                var $inp = $("<input>");
+                $("body").append($inp);
+                $inp.val($(copyId).text()).select();
+                document.execCommand("copy");
+                $inp.remove();
+
+                $("#CopyButton").removeClass("btn-primary").addClass("btn-success").text("Successfully copied!");
+
+                setTimeout(function() {
+                $("#CopyButton").removeClass("btn-success").addClass("btn-primary").text("Copy ID");
+                }, 750);
+            }
+
+            $(document).ready(function() {
+                $("#CopyButton").click(function() {
+                copy('#ID');
+                });
+            });
+            </script>
+            <script>
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                    var purchase_btn = document.getElementById('btn-purchase');
+                                                    var purchaser = document.getElementById('purchaser');
+                                                    var confirmPurchase = document.getElementById('purchase-confirm');
+                                                    var purchaseClose = document.getElementById('btn-cancel');
+                                                    var purchaseComplete = document.getElementById('purchase-complete');
+                                                    var purchaseError = document.getElementById('purchase-error');
+
+                                                    confirmPurchase.addEventListener('click', function() {
+                                                        const data = new URLSearchParams();
+                                                        data.append('assetid', '{{ data.item.id }}');
+                                                        data.append('_token', '{{ data.csrf_token }}');
+                                                        
+                                                        fetch("/api/purchase", {
+                                                            method: "POST",
+                                                            headers: {
+                                                                'Content-type' : 'application/x-www-form-urlencoded'
+                                                            },
+                                                            body: data,
+                                                        })
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            if(data.code != 200) {
+                                                                purchaseError.querySelector('p').innerHTML = data.message;
+                                                                purchaseError.style.display = "";
+
+                                                                setTimeout(function () {
+                                                                    purchaseError.style.display = "None";
+                                                                }, 2500);
+                                                            } else {
+                                                                purchaseComplete.style.display = "";
+                                                                
+                                                                setTimeout(function () {
+                                                                    window.location.href = "/item/{{ data.item.id }}";
+                                                                }, 2500);
+                                                            }
+                                                            
+                                                        });
+                                                    });
+                                                    
+                                                    purchaseClose.addEventListener('click', function() {
+                                                        purchaser.style.display = "none";
+                                                        purchaser.classList.remove('purchaser');
+                                                        purchase_btn.disabled = false;
+                                                    });
+
+                                                    purchase_btn.addEventListener('click', function () {
+                                                        purchaser.style.display = "flex";
+                                                        purchase_btn.disabled = true;
+	                                                    purchaser.classList.add('purchaser');
+                                                        
+                                                    });
+                                                });
+                                            </script>
+    </div>
+    {% include ('v2/Modules/footer.twig') %}
+  </body>
+</html>
